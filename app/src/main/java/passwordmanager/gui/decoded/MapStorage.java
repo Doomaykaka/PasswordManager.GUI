@@ -1,5 +1,6 @@
 package passwordmanager.gui.decoded;
 
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -16,12 +17,15 @@ public class MapStorage implements Storage {
     @Override
     public void create(Record record) {
         Logger.addLog("Storage", "record added");
-        storage.put(record.hashCode(), record);
+        int maxInd = -1;
+        maxInd = Collections.max(storage.keySet());
+        storage.put(maxInd + 1, record);
     }
 
     @Override
     public Record read(int index) {
-        return (Record) storage.values().toArray()[index];
+        Logger.addLog("Storage", "record readed");
+        return storage.get(index);
     }
 
     @Override
@@ -40,9 +44,9 @@ public class MapStorage implements Storage {
     }
 
     @Override
-    public void delete(Record record) {
+    public void delete(int index) {
         Logger.addLog("Storage", "record deleted");
-        storage.remove(record.hashCode());
+        storage.remove(index);
     }
 
     @Override
@@ -54,7 +58,7 @@ public class MapStorage implements Storage {
     public void clear() {
         storage.clear();
     }
-    
+
     @Override
     public int size() {
         return storage.size();
@@ -62,12 +66,12 @@ public class MapStorage implements Storage {
 
     public MapStorage clone() {
         MapStorage clone = new MapStorage();
-        clone.storage = storage;
+        clone.storage.putAll(storage);
         return clone;
     }
 
-    public void put(int key, Record record) {
-        storage.put(key, record);
+    public void put(int index, Record record) {
+        storage.put(index, record);
     }
 
 }

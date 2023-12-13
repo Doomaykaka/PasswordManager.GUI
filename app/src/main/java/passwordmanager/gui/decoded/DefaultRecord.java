@@ -33,7 +33,7 @@ public class DefaultRecord implements Record {
 
     @Override
     public void setInfo(String newInfo) {
-        info = newInfo; 
+        info = newInfo;
     }
 
 }

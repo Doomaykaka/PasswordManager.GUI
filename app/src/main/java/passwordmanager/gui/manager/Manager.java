@@ -3,12 +3,12 @@ package passwordmanager.gui.manager;
 import passwordmanager.gui.decoded.ListStorage;
 import passwordmanager.gui.decoded.MapStorage;
 import passwordmanager.gui.decoded.Storage;
+import passwordmanager.gui.encoded.CheckedRawData;
+import passwordmanager.gui.encoded.DefaultRawData;
+import passwordmanager.gui.encoded.RawData;
 import passwordmanager.gui.encoder.DefaultEncoder;
 import passwordmanager.gui.encoder.Encoder;
 import passwordmanager.gui.encoder.ThreadEncoder;
-import passwordmanager.gui.rawdata.CheckedRawData;
-import passwordmanager.gui.rawdata.DefaultRawData;
-import passwordmanager.gui.rawdata.RawData;
 
 public class Manager {
     private static ManagerContext context;
@@ -43,7 +43,9 @@ public class Manager {
 
         logsUsing = needLogs;
 
-        if (needLogs) {
+        Logger.inicialize(logsUsing);
+
+        if (logsUsing) {
             context = new ManagerContextWithLogs();
             context.setRawData(rawData);
             context.setStorage(storage);

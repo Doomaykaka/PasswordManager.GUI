@@ -22,6 +22,7 @@ public class ListStorage implements Storage {
 
     @Override
     public Record read(int index) {
+        Logger.addLog("Storage", "record readed");
         return storage.get(index);
     }
 
@@ -41,21 +42,21 @@ public class ListStorage implements Storage {
     }
 
     @Override
-    public void delete(Record record) {
+    public void delete(int index) {
         Logger.addLog("Storage", "record deleted");
-        storage.remove(record);
+        storage.remove(index);
     }
 
     @Override
     public boolean isEmpty() {
         return storage.isEmpty();
     }
-    
+
     @Override
     public void clear() {
         storage.clear();
     }
-    
+
     @Override
     public int size() {
         return storage.size();
@@ -63,11 +64,11 @@ public class ListStorage implements Storage {
 
     public ListStorage clone() {
         ListStorage clone = new ListStorage();
-        clone.storage = storage;
+        clone.storage.addAll(storage);
         return clone;
     }
 
     public Iterator<Record> iterator() {
         return storage.iterator();
-    } 
+    }
 }

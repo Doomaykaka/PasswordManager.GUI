@@ -6,6 +6,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
+import java.util.ArrayList;
 import java.util.Base64;
 
 import org.jasypt.encryption.pbe.StandardPBEStringEncryptor;
@@ -15,9 +16,9 @@ import org.jasypt.salt.RandomSaltGenerator;
 
 import passwordmanager.gui.decoded.Record;
 import passwordmanager.gui.decoded.Storage;
+import passwordmanager.gui.encoded.RawData;
 import passwordmanager.gui.manager.Logger;
 import passwordmanager.gui.manager.Manager;
-import passwordmanager.gui.rawdata.RawData;
 
 public class DefaultEncoder implements Encoder {
     private EncoderAlgorithm encoderAlgorithm;
@@ -69,9 +70,9 @@ public class DefaultEncoder implements Encoder {
                 storage.clear();
                 Record record = null;
 
-                for (String chunk : rawData.getData()) {
+                for (Object chunk : rawData.getData()) {
                     try {
-                        chunkDecoded = textEncryptor.decrypt(chunk);
+                        chunkDecoded = textEncryptor.decrypt(chunk.toString());
                         byte[] bytes = Base64.getDecoder().decode(chunkDecoded);
                         InputStream bis = new ByteArrayInputStream(bytes);
                         ObjectInputStream ois = new ObjectInputStream(bis);
@@ -79,11 +80,11 @@ public class DefaultEncoder implements Encoder {
                         record = (Record) resObject;
                         storage.create(record);
                     } catch (IOException e) {
-                        System.out.println ("Error while reading");
+                        Logger.addLog("Encoder", "error while decoding");
                     } catch (ClassNotFoundException e) {
-                        System.out.println ("No class");
+                        Logger.addLog("Encoder", "decoding class not found error");
                     } catch (ClassCastException e) {
-                        System.out.println ("Could not cast to class");
+                        Logger.addLog("Encoder", "decoding cast error");
                     }
                 }
 
@@ -130,8 +131,7 @@ public class DefaultEncoder implements Encoder {
                 ByteArrayOutputStream baos = null;
                 ObjectOutputStream oos = null;
                 RawData rawData = Manager.getContext().getRawData().clone();
-                String[] arr = new String[data.size()];
-                rawData.setData(arr);
+                rawData.setData(new ArrayList<>());
 
                 for (int i = 0; i < data.size(); i++) {
                     try {
@@ -141,11 +141,11 @@ public class DefaultEncoder implements Encoder {
                         oos.writeObject(record);
                         chunk = Base64.getEncoder().encodeToString(baos.toByteArray()); // to String
                         chunk = textEncryptor.encrypt(chunk);
-                        arr[i] = chunk;
+                        rawData.getData().add(chunk);
                     } catch (IndexOutOfBoundsException e) {
                         break;
                     } catch (IOException e) {
-                        e.printStackTrace();
+                        Logger.addLog("Encoder", "encoding error");
                     }
                 }
 

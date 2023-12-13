@@ -1,7 +1,7 @@
 package passwordmanager.gui.encoder;
 
 import passwordmanager.gui.decoded.Storage;
-import passwordmanager.gui.rawdata.RawData;
+import passwordmanager.gui.encoded.RawData;
 
 public interface Encoder {
     public String decodeData(String encodedData, String key);

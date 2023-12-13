@@ -6,16 +6,16 @@ package passwordmanager.gui;
 import passwordmanager.gui.decoded.DefaultRecord;
 import passwordmanager.gui.decoded.Record;
 import passwordmanager.gui.decoded.Storage;
+import passwordmanager.gui.encoded.RawData;
 import passwordmanager.gui.encoder.Encoder;
 import passwordmanager.gui.encoder.Encoder.EncoderAlgorithm;
 import passwordmanager.gui.manager.Logger;
 import passwordmanager.gui.manager.Manager;
-import passwordmanager.gui.rawdata.RawData;
 
 public class App {
     public static void main(String[] args) {
         
-        Manager.initialize(true, true, false, false);
+        Manager.initialize(false, true, false, false);
         
         System.out.println("=========Light=========");
         System.out.println("Hello");
@@ -32,9 +32,15 @@ public class App {
         newRecord.setLogin("admin");
         newRecord.setPassword("123");
         newRecord.setInfo("info");
+        Record newRecord2 = new DefaultRecord();
+        newRecord2.setLogin("admin2");
+        newRecord2.setPassword("123");
+        newRecord2.setInfo("info");
         Manager.getContext().getStorage().create(newRecord);
+        Manager.getContext().getStorage().create(newRecord2);
         
         System.out.println("Record: " + newRecord.getLogin() + "," + newRecord.getPassword() + "," + newRecord.getInfo());
+        System.out.println("Record2: " + newRecord2.getLogin() + "," + newRecord2.getPassword() + "," + newRecord2.getInfo());
         RawData newRaw = Manager.getContext().getEncoder().encodeStruct(Manager.getContext().getStorage(), "123");
         for(String chunk : newRaw.getData()) {
             System.out.println(chunk);
@@ -48,6 +54,13 @@ public class App {
         System.out.print("Right key: " + decodeRecord.getLogin());
         System.out.print("," + decodeRecord.getPassword());
         System.out.println("," + decodeRecord.getInfo());
+        
+        Record decodeRecord2 = storage.read(1);
+        System.out.print("Right key: " + decodeRecord2.getLogin());
+        System.out.print("," + decodeRecord2.getPassword());
+        System.out.println("," + decodeRecord2.getInfo());
+        
+        System.out.println("=========Log=========");
         
         for (String log : Logger.getLogs()) {
             System.out.println(log);

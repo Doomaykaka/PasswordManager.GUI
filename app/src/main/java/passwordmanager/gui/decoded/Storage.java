@@ -7,13 +7,13 @@ public interface Storage extends Cloneable {
 
     public void update(Record record);
 
-    public void delete(Record record);
+    public void delete(int index);
 
     public Storage clone();
 
     public boolean isEmpty();
-    
+
     public void clear();
-    
+
     public int size();
 }

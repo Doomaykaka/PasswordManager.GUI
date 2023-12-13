@@ -1,14 +1,14 @@
 package passwordmanager.gui.manager;
 
 import passwordmanager.gui.decoded.Storage;
+import passwordmanager.gui.encoded.RawData;
 import passwordmanager.gui.encoder.Encoder;
-import passwordmanager.gui.rawdata.RawData;
 
 public class ManagerContextWithLogs implements ManagerContext {
     private RawData rawData;
     private Storage storage;
     private Encoder encoder;
-    
+
     public ManagerContextWithLogs() {
         Logger.addLog("Manager", "creating");
     }
