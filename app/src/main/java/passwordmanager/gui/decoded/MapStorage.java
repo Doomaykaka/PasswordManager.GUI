@@ -8,10 +8,12 @@ import passwordmanager.gui.manager.Logger;
 
 public class MapStorage implements Storage {
     private Map<Integer, Record> storage;
+    private String name;
 
     public MapStorage() {
         Logger.addLog("Storage", "creating");
         storage = new HashMap<Integer, Record>();
+        name = "default";
     }
 
     @Override
@@ -62,6 +64,16 @@ public class MapStorage implements Storage {
     @Override
     public int size() {
         return storage.size();
+    }
+
+    @Override
+    public String getName() {
+        return name;
+    }
+
+    @Override
+    public void setName(String newName) {
+        this.name = newName;
     }
 
     public MapStorage clone() {

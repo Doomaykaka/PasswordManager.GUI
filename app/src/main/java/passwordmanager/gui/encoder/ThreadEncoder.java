@@ -34,8 +34,8 @@ public class ThreadEncoder implements Encoder {
     public String decodeData(String encodedData, String key) {
         Logger.addLog("Encoder", "decoding data");
         String result = null;
-           
-        //PooledPBEStringEncryptor
+
+        // PooledPBEStringEncryptor
         textEncryptor = new PooledPBEStringEncryptor();
         textEncryptor.setAlgorithm(encoderAlgorithm.getStringName());
         textEncryptor.setPassword(key);
@@ -91,6 +91,8 @@ public class ThreadEncoder implements Encoder {
                         Logger.addLog("Encoder", "decoding cast error");
                     }
                 }
+
+                storage.setName(rawData.getName());
 
                 return storage;
             } catch (EncryptionOperationNotPossibleException e) {
@@ -153,6 +155,8 @@ public class ThreadEncoder implements Encoder {
                         Logger.addLog("Encoder", "encoding error");
                     }
                 }
+
+                rawData.setName(data.getName());
 
                 return rawData;
             }

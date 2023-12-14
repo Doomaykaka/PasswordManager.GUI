@@ -88,6 +88,8 @@ public class DefaultEncoder implements Encoder {
                     }
                 }
 
+                storage.setName(rawData.getName());
+
                 return storage;
             } catch (EncryptionOperationNotPossibleException e) {
                 Logger.addLog("Encoder", "decoding bad key");
@@ -148,6 +150,8 @@ public class DefaultEncoder implements Encoder {
                         Logger.addLog("Encoder", "encoding error");
                     }
                 }
+
+                rawData.setName(data.getName());
 
                 return rawData;
             }

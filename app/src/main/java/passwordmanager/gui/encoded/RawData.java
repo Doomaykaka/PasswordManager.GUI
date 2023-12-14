@@ -10,4 +10,8 @@ public interface RawData extends Cloneable {
     public boolean checkData();
 
     public RawData clone();
+
+    public String getName();
+
+    public void setName(String newName);
 }

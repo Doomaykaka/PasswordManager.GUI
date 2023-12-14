@@ -16,4 +16,8 @@ public interface Storage extends Cloneable {
     public void clear();
 
     public int size();
+
+    public String getName();
+
+    public void setName(String newName);
 }

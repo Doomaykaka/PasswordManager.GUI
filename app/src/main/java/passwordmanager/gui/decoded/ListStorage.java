@@ -8,10 +8,12 @@ import passwordmanager.gui.manager.Logger;
 
 public class ListStorage implements Storage {
     private List<Record> storage;
+    private String name;
 
     public ListStorage() {
         Logger.addLog("Storage", "creating");
         storage = new LinkedList<Record>();
+        name = "default";
     }
 
     @Override
@@ -60,6 +62,16 @@ public class ListStorage implements Storage {
     @Override
     public int size() {
         return storage.size();
+    }
+
+    @Override
+    public String getName() {
+        return name;
+    }
+
+    @Override
+    public void setName(String newName) {
+        this.name = newName;
     }
 
     public ListStorage clone() {

@@ -7,9 +7,11 @@ import passwordmanager.gui.manager.Logger;
 
 public class CheckedRawData implements RawData {
     private List<String> data;
+    private String name;
 
     public CheckedRawData() {
         data = new ArrayList<String>();
+        name = "default";
     }
 
     @Override
@@ -43,6 +45,16 @@ public class CheckedRawData implements RawData {
         }
 
         return data != null;
+    }
+
+    @Override
+    public String getName() {
+        return name;
+    }
+
+    @Override
+    public void setName(String newName) {
+        this.name = newName;
     }
 
     public CheckedRawData clone() {
