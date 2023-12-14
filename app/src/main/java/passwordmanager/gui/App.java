@@ -15,7 +15,7 @@ import passwordmanager.gui.manager.Manager;
 public class App {
     public static void main(String[] args) {
         
-        Manager.initialize(false, true, false, false);
+        Manager.initialize(false, true, false, true);
         
         System.out.println("=========Light=========");
         System.out.println("Hello");
