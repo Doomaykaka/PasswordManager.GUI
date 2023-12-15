@@ -96,6 +96,11 @@ loadScripts(document, 'script');</script>
 <hr>
 <div class="type-signature"><span class="modifiers">public interface </span><span class="element-name type-name-label">Record</span><span class="extends-implements">
 extends <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/io/Serializable.html" title="class or interface in java.io" class="external-link">Serializable</a></span></div>
+<div class="block">Decrypted record with information about login, password, description</div>
+<dl class="notes">
+<dt>Since:</dt>
+<dd>2023-12-14</dd>
+</dl>
 </section>
 <section class="summary">
 <ul class="summary-list">
@@ -112,22 +117,34 @@ extends <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/ja
 <div class="table-header col-last">Description</div>
 <div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></code></div>
 <div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#getInfo()" class="member-name-link">getInfo</a>()</code></div>
-<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">&nbsp;</div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">
+<div class="block">Method for obtaining additional information about a record</div>
+</div>
 <div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></code></div>
 <div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#getLogin()" class="member-name-link">getLogin</a>()</code></div>
-<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">&nbsp;</div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">
+<div class="block">Method for getting login from a record</div>
+</div>
 <div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></code></div>
 <div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#getPassword()" class="member-name-link">getPassword</a>()</code></div>
-<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">&nbsp;</div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">
+<div class="block">Method for getting password from a record</div>
+</div>
 <div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code>void</code></div>
 <div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#setInfo(java.lang.String)" class="member-name-link">setInfo</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;newInfo)</code></div>
-<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">&nbsp;</div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">
+<div class="block">Method for changing additional record information</div>
+</div>
 <div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code>void</code></div>
 <div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#setLogin(java.lang.String)" class="member-name-link">setLogin</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;newLogin)</code></div>
-<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">&nbsp;</div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">
+<div class="block">Method for changing the login of an entry</div>
+</div>
 <div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code>void</code></div>
 <div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#setPassword(java.lang.String)" class="member-name-link">setPassword</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;newPassword)</code></div>
-<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">&nbsp;</div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">
+<div class="block">Method for changing the password of an entry</div>
+</div>
 </div>
 </div>
 </div>
@@ -146,36 +163,66 @@ extends <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/ja
 <section class="detail" id="getLogin()">
 <h3>getLogin</h3>
 <div class="member-signature"><span class="return-type"><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></span>&nbsp;<span class="element-name">getLogin</span>()</div>
+<div class="block">Method for getting login from a record</div>
+<dl class="notes">
+<dt>Returns:</dt>
+<dd>login</dd>
+</dl>
 </section>
 </li>
 <li>
 <section class="detail" id="setLogin(java.lang.String)">
 <h3>setLogin</h3>
 <div class="member-signature"><span class="return-type">void</span>&nbsp;<span class="element-name">setLogin</span><wbr><span class="parameters">(<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;newLogin)</span></div>
+<div class="block">Method for changing the login of an entry</div>
+<dl class="notes">
+<dt>Parameters:</dt>
+<dd><code>newLogin</code> - new login name</dd>
+</dl>
 </section>
 </li>
 <li>
 <section class="detail" id="getPassword()">
 <h3>getPassword</h3>
 <div class="member-signature"><span class="return-type"><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></span>&nbsp;<span class="element-name">getPassword</span>()</div>
+<div class="block">Method for getting password from a record</div>
+<dl class="notes">
+<dt>Returns:</dt>
+<dd>password</dd>
+</dl>
 </section>
 </li>
 <li>
 <section class="detail" id="setPassword(java.lang.String)">
 <h3>setPassword</h3>
 <div class="member-signature"><span class="return-type">void</span>&nbsp;<span class="element-name">setPassword</span><wbr><span class="parameters">(<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;newPassword)</span></div>
+<div class="block">Method for changing the password of an entry</div>
+<dl class="notes">
+<dt>Parameters:</dt>
+<dd><code>newPassword</code> - new password</dd>
+</dl>
 </section>
 </li>
 <li>
 <section class="detail" id="getInfo()">
 <h3>getInfo</h3>
 <div class="member-signature"><span class="return-type"><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></span>&nbsp;<span class="element-name">getInfo</span>()</div>
+<div class="block">Method for obtaining additional information about a record</div>
+<dl class="notes">
+<dt>Returns:</dt>
+<dd>additional information about a record</dd>
+</dl>
 </section>
 </li>
 <li>
 <section class="detail" id="setInfo(java.lang.String)">
 <h3>setInfo</h3>
 <div class="member-signature"><span class="return-type">void</span>&nbsp;<span class="element-name">setInfo</span><wbr><span class="parameters">(<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;newInfo)</span></div>
+<div class="block">Method for changing additional record information</div>
+<dl class="notes">
+<dt>Parameters:</dt>
+<dd><code>newInfo</code> - new additional record information</dd>
+</dl>
 </section>
 </li>
 </ul>

@@ -96,10 +96,15 @@ loadScripts(document, 'script');</script>
 <div class="type-signature"><span class="modifiers">public class </span><span class="element-name type-name-label">DefaultRecord</span>
 <span class="extends-implements">extends <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/Object.html" title="class or interface in java.lang" class="external-link">Object</a>
 implements <a href="Record.html" title="interface in passwordmanager.gui.decoded">Record</a></span></div>
+<div class="block">Standard implementation of a decrypted record with information about login,
+ password, description</div>
 <dl class="notes">
+<dt>Since:</dt>
+<dd>2023-12-14</dd>
 <dt>See Also:</dt>
 <dd>
 <ul class="tag-list">
+<li><a href="Record.html" title="interface in passwordmanager.gui.decoded"><code>Record</code></a></li>
 <li><a href="../../../serialized-form.html#passwordmanager.gui.decoded.DefaultRecord">Serialized Form</a></li>
 </ul>
 </dd>
@@ -118,16 +123,25 @@ implements <a href="Record.html" title="interface in passwordmanager.gui.decoded
 <div class="table-header col-last">Description</div>
 <div class="col-first even-row-color"><code>private <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></code></div>
 <div class="col-second even-row-color"><code><a href="#info" class="member-name-link">info</a></code></div>
-<div class="col-last even-row-color">&nbsp;</div>
+<div class="col-last even-row-color">
+<div class="block">Info value</div>
+</div>
 <div class="col-first odd-row-color"><code>private <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></code></div>
 <div class="col-second odd-row-color"><code><a href="#login" class="member-name-link">login</a></code></div>
-<div class="col-last odd-row-color">&nbsp;</div>
+<div class="col-last odd-row-color">
+<div class="block">Login value</div>
+</div>
 <div class="col-first even-row-color"><code>private <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></code></div>
 <div class="col-second even-row-color"><code><a href="#password" class="member-name-link">password</a></code></div>
-<div class="col-last even-row-color">&nbsp;</div>
+<div class="col-last even-row-color">
+<div class="block">Password value</div>
+</div>
 <div class="col-first odd-row-color"><code>private static final long</code></div>
 <div class="col-second odd-row-color"><code><a href="#serialVersionUID" class="member-name-link">serialVersionUID</a></code></div>
-<div class="col-last odd-row-color">&nbsp;</div>
+<div class="col-last odd-row-color">
+<div class="block">Class version number for checks when desirializing and serializing class
+ objects</div>
+</div>
 </div>
 </section>
 </li>
@@ -157,22 +171,34 @@ implements <a href="Record.html" title="interface in passwordmanager.gui.decoded
 <div class="table-header col-last">Description</div>
 <div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></code></div>
 <div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getInfo()" class="member-name-link">getInfo</a>()</code></div>
-<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="block">Method for obtaining additional information about a record</div>
+</div>
 <div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></code></div>
 <div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getLogin()" class="member-name-link">getLogin</a>()</code></div>
-<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="block">Method for getting login from a record</div>
+</div>
 <div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></code></div>
 <div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getPassword()" class="member-name-link">getPassword</a>()</code></div>
-<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="block">Method for getting password from a record</div>
+</div>
 <div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
 <div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#setInfo(java.lang.String)" class="member-name-link">setInfo</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;newInfo)</code></div>
-<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="block">Method for changing additional record information</div>
+</div>
 <div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
 <div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#setLogin(java.lang.String)" class="member-name-link">setLogin</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;newLogin)</code></div>
-<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="block">Method for changing the login of an entry</div>
+</div>
 <div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
 <div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#setPassword(java.lang.String)" class="member-name-link">setPassword</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;newPassword)</code></div>
-<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="block">Method for changing the password of an entry</div>
+</div>
 </div>
 </div>
 </div>
@@ -194,6 +220,8 @@ implements <a href="Record.html" title="interface in passwordmanager.gui.decoded
 <section class="detail" id="serialVersionUID">
 <h3>serialVersionUID</h3>
 <div class="member-signature"><span class="modifiers">private static final</span>&nbsp;<span class="return-type">long</span>&nbsp;<span class="element-name">serialVersionUID</span></div>
+<div class="block">Class version number for checks when desirializing and serializing class
+ objects</div>
 <dl class="notes">
 <dt>See Also:</dt>
 <dd>
@@ -208,18 +236,21 @@ implements <a href="Record.html" title="interface in passwordmanager.gui.decoded
 <section class="detail" id="login">
 <h3>login</h3>
 <div class="member-signature"><span class="modifiers">private</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></span>&nbsp;<span class="element-name">login</span></div>
+<div class="block">Login value</div>
 </section>
 </li>
 <li>
 <section class="detail" id="password">
 <h3>password</h3>
 <div class="member-signature"><span class="modifiers">private</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></span>&nbsp;<span class="element-name">password</span></div>
+<div class="block">Password value</div>
 </section>
 </li>
 <li>
 <section class="detail" id="info">
 <h3>info</h3>
 <div class="member-signature"><span class="modifiers">private</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></span>&nbsp;<span class="element-name">info</span></div>
+<div class="block">Info value</div>
 </section>
 </li>
 </ul>
@@ -248,9 +279,12 @@ implements <a href="Record.html" title="interface in passwordmanager.gui.decoded
 <section class="detail" id="getLogin()">
 <h3>getLogin</h3>
 <div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></span>&nbsp;<span class="element-name">getLogin</span>()</div>
+<div class="block">Method for getting login from a record</div>
 <dl class="notes">
 <dt>Specified by:</dt>
 <dd><code><a href="Record.html#getLogin()">getLogin</a></code>&nbsp;in interface&nbsp;<code><a href="Record.html" title="interface in passwordmanager.gui.decoded">Record</a></code></dd>
+<dt>Returns:</dt>
+<dd>login</dd>
 </dl>
 </section>
 </li>
@@ -258,9 +292,12 @@ implements <a href="Record.html" title="interface in passwordmanager.gui.decoded
 <section class="detail" id="setLogin(java.lang.String)">
 <h3>setLogin</h3>
 <div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">setLogin</span><wbr><span class="parameters">(<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;newLogin)</span></div>
+<div class="block">Method for changing the login of an entry</div>
 <dl class="notes">
 <dt>Specified by:</dt>
 <dd><code><a href="Record.html#setLogin(java.lang.String)">setLogin</a></code>&nbsp;in interface&nbsp;<code><a href="Record.html" title="interface in passwordmanager.gui.decoded">Record</a></code></dd>
+<dt>Parameters:</dt>
+<dd><code>newLogin</code> - new login name</dd>
 </dl>
 </section>
 </li>
@@ -268,9 +305,12 @@ implements <a href="Record.html" title="interface in passwordmanager.gui.decoded
 <section class="detail" id="getPassword()">
 <h3>getPassword</h3>
 <div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></span>&nbsp;<span class="element-name">getPassword</span>()</div>
+<div class="block">Method for getting password from a record</div>
 <dl class="notes">
 <dt>Specified by:</dt>
 <dd><code><a href="Record.html#getPassword()">getPassword</a></code>&nbsp;in interface&nbsp;<code><a href="Record.html" title="interface in passwordmanager.gui.decoded">Record</a></code></dd>
+<dt>Returns:</dt>
+<dd>password</dd>
 </dl>
 </section>
 </li>
@@ -278,9 +318,12 @@ implements <a href="Record.html" title="interface in passwordmanager.gui.decoded
 <section class="detail" id="setPassword(java.lang.String)">
 <h3>setPassword</h3>
 <div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">setPassword</span><wbr><span class="parameters">(<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;newPassword)</span></div>
+<div class="block">Method for changing the password of an entry</div>
 <dl class="notes">
 <dt>Specified by:</dt>
 <dd><code><a href="Record.html#setPassword(java.lang.String)">setPassword</a></code>&nbsp;in interface&nbsp;<code><a href="Record.html" title="interface in passwordmanager.gui.decoded">Record</a></code></dd>
+<dt>Parameters:</dt>
+<dd><code>newPassword</code> - new password</dd>
 </dl>
 </section>
 </li>
@@ -288,9 +331,12 @@ implements <a href="Record.html" title="interface in passwordmanager.gui.decoded
 <section class="detail" id="getInfo()">
 <h3>getInfo</h3>
 <div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></span>&nbsp;<span class="element-name">getInfo</span>()</div>
+<div class="block">Method for obtaining additional information about a record</div>
 <dl class="notes">
 <dt>Specified by:</dt>
 <dd><code><a href="Record.html#getInfo()">getInfo</a></code>&nbsp;in interface&nbsp;<code><a href="Record.html" title="interface in passwordmanager.gui.decoded">Record</a></code></dd>
+<dt>Returns:</dt>
+<dd>additional information about a record</dd>
 </dl>
 </section>
 </li>
@@ -298,9 +344,12 @@ implements <a href="Record.html" title="interface in passwordmanager.gui.decoded
 <section class="detail" id="setInfo(java.lang.String)">
 <h3>setInfo</h3>
 <div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">setInfo</span><wbr><span class="parameters">(<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;newInfo)</span></div>
+<div class="block">Method for changing additional record information</div>
 <dl class="notes">
 <dt>Specified by:</dt>
 <dd><code><a href="Record.html#setInfo(java.lang.String)">setInfo</a></code>&nbsp;in interface&nbsp;<code><a href="Record.html" title="interface in passwordmanager.gui.decoded">Record</a></code></dd>
+<dt>Parameters:</dt>
+<dd><code>newInfo</code> - new additional record information</dd>
 </dl>
 </section>
 </li>

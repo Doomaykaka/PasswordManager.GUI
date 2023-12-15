@@ -5,9 +5,10 @@ import passwordmanager.gui.encoded.RawData;
 import passwordmanager.gui.encoder.Encoder;
 
 /**
- * Standard context implementation for storing and accessing encrypted data;
- * decrypted data and encoder with logging support.
+ * Standard context implementation for storing and accessing encrypted data,
+ * decrypted data and encoder with logging support
  * 
+ * @see ManagerContext
  * @see RawData
  * @see Storage
  * @see Encoder

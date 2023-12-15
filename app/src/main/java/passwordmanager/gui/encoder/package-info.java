@@ -1,5 +1,5 @@
 /**
- * A package with tools for data encryption/decryption.
+ * A package with tools for data encryption/decryption
  * 
  * @see Encoder
  * @see DefaultEncoder

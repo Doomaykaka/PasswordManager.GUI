@@ -25,6 +25,7 @@ import passwordmanager.gui.manager.Manager;
  * Encoder implementation that allows you to encrypt and decrypt both text data
  * and data structures, with multi-threading support
  * 
+ * @see Encoder
  * @see EncoderAlgorithm
  * @see Storage
  * @see RawData
