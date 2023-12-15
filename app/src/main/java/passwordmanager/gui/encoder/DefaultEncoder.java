@@ -17,18 +17,42 @@ import org.jasypt.salt.RandomSaltGenerator;
 import passwordmanager.gui.decoded.Record;
 import passwordmanager.gui.decoded.Storage;
 import passwordmanager.gui.encoded.RawData;
+import passwordmanager.gui.encoder.Encoder.EncoderAlgorithm;
 import passwordmanager.gui.manager.Logger;
 import passwordmanager.gui.manager.Manager;
 
+/**
+ * A standard encoder implementation that allows you to encrypt and decrypt both
+ * text data and data structures.
+ * 
+ * @see EncoderAlgorithm
+ * @see Storage
+ * @see RawData
+ * @author Doomaykaka MIT License
+ * @since 2023-12-14
+ */
 public class DefaultEncoder implements Encoder {
+    /** Link to encoding algorithm ({@link EncoderAlgorithm}) */
     private EncoderAlgorithm encoderAlgorithm;
+    /** Link to encryptor */
     private StandardPBEStringEncryptor textEncryptor;
 
+    /**
+     * A constructor that creates a record of the object's creation event and sets
+     * the default encryption/decryption algorithm
+     */
     public DefaultEncoder() {
         Logger.addLog("Encoder", "creating");
         changeAlgorithm(EncoderAlgorithm.SHA256);
     }
 
+    /**
+     * Method for decrypting text data
+     * 
+     * @param encodedData encrypted text
+     * @param key         decryption key
+     * @return decrypted text
+     */
     @Override
     public String decodeData(String encodedData, String key) {
         Logger.addLog("Encoder", "decoding data");
@@ -51,6 +75,13 @@ public class DefaultEncoder implements Encoder {
         return result;
     }
 
+    /**
+     * Method for decrypting data structure
+     * 
+     * @param rawData encrypted data structure
+     * @param key     decryption key
+     * @return decrypted structure
+     */
     @Override
     public Storage decodeStruct(RawData rawData, String key) {
         Logger.addLog("Encoder", "decoding structure");
@@ -100,6 +131,13 @@ public class DefaultEncoder implements Encoder {
 
     }
 
+    /**
+     * Method for encrypting text data
+     * 
+     * @param decodedData decrypted text
+     * @param key         encription key
+     * @return encrypted text
+     */
     @Override
     public String encodeData(String decodedData, String key) {
         Logger.addLog("Encoder", "encoding data");
@@ -114,6 +152,13 @@ public class DefaultEncoder implements Encoder {
         return textEncryptor.encrypt(decodedData);
     }
 
+    /**
+     * Method for encrypting data structure
+     * 
+     * @param data decrypted data structure
+     * @param key  encryption key
+     * @return encrypted structure
+     */
     @Override
     public RawData encodeStruct(Storage data, String key) {
         Logger.addLog("Encoder", "encoding structure");
@@ -160,6 +205,11 @@ public class DefaultEncoder implements Encoder {
         return null;
     }
 
+    /**
+     * Method for changing the encryption/decryption algorithm
+     * 
+     * @param algo new encryption/decryption algorithm
+     */
     @Override
     public void changeAlgorithm(EncoderAlgorithm algo) {
         Logger.addLog("Encoder", "algorithm changed");

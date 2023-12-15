@@ -17,25 +17,49 @@ import org.jasypt.salt.RandomSaltGenerator;
 import passwordmanager.gui.decoded.Record;
 import passwordmanager.gui.decoded.Storage;
 import passwordmanager.gui.encoded.RawData;
+import passwordmanager.gui.encoder.Encoder.EncoderAlgorithm;
 import passwordmanager.gui.manager.Logger;
 import passwordmanager.gui.manager.Manager;
 
+/**
+ * Encoder implementation that allows you to encrypt and decrypt both text data
+ * and data structures, with multi-threading support
+ * 
+ * @see EncoderAlgorithm
+ * @see Storage
+ * @see RawData
+ * @author Doomaykaka MIT License
+ * @since 2023-12-14
+ */
 public class ThreadEncoder implements Encoder {
+    /** Link to encoding algorithm ({@link EncoderAlgorithm}) */
     private EncoderAlgorithm encoderAlgorithm;
+    /** Link to encryptor */
     private PooledPBEStringEncryptor textEncryptor;
+    /** Field storing the number of threads available for use */
     private int numberOfThreads;
 
+    /**
+     * A constructor that creates a record of the object's creation event and sets
+     * the default encryption/decryption algorithm
+     */
     public ThreadEncoder() {
         encoderAlgorithm = EncoderAlgorithm.SHA256;
         numberOfThreads = Runtime.getRuntime().availableProcessors();
     }
 
+    /**
+     * Method for decrypting text data
+     * 
+     * @param encodedData encrypted text
+     * @param key         decryption key
+     * @return decrypted text
+     */
     @Override
     public String decodeData(String encodedData, String key) {
         Logger.addLog("Encoder", "decoding data");
         String result = null;
 
-        // PooledPBEStringEncryptor
         textEncryptor = new PooledPBEStringEncryptor();
         textEncryptor.setAlgorithm(encoderAlgorithm.getStringName());
         textEncryptor.setPassword(key);
@@ -54,6 +78,13 @@ public class ThreadEncoder implements Encoder {
         return result;
     }
 
+    /**
+     * Method for decrypting data structure
+     * 
+     * @param rawData encrypted data structure
+     * @param key     decryption key
+     * @return decrypted structure
+     */
     @Override
     public Storage decodeStruct(RawData rawData, String key) {
         Logger.addLog("Encoder", "decoding structure");
@@ -103,6 +134,13 @@ public class ThreadEncoder implements Encoder {
         return null;
     }
 
+    /**
+     * Method for encrypting text data
+     * 
+     * @param decodedData decrypted text
+     * @param key         encription key
+     * @return encrypted text
+     */
     @Override
     public String encodeData(String decodedData, String key) {
         Logger.addLog("Encoder", "encoding data");
@@ -118,6 +156,13 @@ public class ThreadEncoder implements Encoder {
         return textEncryptor.encrypt(decodedData);
     }
 
+    /**
+     * Method for encrypting data structure
+     * 
+     * @param data decrypted data structure
+     * @param key  encryption key
+     * @return encrypted structure
+     */
     @Override
     public RawData encodeStruct(Storage data, String key) {
         Logger.addLog("Encoder", "encoding structure");
@@ -165,6 +210,11 @@ public class ThreadEncoder implements Encoder {
         return null;
     }
 
+    /**
+     * Method for changing the encryption/decryption algorithm
+     * 
+     * @param algo new encryption/decryption algorithm
+     */
     @Override
     public void changeAlgorithm(EncoderAlgorithm algo) {
         Logger.addLog("Encoder", "algorithm changed");
