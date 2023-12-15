@@ -1,7 +1,8 @@
 /**
  * Package with encrypted data models
  * 
- * @see RawData
+ * @see IRecoverable
+ * @see IRawData
  * @see DefaultRawData
  * @see CheckedRawData
  * @author Doomaykaka MIT License

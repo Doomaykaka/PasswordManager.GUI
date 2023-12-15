@@ -14,10 +14,10 @@ import org.jasypt.exceptions.EncryptionOperationNotPossibleException;
 import org.jasypt.iv.RandomIvGenerator;
 import org.jasypt.salt.RandomSaltGenerator;
 
-import passwordmanager.gui.decoded.Record;
-import passwordmanager.gui.decoded.Storage;
-import passwordmanager.gui.encoded.RawData;
-import passwordmanager.gui.encoder.Encoder.EncoderAlgorithm;
+import passwordmanager.gui.decoded.IRecord;
+import passwordmanager.gui.decoded.IStorage;
+import passwordmanager.gui.encoded.IRawData;
+import passwordmanager.gui.encoder.IEncoder.EncoderAlgorithm;
 import passwordmanager.gui.manager.Logger;
 import passwordmanager.gui.manager.Manager;
 
@@ -25,14 +25,14 @@ import passwordmanager.gui.manager.Manager;
  * Encoder implementation that allows you to encrypt and decrypt both text data
  * and data structures, with multi-threading support
  * 
- * @see Encoder
+ * @see IEncoder
  * @see EncoderAlgorithm
- * @see Storage
- * @see RawData
+ * @see IStorage
+ * @see IRawData
  * @author Doomaykaka MIT License
  * @since 2023-12-14
  */
-public class ThreadEncoder implements Encoder {
+public class ThreadEncoder implements IEncoder {
     /**
      * Link to encoding algorithm ({@link EncoderAlgorithm})
      */
@@ -51,7 +51,7 @@ public class ThreadEncoder implements Encoder {
      * the default encryption/decryption algorithm
      */
     public ThreadEncoder() {
-        encoderAlgorithm = EncoderAlgorithm.SHA256;
+        setAlgorithm(EncoderAlgorithm.SHA256);
         numberOfThreads = Runtime.getRuntime().availableProcessors();
     }
 
@@ -63,12 +63,12 @@ public class ThreadEncoder implements Encoder {
      * @return decrypted text
      */
     @Override
-    public String decodeData(String encodedData, String key) {
+    public String decodeString(String encodedData, String key) {
         Logger.addLog("Encoder", "decoding data");
         String result = null;
 
         textEncryptor = new PooledPBEStringEncryptor();
-        textEncryptor.setAlgorithm(encoderAlgorithm.getStringName());
+        textEncryptor.setAlgorithm(encoderAlgorithm.getInternalName());
         textEncryptor.setPassword(key);
         textEncryptor.setPoolSize(numberOfThreads);
         textEncryptor.setIvGenerator(new RandomIvGenerator());
@@ -93,11 +93,11 @@ public class ThreadEncoder implements Encoder {
      * @return decrypted structure
      */
     @Override
-    public Storage decodeStruct(RawData rawData, String key) {
+    public IStorage decodeStruct(IRawData rawData, String key) {
         Logger.addLog("Encoder", "decoding structure");
 
         textEncryptor = new PooledPBEStringEncryptor();
-        textEncryptor.setAlgorithm(encoderAlgorithm.getStringName());
+        textEncryptor.setAlgorithm(encoderAlgorithm.getInternalName());
         textEncryptor.setPassword(key);
         textEncryptor.setPoolSize(numberOfThreads);
         textEncryptor.setIvGenerator(new RandomIvGenerator());
@@ -108,9 +108,9 @@ public class ThreadEncoder implements Encoder {
         if ((rawData.checkData()) && (key != null)) {
             try {
                 String chunkDecoded = "";
-                Storage storage = Manager.getContext().getStorage().clone();
+                IStorage storage = Manager.getContext().getStorage().clone();
                 storage.clear();
-                Record record = null;
+                IRecord record = null;
 
                 for (Object chunk : rawData.getData()) {
                     try {
@@ -119,7 +119,7 @@ public class ThreadEncoder implements Encoder {
                         InputStream bis = new ByteArrayInputStream(bytes);
                         ObjectInputStream ois = new ObjectInputStream(bis);
                         Object resObject = ois.readObject();
-                        record = (Record) resObject;
+                        record = (IRecord) resObject;
                         storage.create(record);
                     } catch (IOException e) {
                         Logger.addLog("Encoder", "error while decoding");
@@ -149,10 +149,10 @@ public class ThreadEncoder implements Encoder {
      * @return encrypted text
      */
     @Override
-    public String encodeData(String decodedData, String key) {
+    public String encodeString(String decodedData, String key) {
         Logger.addLog("Encoder", "encoding data");
         textEncryptor = new PooledPBEStringEncryptor();
-        textEncryptor.setAlgorithm(encoderAlgorithm.getStringName());
+        textEncryptor.setAlgorithm(encoderAlgorithm.getInternalName());
         textEncryptor.setPassword(key);
         textEncryptor.setPoolSize(numberOfThreads);
         textEncryptor.setIvGenerator(new RandomIvGenerator());
@@ -171,11 +171,11 @@ public class ThreadEncoder implements Encoder {
      * @return encrypted structure
      */
     @Override
-    public RawData encodeStruct(Storage data, String key) {
+    public IRawData encodeStruct(IStorage data, String key) {
         Logger.addLog("Encoder", "encoding structure");
 
         textEncryptor = new PooledPBEStringEncryptor();
-        textEncryptor.setAlgorithm(encoderAlgorithm.getStringName());
+        textEncryptor.setAlgorithm(encoderAlgorithm.getInternalName());
         textEncryptor.setPassword(key);
         textEncryptor.setPoolSize(numberOfThreads);
         textEncryptor.setIvGenerator(new RandomIvGenerator());
@@ -185,18 +185,18 @@ public class ThreadEncoder implements Encoder {
 
         if (data != null) {
             if (!data.isEmpty()) {
-                Record record = null;
+                IRecord record = null;
                 String chunk = "";
                 ByteArrayOutputStream baos = null;
                 ObjectOutputStream oos = null;
-                RawData rawData = Manager.getContext().getRawData().clone();
+                IRawData rawData = Manager.getContext().getRawData().clone();
                 rawData.setData(new ArrayList<>());
 
                 for (int i = 0; i < data.size(); i++) {
                     try {
                         baos = new ByteArrayOutputStream();
                         oos = new ObjectOutputStream(baos);
-                        record = data.read(i);
+                        record = data.getByIndex(i);
                         oos.writeObject(record);
                         chunk = Base64.getEncoder().encodeToString(baos.toByteArray()); // to String
                         chunk = textEncryptor.encrypt(chunk);
@@ -223,7 +223,7 @@ public class ThreadEncoder implements Encoder {
      * @param algo new encryption/decryption algorithm
      */
     @Override
-    public void changeAlgorithm(EncoderAlgorithm algo) {
+    public void setAlgorithm(EncoderAlgorithm algo) {
         Logger.addLog("Encoder", "algorithm changed");
         encoderAlgorithm = algo;
     }

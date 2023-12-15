@@ -90,12 +90,12 @@ loadScripts(document, 'script');</script>
 <section class="class-description" id="class-description">
 <dl class="notes">
 <dt>All Implemented Interfaces:</dt>
-<dd><code><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/io/Serializable.html" title="class or interface in java.io" class="external-link">Serializable</a></code>, <code><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/Cloneable.html" title="class or interface in java.lang" class="external-link">Cloneable</a></code>, <code><a href="RawData.html" title="interface in passwordmanager.gui.encoded">RawData</a></code></dd>
+<dd><code><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/io/Serializable.html" title="class or interface in java.io" class="external-link">Serializable</a></code>, <code><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/Cloneable.html" title="class or interface in java.lang" class="external-link">Cloneable</a></code>, <code><a href="IRawData.html" title="interface in passwordmanager.gui.encoded">IRawData</a></code>, <code><a href="IRecoverable.html" title="interface in passwordmanager.gui.encoded">IRecoverable</a></code></dd>
 </dl>
 <hr>
 <div class="type-signature"><span class="modifiers">public class </span><span class="element-name type-name-label">DefaultRawData</span>
 <span class="extends-implements">extends <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/Object.html" title="class or interface in java.lang" class="external-link">Object</a>
-implements <a href="RawData.html" title="interface in passwordmanager.gui.encoded">RawData</a></span></div>
+implements <a href="IRawData.html" title="interface in passwordmanager.gui.encoded">IRawData</a></span></div>
 <div class="block">Data structure with encrypted records implementation without checks</div>
 <dl class="notes">
 <dt>Since:</dt>
@@ -103,7 +103,7 @@ implements <a href="RawData.html" title="interface in passwordmanager.gui.encode
 <dt>See Also:</dt>
 <dd>
 <ul class="tag-list">
-<li><a href="RawData.html" title="interface in passwordmanager.gui.encoded"><code>RawData</code></a></li>
+<li><a href="IRawData.html" title="interface in passwordmanager.gui.encoded"><code>IRawData</code></a></li>
 <li><a href="../../../serialized-form.html#passwordmanager.gui.encoded.DefaultRawData">Serialized Form</a></li>
 </ul>
 </dd>
@@ -130,9 +130,14 @@ implements <a href="RawData.html" title="interface in passwordmanager.gui.encode
 <div class="col-last odd-row-color">
 <div class="block">Name of an encrypted data structure</div>
 </div>
-<div class="col-first even-row-color"><code>private static final long</code></div>
-<div class="col-second even-row-color"><code><a href="#serialVersionUID" class="member-name-link">serialVersionUID</a></code></div>
+<div class="col-first even-row-color"><code>private <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></code></div>
+<div class="col-second even-row-color"><code><a href="#pathToSaveFile" class="member-name-link">pathToSaveFile</a></code></div>
 <div class="col-last even-row-color">
+<div class="block">The path along which the structure will be saved</div>
+</div>
+<div class="col-first odd-row-color"><code>private static final long</code></div>
+<div class="col-second odd-row-color"><code><a href="#serialVersionUID" class="member-name-link">serialVersionUID</a></code></div>
+<div class="col-last odd-row-color">
 <div class="block">Class version number for checks when desirializing and serializing class
  objects</div>
 </div>
@@ -176,15 +181,35 @@ implements <a href="RawData.html" title="interface in passwordmanager.gui.encode
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
 <div class="block">Method for cloning a structure object with encrypted records</div>
 </div>
-<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/util/List.html" title="class or interface in java.util" class="external-link">List</a><wbr>&lt;<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&gt;</code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getData()" class="member-name-link">getData</a>()</code></div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>private void</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#generateSaveFilePath()" class="member-name-link">generateSaveFilePath</a>()</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="block">Method generating default path for saving and restoring structure</div>
+</div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/util/List.html" title="class or interface in java.util" class="external-link">List</a><wbr>&lt;<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&gt;</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getData()" class="member-name-link">getData</a>()</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
 <div class="block">Method for getting a list of encrypted records from a structure</div>
 </div>
-<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getName()" class="member-name-link">getName</a>()</code></div>
-<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getName()" class="member-name-link">getName</a>()</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
 <div class="block">Method for getting the name of an encrypted data structure</div>
+</div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getPathToSaveFile()" class="member-name-link">getPathToSaveFile</a>()</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="block">Method for obtaining the path along which the structure will be saved</div>
+</div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#load()" class="member-name-link">load</a>()</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="block">Method for restoring structure</div>
+</div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#save()" class="member-name-link">save</a>()</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="block">Method for saving structure</div>
 </div>
 <div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
 <div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#setData(java.util.List)" class="member-name-link">setData</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/util/List.html" title="class or interface in java.util" class="external-link">List</a>&lt;<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&gt;&nbsp;newData)</code></div>
@@ -195,6 +220,11 @@ implements <a href="RawData.html" title="interface in passwordmanager.gui.encode
 <div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#setName(java.lang.String)" class="member-name-link">setName</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;newName)</code></div>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
 <div class="block">Method for setting the name of an encrypted data structure</div>
+</div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#setPathToSaveFile(java.lang.String)" class="member-name-link">setPathToSaveFile</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;pathToSaveFile)</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="block">Method for changing the path where the structure will be saved</div>
 </div>
 </div>
 </div>
@@ -243,6 +273,13 @@ implements <a href="RawData.html" title="interface in passwordmanager.gui.encode
 <div class="block">Name of an encrypted data structure</div>
 </section>
 </li>
+<li>
+<section class="detail" id="pathToSaveFile">
+<h3>pathToSaveFile</h3>
+<div class="member-signature"><span class="modifiers">private</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></span>&nbsp;<span class="element-name">pathToSaveFile</span></div>
+<div class="block">The path along which the structure will be saved</div>
+</section>
+</li>
 </ul>
 </section>
 </li>
@@ -274,7 +311,7 @@ implements <a href="RawData.html" title="interface in passwordmanager.gui.encode
 <div class="block">Method for getting a list of encrypted records from a structure</div>
 <dl class="notes">
 <dt>Specified by:</dt>
-<dd><code><a href="RawData.html#getData()">getData</a></code>&nbsp;in interface&nbsp;<code><a href="RawData.html" title="interface in passwordmanager.gui.encoded">RawData</a></code></dd>
+<dd><code><a href="IRawData.html#getData()">getData</a></code>&nbsp;in interface&nbsp;<code><a href="IRawData.html" title="interface in passwordmanager.gui.encoded">IRawData</a></code></dd>
 <dt>Returns:</dt>
 <dd>list of encrypted entries</dd>
 </dl>
@@ -287,7 +324,7 @@ implements <a href="RawData.html" title="interface in passwordmanager.gui.encode
 <div class="block">Method for changing the list of encrypted entries in a structure</div>
 <dl class="notes">
 <dt>Specified by:</dt>
-<dd><code><a href="RawData.html#setData(java.util.List)">setData</a></code>&nbsp;in interface&nbsp;<code><a href="RawData.html" title="interface in passwordmanager.gui.encoded">RawData</a></code></dd>
+<dd><code><a href="IRawData.html#setData(java.util.List)">setData</a></code>&nbsp;in interface&nbsp;<code><a href="IRawData.html" title="interface in passwordmanager.gui.encoded">IRawData</a></code></dd>
 <dt>Parameters:</dt>
 <dd><code>newData</code> - list of encrypted entries</dd>
 </dl>
@@ -300,7 +337,7 @@ implements <a href="RawData.html" title="interface in passwordmanager.gui.encode
 <div class="block">Method for checking the correctness of the structure with encrypted records</div>
 <dl class="notes">
 <dt>Specified by:</dt>
-<dd><code><a href="RawData.html#checkData()">checkData</a></code>&nbsp;in interface&nbsp;<code><a href="RawData.html" title="interface in passwordmanager.gui.encoded">RawData</a></code></dd>
+<dd><code><a href="IRawData.html#checkData()">checkData</a></code>&nbsp;in interface&nbsp;<code><a href="IRawData.html" title="interface in passwordmanager.gui.encoded">IRawData</a></code></dd>
 <dt>Returns:</dt>
 <dd>always returns true</dd>
 </dl>
@@ -313,7 +350,7 @@ implements <a href="RawData.html" title="interface in passwordmanager.gui.encode
 <div class="block">Method for getting the name of an encrypted data structure</div>
 <dl class="notes">
 <dt>Specified by:</dt>
-<dd><code><a href="RawData.html#getName()">getName</a></code>&nbsp;in interface&nbsp;<code><a href="RawData.html" title="interface in passwordmanager.gui.encoded">RawData</a></code></dd>
+<dd><code><a href="IRawData.html#getName()">getName</a></code>&nbsp;in interface&nbsp;<code><a href="IRawData.html" title="interface in passwordmanager.gui.encoded">IRawData</a></code></dd>
 <dt>Returns:</dt>
 <dd>data structure name</dd>
 </dl>
@@ -326,9 +363,31 @@ implements <a href="RawData.html" title="interface in passwordmanager.gui.encode
 <div class="block">Method for setting the name of an encrypted data structure</div>
 <dl class="notes">
 <dt>Specified by:</dt>
-<dd><code><a href="RawData.html#setName(java.lang.String)">setName</a></code>&nbsp;in interface&nbsp;<code><a href="RawData.html" title="interface in passwordmanager.gui.encoded">RawData</a></code></dd>
+<dd><code><a href="IRawData.html#setName(java.lang.String)">setName</a></code>&nbsp;in interface&nbsp;<code><a href="IRawData.html" title="interface in passwordmanager.gui.encoded">IRawData</a></code></dd>
 <dt>Parameters:</dt>
 <dd><code>newName</code> - new data structure name</dd>
+</dl>
+</section>
+</li>
+<li>
+<section class="detail" id="save()">
+<h3>save</h3>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">save</span>()</div>
+<div class="block">Method for saving structure</div>
+<dl class="notes">
+<dt>Specified by:</dt>
+<dd><code><a href="IRecoverable.html#save()">save</a></code>&nbsp;in interface&nbsp;<code><a href="IRecoverable.html" title="interface in passwordmanager.gui.encoded">IRecoverable</a></code></dd>
+</dl>
+</section>
+</li>
+<li>
+<section class="detail" id="load()">
+<h3>load</h3>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">load</span>()</div>
+<div class="block">Method for restoring structure</div>
+<dl class="notes">
+<dt>Specified by:</dt>
+<dd><code><a href="IRecoverable.html#load()">load</a></code>&nbsp;in interface&nbsp;<code><a href="IRecoverable.html" title="interface in passwordmanager.gui.encoded">IRecoverable</a></code></dd>
 </dl>
 </section>
 </li>
@@ -339,12 +398,41 @@ implements <a href="RawData.html" title="interface in passwordmanager.gui.encode
 <div class="block">Method for cloning a structure object with encrypted records</div>
 <dl class="notes">
 <dt>Specified by:</dt>
-<dd><code><a href="RawData.html#clone()">clone</a></code>&nbsp;in interface&nbsp;<code><a href="RawData.html" title="interface in passwordmanager.gui.encoded">RawData</a></code></dd>
+<dd><code><a href="IRawData.html#clone()">clone</a></code>&nbsp;in interface&nbsp;<code><a href="IRawData.html" title="interface in passwordmanager.gui.encoded">IRawData</a></code></dd>
 <dt>Overrides:</dt>
 <dd><code><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/Object.html#clone()" title="class or interface in java.lang" class="external-link">clone</a></code>&nbsp;in class&nbsp;<code><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/Object.html" title="class or interface in java.lang" class="external-link">Object</a></code></dd>
 <dt>Returns:</dt>
 <dd>cloned structure</dd>
 </dl>
+</section>
+</li>
+<li>
+<section class="detail" id="getPathToSaveFile()">
+<h3>getPathToSaveFile</h3>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></span>&nbsp;<span class="element-name">getPathToSaveFile</span>()</div>
+<div class="block">Method for obtaining the path along which the structure will be saved</div>
+<dl class="notes">
+<dt>Returns:</dt>
+<dd>path to the saving file</dd>
+</dl>
+</section>
+</li>
+<li>
+<section class="detail" id="setPathToSaveFile(java.lang.String)">
+<h3>setPathToSaveFile</h3>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">setPathToSaveFile</span><wbr><span class="parameters">(<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;pathToSaveFile)</span></div>
+<div class="block">Method for changing the path where the structure will be saved</div>
+<dl class="notes">
+<dt>Parameters:</dt>
+<dd><code>pathToSaveFile</code> - the path along which the structure will be saved</dd>
+</dl>
+</section>
+</li>
+<li>
+<section class="detail" id="generateSaveFilePath()">
+<h3>generateSaveFilePath</h3>
+<div class="member-signature"><span class="modifiers">private</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">generateSaveFilePath</span>()</div>
+<div class="block">Method generating default path for saving and restoring structure</div>
 </section>
 </li>
 </ul>

@@ -90,12 +90,12 @@ loadScripts(document, 'script');</script>
 <section class="class-description" id="class-description">
 <dl class="notes">
 <dt>All Implemented Interfaces:</dt>
-<dd><code><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/io/Serializable.html" title="class or interface in java.io" class="external-link">Serializable</a></code>, <code><a href="Record.html" title="interface in passwordmanager.gui.decoded">Record</a></code></dd>
+<dd><code><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/io/Serializable.html" title="class or interface in java.io" class="external-link">Serializable</a></code>, <code><a href="IRecord.html" title="interface in passwordmanager.gui.decoded">IRecord</a></code></dd>
 </dl>
 <hr>
 <div class="type-signature"><span class="modifiers">public class </span><span class="element-name type-name-label">DefaultRecord</span>
 <span class="extends-implements">extends <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/Object.html" title="class or interface in java.lang" class="external-link">Object</a>
-implements <a href="Record.html" title="interface in passwordmanager.gui.decoded">Record</a></span></div>
+implements <a href="IRecord.html" title="interface in passwordmanager.gui.decoded">IRecord</a></span></div>
 <div class="block">Standard implementation of a decrypted record with information about login,
  password, description</div>
 <dl class="notes">
@@ -104,7 +104,7 @@ implements <a href="Record.html" title="interface in passwordmanager.gui.decoded
 <dt>See Also:</dt>
 <dd>
 <ul class="tag-list">
-<li><a href="Record.html" title="interface in passwordmanager.gui.decoded"><code>Record</code></a></li>
+<li><a href="IRecord.html" title="interface in passwordmanager.gui.decoded"><code>IRecord</code></a></li>
 <li><a href="../../../serialized-form.html#passwordmanager.gui.decoded.DefaultRecord">Serialized Form</a></li>
 </ul>
 </dd>
@@ -282,7 +282,7 @@ implements <a href="Record.html" title="interface in passwordmanager.gui.decoded
 <div class="block">Method for getting login from a record</div>
 <dl class="notes">
 <dt>Specified by:</dt>
-<dd><code><a href="Record.html#getLogin()">getLogin</a></code>&nbsp;in interface&nbsp;<code><a href="Record.html" title="interface in passwordmanager.gui.decoded">Record</a></code></dd>
+<dd><code><a href="IRecord.html#getLogin()">getLogin</a></code>&nbsp;in interface&nbsp;<code><a href="IRecord.html" title="interface in passwordmanager.gui.decoded">IRecord</a></code></dd>
 <dt>Returns:</dt>
 <dd>login</dd>
 </dl>
@@ -295,7 +295,7 @@ implements <a href="Record.html" title="interface in passwordmanager.gui.decoded
 <div class="block">Method for changing the login of an entry</div>
 <dl class="notes">
 <dt>Specified by:</dt>
-<dd><code><a href="Record.html#setLogin(java.lang.String)">setLogin</a></code>&nbsp;in interface&nbsp;<code><a href="Record.html" title="interface in passwordmanager.gui.decoded">Record</a></code></dd>
+<dd><code><a href="IRecord.html#setLogin(java.lang.String)">setLogin</a></code>&nbsp;in interface&nbsp;<code><a href="IRecord.html" title="interface in passwordmanager.gui.decoded">IRecord</a></code></dd>
 <dt>Parameters:</dt>
 <dd><code>newLogin</code> - new login name</dd>
 </dl>
@@ -308,7 +308,7 @@ implements <a href="Record.html" title="interface in passwordmanager.gui.decoded
 <div class="block">Method for getting password from a record</div>
 <dl class="notes">
 <dt>Specified by:</dt>
-<dd><code><a href="Record.html#getPassword()">getPassword</a></code>&nbsp;in interface&nbsp;<code><a href="Record.html" title="interface in passwordmanager.gui.decoded">Record</a></code></dd>
+<dd><code><a href="IRecord.html#getPassword()">getPassword</a></code>&nbsp;in interface&nbsp;<code><a href="IRecord.html" title="interface in passwordmanager.gui.decoded">IRecord</a></code></dd>
 <dt>Returns:</dt>
 <dd>password</dd>
 </dl>
@@ -321,7 +321,7 @@ implements <a href="Record.html" title="interface in passwordmanager.gui.decoded
 <div class="block">Method for changing the password of an entry</div>
 <dl class="notes">
 <dt>Specified by:</dt>
-<dd><code><a href="Record.html#setPassword(java.lang.String)">setPassword</a></code>&nbsp;in interface&nbsp;<code><a href="Record.html" title="interface in passwordmanager.gui.decoded">Record</a></code></dd>
+<dd><code><a href="IRecord.html#setPassword(java.lang.String)">setPassword</a></code>&nbsp;in interface&nbsp;<code><a href="IRecord.html" title="interface in passwordmanager.gui.decoded">IRecord</a></code></dd>
 <dt>Parameters:</dt>
 <dd><code>newPassword</code> - new password</dd>
 </dl>
@@ -334,7 +334,7 @@ implements <a href="Record.html" title="interface in passwordmanager.gui.decoded
 <div class="block">Method for obtaining additional information about a record</div>
 <dl class="notes">
 <dt>Specified by:</dt>
-<dd><code><a href="Record.html#getInfo()">getInfo</a></code>&nbsp;in interface&nbsp;<code><a href="Record.html" title="interface in passwordmanager.gui.decoded">Record</a></code></dd>
+<dd><code><a href="IRecord.html#getInfo()">getInfo</a></code>&nbsp;in interface&nbsp;<code><a href="IRecord.html" title="interface in passwordmanager.gui.decoded">IRecord</a></code></dd>
 <dt>Returns:</dt>
 <dd>additional information about a record</dd>
 </dl>
@@ -347,7 +347,7 @@ implements <a href="Record.html" title="interface in passwordmanager.gui.decoded
 <div class="block">Method for changing additional record information</div>
 <dl class="notes">
 <dt>Specified by:</dt>
-<dd><code><a href="Record.html#setInfo(java.lang.String)">setInfo</a></code>&nbsp;in interface&nbsp;<code><a href="Record.html" title="interface in passwordmanager.gui.decoded">Record</a></code></dd>
+<dd><code><a href="IRecord.html#setInfo(java.lang.String)">setInfo</a></code>&nbsp;in interface&nbsp;<code><a href="IRecord.html" title="interface in passwordmanager.gui.decoded">IRecord</a></code></dd>
 <dt>Parameters:</dt>
 <dd><code>newInfo</code> - new additional record information</dd>
 </dl>

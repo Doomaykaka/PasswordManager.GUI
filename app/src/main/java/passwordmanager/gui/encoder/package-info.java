@@ -1,7 +1,7 @@
 /**
  * A package with tools for data encryption/decryption
  * 
- * @see Encoder
+ * @see IEncoder
  * @see DefaultEncoder
  * @see ThreadEncoder
  * @author Doomaykaka MIT License

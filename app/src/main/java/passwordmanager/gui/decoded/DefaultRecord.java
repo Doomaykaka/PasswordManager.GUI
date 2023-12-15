@@ -4,11 +4,11 @@ package passwordmanager.gui.decoded;
  * Standard implementation of a decrypted record with information about login,
  * password, description
  * 
- * @see Record
+ * @see IRecord
  * @author Doomaykaka MIT License
  * @since 2023-12-14
  */
-public class DefaultRecord implements Record {
+public class DefaultRecord implements IRecord {
     /**
      * Class version number for checks when desirializing and serializing class
      * objects

@@ -3,12 +3,18 @@
  */
 package passwordmanager.gui;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collection;
+import java.util.Collections;
+import java.util.List;
+
 import passwordmanager.gui.decoded.DefaultRecord;
-import passwordmanager.gui.decoded.Record;
-import passwordmanager.gui.decoded.Storage;
-import passwordmanager.gui.encoded.RawData;
-import passwordmanager.gui.encoder.Encoder;
-import passwordmanager.gui.encoder.Encoder.EncoderAlgorithm;
+import passwordmanager.gui.decoded.IRecord;
+import passwordmanager.gui.decoded.IStorage;
+import passwordmanager.gui.encoded.IRawData;
+import passwordmanager.gui.encoder.IEncoder;
+import passwordmanager.gui.encoder.IEncoder.EncoderAlgorithm;
 import passwordmanager.gui.manager.Logger;
 import passwordmanager.gui.manager.Manager;
 
@@ -22,20 +28,20 @@ public class App {
 
         System.out.println("=========Light=========");
         System.out.println("Hello");
-        Manager.getContext().getEncoder().changeAlgorithm(EncoderAlgorithm.SHA256);
+        Manager.getContext().getEncoder().setAlgorithm(EncoderAlgorithm.SHA256);
 
-        String coded = Manager.getContext().getEncoder().encodeData("Hello", "123");
+        String coded = Manager.getContext().getEncoder().encodeString("Hello", "123");
 
         System.out.println(coded);
-        System.out.println("Bad key: " + Manager.getContext().getEncoder().decodeData(coded, "12"));
-        System.out.println("Right key: " + Manager.getContext().getEncoder().decodeData(coded, "123"));
+        System.out.println("Bad key: " + Manager.getContext().getEncoder().decodeString(coded, "12"));
+        System.out.println("Right key: " + Manager.getContext().getEncoder().decodeString(coded, "123"));
 
         System.out.println("=========Hard=========");
-        Record newRecord = new DefaultRecord();
+        IRecord newRecord = new DefaultRecord();
         newRecord.setLogin("admin");
         newRecord.setPassword("123");
         newRecord.setInfo("info");
-        Record newRecord2 = new DefaultRecord();
+        IRecord newRecord2 = new DefaultRecord();
         newRecord2.setLogin("admin2");
         newRecord2.setPassword("123");
         newRecord2.setInfo("info");
@@ -46,24 +52,52 @@ public class App {
                 .println("Record: " + newRecord.getLogin() + "," + newRecord.getPassword() + "," + newRecord.getInfo());
         System.out.println(
                 "Record2: " + newRecord2.getLogin() + "," + newRecord2.getPassword() + "," + newRecord2.getInfo());
-        RawData newRaw = Manager.getContext().getEncoder().encodeStruct(Manager.getContext().getStorage(), "123");
+        IRawData newRaw = Manager.getContext().getEncoder().encodeStruct(Manager.getContext().getStorage(), "123");
         for (String chunk : newRaw.getData()) {
             System.out.println(chunk);
         }
 
-        Storage decodeStorage = Manager.getContext().getEncoder().decodeStruct(newRaw, "1"); // is null
+        IStorage decodeStorage = Manager.getContext().getEncoder().decodeStruct(newRaw, "1"); // is null
         System.out.println("Bad key: " + decodeStorage);
-        Encoder encoder = Manager.getContext().getEncoder();
-        Storage storage = encoder.decodeStruct(newRaw, "123");
-        Record decodeRecord = storage.read(0);
+        IEncoder encoder = Manager.getContext().getEncoder();
+        IStorage storage = encoder.decodeStruct(newRaw, "123");
+        IRecord decodeRecord = storage.getByIndex(0);
         System.out.print("Right key: " + decodeRecord.getLogin());
         System.out.print("," + decodeRecord.getPassword());
         System.out.println("," + decodeRecord.getInfo());
 
-        Record decodeRecord2 = storage.read(1);
+        IRecord decodeRecord2 = storage.getByIndex(1);
         System.out.print("Right key: " + decodeRecord2.getLogin());
         System.out.print("," + decodeRecord2.getPassword());
         System.out.println("," + decodeRecord2.getInfo());
+
+        System.out.println("=========Restoring=========");
+
+        String dataOld = "";
+        String dataNew = "";
+
+        System.out.println("RawData: ");
+        newRaw.save();
+        dataOld = Arrays.toString(newRaw.getData().toArray());
+        System.out.print(dataOld);
+
+        System.out.println("\nRawData cleared: ");
+        newRaw.setData(new ArrayList<String>());
+        newRaw.getData().forEach(System.out::print);
+
+        System.out.println("RawData restored: ");
+        newRaw.load();
+        dataNew = Arrays.toString(newRaw.getData().toArray());
+        System.out.print(dataOld);
+
+        System.out.println("");
+        System.out.println("Equals: " + (dataOld.equals(dataNew)));
+
+        storage = encoder.decodeStruct(newRaw, "123");
+        decodeRecord = storage.getByIndex(0);
+        System.out.print("Right key: " + decodeRecord.getLogin());
+        System.out.print("," + decodeRecord.getPassword());
+        System.out.println("," + decodeRecord.getInfo());
 
         System.out.println("=========Log=========");
 

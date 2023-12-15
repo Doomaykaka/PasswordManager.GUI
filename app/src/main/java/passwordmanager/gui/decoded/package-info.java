@@ -1,8 +1,8 @@
 /**
  * Package with decrypted data models
  * 
- * @see Storage
- * @see Record
+ * @see IStorage
+ * @see IRecord
  * @see ListStorage
  * @see MapStorage
  * @see DefaultRecord

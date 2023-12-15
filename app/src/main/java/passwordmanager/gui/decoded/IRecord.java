@@ -8,7 +8,7 @@ import java.io.Serializable;
  * @author Doomaykaka MIT License
  * @since 2023-12-14
  */
-public interface Record extends Serializable {
+public interface IRecord extends Serializable {
     /**
      * Method for getting login from a record
      * 

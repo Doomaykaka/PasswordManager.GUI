@@ -2,26 +2,26 @@ package passwordmanager.gui.manager;
 
 import passwordmanager.gui.decoded.ListStorage;
 import passwordmanager.gui.decoded.MapStorage;
-import passwordmanager.gui.decoded.Storage;
+import passwordmanager.gui.decoded.IStorage;
 import passwordmanager.gui.encoded.CheckedRawData;
 import passwordmanager.gui.encoded.DefaultRawData;
-import passwordmanager.gui.encoded.RawData;
+import passwordmanager.gui.encoded.IRawData;
 import passwordmanager.gui.encoder.DefaultEncoder;
-import passwordmanager.gui.encoder.Encoder;
+import passwordmanager.gui.encoder.IEncoder;
 import passwordmanager.gui.encoder.ThreadEncoder;
 
 /**
  * Manager for initializing the context and providing access to it
  * 
- * @see ManagerContext
+ * @see IContextManager
  * @see Logger
- * @see RawData
+ * @see IRawData
  * @see CheckedRawData
  * @see DefaultRawData
- * @see Storage
+ * @see IStorage
  * @see MapStorage
  * @see ListStorage
- * @see Encoder
+ * @see IEncoder
  * @see DefaultEncoder
  * @see ThreadEncoder
  * @author Doomaykaka MIT License
@@ -29,9 +29,9 @@ import passwordmanager.gui.encoder.ThreadEncoder;
  */
 public class Manager {
     /**
-     * Link to context ({@link ManagerContext})
+     * Link to context ({@link IContextManager})
      */
-    private static ManagerContext context;
+    private static IContextManager context;
     /**
      * Field indicating the need to use logs
      */
@@ -44,7 +44,7 @@ public class Manager {
     }
 
     /**
-     * Method initializing the {@link ManagerContext} in accordance with the passed
+     * Method initializing the {@link IContextManager} in accordance with the passed
      * values
      * 
      * @param needLogs           talks about the need to use logs
@@ -56,9 +56,9 @@ public class Manager {
      */
     public static void initialize(boolean needLogs, boolean needRawDataChecked, boolean needMapStorage,
             boolean needThreadEncoder) {
-        RawData rawData;
-        Storage storage;
-        Encoder encoder;
+        IRawData rawData;
+        IStorage storage;
+        IEncoder encoder;
 
         if (needRawDataChecked) {
             rawData = new CheckedRawData();
@@ -83,12 +83,12 @@ public class Manager {
         Logger.inicialize(logsUsing);
 
         if (logsUsing) {
-            context = new ManagerContextWithLogs();
+            context = new ContextManagerLogged();
             context.setRawData(rawData);
             context.setStorage(storage);
             context.setEncoder(encoder);
         } else {
-            context = new DefaultManagerContext();
+            context = new DefaultContextManager();
             context.setRawData(rawData);
             context.setStorage(storage);
             context.setEncoder(encoder);
@@ -96,11 +96,11 @@ public class Manager {
     };
 
     /**
-     * Method for getting a link to the created {@link ManagerContext}
+     * Method for getting a link to the created {@link IContextManager}
      * 
-     * @return manager context {@link ManagerContext}
+     * @return manager context {@link IContextManager}
      */
-    public static ManagerContext getContext() {
+    public static IContextManager getContext() {
         return Manager.context;
     }
 

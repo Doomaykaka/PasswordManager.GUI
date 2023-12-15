@@ -10,16 +10,16 @@ import passwordmanager.gui.manager.Logger;
  * Implementation of a data structure with decrypted records in the form of
  * key-value
  * 
- * @see Storage
- * @see Record
+ * @see IStorage
+ * @see IRecord
  * @author Doomaykaka MIT License
  * @since 2023-12-14
  */
-public class MapStorage implements Storage {
+public class MapStorage implements IStorage {
     /**
      * Map of decrypted records
      */
-    private Map<Integer, Record> storage;
+    private Map<Integer, IRecord> storage;
     /**
      * Name of an decrypted data structure
      */
@@ -31,7 +31,7 @@ public class MapStorage implements Storage {
      */
     public MapStorage() {
         Logger.addLog("Storage", "creating");
-        storage = new HashMap<Integer, Record>();
+        storage = new HashMap<Integer, IRecord>();
         name = "default";
     }
 
@@ -41,7 +41,7 @@ public class MapStorage implements Storage {
      * @param record decoded record
      */
     @Override
-    public void create(Record record) {
+    public void create(IRecord record) {
         Logger.addLog("Storage", "record added");
         int maxInd = -1;
         maxInd = Collections.max(storage.keySet());
@@ -54,7 +54,7 @@ public class MapStorage implements Storage {
      * @param index Index of entry to read in structure
      */
     @Override
-    public Record read(int index) {
+    public IRecord getByIndex(int index) {
         Logger.addLog("Storage", "record readed");
         return storage.get(index);
     }
@@ -65,10 +65,10 @@ public class MapStorage implements Storage {
      * @param record decrypted record to be updated
      */
     @Override
-    public void update(Record record) {
+    public void update(IRecord record) {
         Logger.addLog("Storage", "record changed");
-        Record findedRecord = null;
-        for (Record rec : storage.values()) {
+        IRecord findedRecord = null;
+        for (IRecord rec : storage.values()) {
             if (rec.getInfo().equals(record.getInfo())) {
                 findedRecord = rec;
             }
@@ -156,8 +156,28 @@ public class MapStorage implements Storage {
      * @param index  map key
      * @param record map value
      */
-    public void put(int index, Record record) {
+    public void put(int index, IRecord record) {
         storage.put(index, record);
+    }
+
+    /**
+     * Method for filtering structure records
+     * 
+     * @param query filter string
+     */
+    public MapStorage filterByInfo(String query) {
+        MapStorage filterResult = new MapStorage();
+        String info = "";
+
+        for (IRecord record : storage.values()) {
+            info = record.getInfo().toLowerCase();
+
+            if (info.contains(query)) {
+                filterResult.create(record);
+            }
+        }
+
+        return filterResult;
     }
 
 }

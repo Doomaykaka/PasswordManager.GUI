@@ -1,19 +1,19 @@
 package passwordmanager.gui.encoder;
 
-import passwordmanager.gui.decoded.Storage;
-import passwordmanager.gui.encoded.RawData;
+import passwordmanager.gui.decoded.IStorage;
+import passwordmanager.gui.encoded.IRawData;
 
 /**
  * An encoder that allows you to encrypt and decrypt both text data and data
  * structures
  * 
- * @see RawData
- * @see Storage
+ * @see IRawData
+ * @see IStorage
  * @see EncoderAlgorithm
  * @author Doomaykaka MIT License
  * @since 2023-12-14
  */
-public interface Encoder {
+public interface IEncoder {
     /**
      * Method for decrypting text data
      * 
@@ -21,7 +21,7 @@ public interface Encoder {
      * @param key         decryption key
      * @return decrypted text
      */
-    public String decodeData(String encodedData, String key);
+    public String decodeString(String encodedData, String key);
 
     /**
      * Method for decrypting data structure
@@ -30,7 +30,7 @@ public interface Encoder {
      * @param key     decryption key
      * @return decrypted structure
      */
-    public Storage decodeStruct(RawData rawData, String key);
+    public IStorage decodeStruct(IRawData rawData, String key);
 
     /**
      * Method for encrypting text data
@@ -39,7 +39,7 @@ public interface Encoder {
      * @param key         encription key
      * @return encrypted text
      */
-    public String encodeData(String decodedData, String key);
+    public String encodeString(String decodedData, String key);
 
     /**
      * Method for encrypting data structure
@@ -48,14 +48,14 @@ public interface Encoder {
      * @param key  encryption key
      * @return encrypted structure
      */
-    public RawData encodeStruct(Storage data, String key);
+    public IRawData encodeStruct(IStorage data, String key);
 
     /**
      * Method for changing the encryption/decryption algorithm
      * 
      * @param algo new encryption/decryption algorithm
      */
-    public void changeAlgorithm(EncoderAlgorithm algo);
+    public void setAlgorithm(EncoderAlgorithm algo);
 
     /**
      * Algorithms that can be used {@link #MD2} {@link #MD5} {@link #SHA}
@@ -69,7 +69,7 @@ public interface Encoder {
          * 
          * @return string representation for a specific algorithm
          */
-        public String getStringName() {
+        public String getInternalName() {
             String representation = "";
             switch (this) {
             case MD2: {

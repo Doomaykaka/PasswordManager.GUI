@@ -3,31 +3,31 @@ package passwordmanager.gui.decoded;
 /**
  * Data structure with decrypted records
  * 
- * @see Record
+ * @see IRecord
  * @author Doomaykaka MIT License
  * @since 2023-12-14
  */
-public interface Storage extends Cloneable {
+public interface IStorage extends Cloneable {
     /**
      * A method that creates a new entry in the repository
      * 
      * @param record decoded record
      */
-    public void create(Record record);
+    public void create(IRecord record);
 
     /**
      * Method that reads an entry from the repository
      * 
      * @param index Index of entry to read in structure
      */
-    public Record read(int index);
+    public IRecord getByIndex(int index);
 
     /**
      * Method updating information about a record in the repository
      * 
      * @param record decrypted record to be updated
      */
-    public void update(Record record);
+    public void update(IRecord record);
 
     /**
      * Method removing information about a record in the repository
@@ -41,7 +41,7 @@ public interface Storage extends Cloneable {
      * 
      * @return cloned structure
      */
-    public Storage clone();
+    public IStorage clone();
 
     /**
      * Method for checking a structure for missing values
@@ -75,4 +75,11 @@ public interface Storage extends Cloneable {
      * @param newName new data structure name
      */
     public void setName(String newName);
+
+    /**
+     * Method for filtering structure records
+     * 
+     * @param query filter string
+     */
+    public IStorage filterByInfo(String query);
 }

@@ -98,15 +98,15 @@ loadScripts(document, 'script');</script>
 <dt>See Also:</dt>
 <dd>
 <ul class="tag-list">
-<li><a href="ManagerContext.html" title="interface in passwordmanager.gui.manager"><code>ManagerContext</code></a></li>
+<li><a href="IContextManager.html" title="interface in passwordmanager.gui.manager"><code>IContextManager</code></a></li>
 <li><a href="Logger.html" title="class in passwordmanager.gui.manager"><code>Logger</code></a></li>
-<li><a href="../encoded/RawData.html" title="interface in passwordmanager.gui.encoded"><code>RawData</code></a></li>
+<li><a href="../encoded/IRawData.html" title="interface in passwordmanager.gui.encoded"><code>IRawData</code></a></li>
 <li><a href="../encoded/CheckedRawData.html" title="class in passwordmanager.gui.encoded"><code>CheckedRawData</code></a></li>
 <li><a href="../encoded/DefaultRawData.html" title="class in passwordmanager.gui.encoded"><code>DefaultRawData</code></a></li>
-<li><a href="../decoded/Storage.html" title="interface in passwordmanager.gui.decoded"><code>Storage</code></a></li>
+<li><a href="../decoded/IStorage.html" title="interface in passwordmanager.gui.decoded"><code>IStorage</code></a></li>
 <li><a href="../decoded/MapStorage.html" title="class in passwordmanager.gui.decoded"><code>MapStorage</code></a></li>
 <li><a href="../decoded/ListStorage.html" title="class in passwordmanager.gui.decoded"><code>ListStorage</code></a></li>
-<li><a href="../encoder/Encoder.html" title="interface in passwordmanager.gui.encoder"><code>Encoder</code></a></li>
+<li><a href="../encoder/IEncoder.html" title="interface in passwordmanager.gui.encoder"><code>IEncoder</code></a></li>
 <li><a href="../encoder/DefaultEncoder.html" title="class in passwordmanager.gui.encoder"><code>DefaultEncoder</code></a></li>
 <li><a href="../encoder/ThreadEncoder.html" title="class in passwordmanager.gui.encoder"><code>ThreadEncoder</code></a></li>
 </ul>
@@ -124,10 +124,10 @@ loadScripts(document, 'script');</script>
 <div class="table-header col-first">Modifier and Type</div>
 <div class="table-header col-second">Field</div>
 <div class="table-header col-last">Description</div>
-<div class="col-first even-row-color"><code>private static <a href="ManagerContext.html" title="interface in passwordmanager.gui.manager">ManagerContext</a></code></div>
+<div class="col-first even-row-color"><code>private static <a href="IContextManager.html" title="interface in passwordmanager.gui.manager">IContextManager</a></code></div>
 <div class="col-second even-row-color"><code><a href="#context" class="member-name-link">context</a></code></div>
 <div class="col-last even-row-color">
-<div class="block">Link to context (<a href="ManagerContext.html" title="interface in passwordmanager.gui.manager"><code>ManagerContext</code></a>)</div>
+<div class="block">Link to context (<a href="IContextManager.html" title="interface in passwordmanager.gui.manager"><code>IContextManager</code></a>)</div>
 </div>
 <div class="col-first odd-row-color"><code>private static boolean</code></div>
 <div class="col-second odd-row-color"><code><a href="#logsUsing" class="member-name-link">logsUsing</a></code></div>
@@ -165,10 +165,10 @@ loadScripts(document, 'script');</script>
 <div class="table-header col-first">Modifier and Type</div>
 <div class="table-header col-second">Method</div>
 <div class="table-header col-last">Description</div>
-<div class="col-first even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code>static <a href="ManagerContext.html" title="interface in passwordmanager.gui.manager">ManagerContext</a></code></div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code>static <a href="IContextManager.html" title="interface in passwordmanager.gui.manager">IContextManager</a></code></div>
 <div class="col-second even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#getContext()" class="member-name-link">getContext</a>()</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4">
-<div class="block">Method for getting a link to the created <a href="ManagerContext.html" title="interface in passwordmanager.gui.manager"><code>ManagerContext</code></a></div>
+<div class="block">Method for getting a link to the created <a href="IContextManager.html" title="interface in passwordmanager.gui.manager"><code>IContextManager</code></a></div>
 </div>
 <div class="col-first odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code>static void</code></div>
 <div class="col-second odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#initialize(boolean,boolean,boolean,boolean)" class="member-name-link">initialize</a><wbr>(boolean&nbsp;needLogs,
@@ -176,7 +176,7 @@ loadScripts(document, 'script');</script>
  boolean&nbsp;needMapStorage,
  boolean&nbsp;needThreadEncoder)</code></div>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4">
-<div class="block">Method initializing the <a href="ManagerContext.html" title="interface in passwordmanager.gui.manager"><code>ManagerContext</code></a> in accordance with the passed
+<div class="block">Method initializing the <a href="IContextManager.html" title="interface in passwordmanager.gui.manager"><code>IContextManager</code></a> in accordance with the passed
  values</div>
 </div>
 <div class="col-first even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code>static boolean</code></div>
@@ -204,8 +204,8 @@ loadScripts(document, 'script');</script>
 <li>
 <section class="detail" id="context">
 <h3>context</h3>
-<div class="member-signature"><span class="modifiers">private static</span>&nbsp;<span class="return-type"><a href="ManagerContext.html" title="interface in passwordmanager.gui.manager">ManagerContext</a></span>&nbsp;<span class="element-name">context</span></div>
-<div class="block">Link to context (<a href="ManagerContext.html" title="interface in passwordmanager.gui.manager"><code>ManagerContext</code></a>)</div>
+<div class="member-signature"><span class="modifiers">private static</span>&nbsp;<span class="return-type"><a href="IContextManager.html" title="interface in passwordmanager.gui.manager">IContextManager</a></span>&nbsp;<span class="element-name">context</span></div>
+<div class="block">Link to context (<a href="IContextManager.html" title="interface in passwordmanager.gui.manager"><code>IContextManager</code></a>)</div>
 </section>
 </li>
 <li>
@@ -245,7 +245,7 @@ loadScripts(document, 'script');</script>
  boolean&nbsp;needRawDataChecked,
  boolean&nbsp;needMapStorage,
  boolean&nbsp;needThreadEncoder)</span></div>
-<div class="block">Method initializing the <a href="ManagerContext.html" title="interface in passwordmanager.gui.manager"><code>ManagerContext</code></a> in accordance with the passed
+<div class="block">Method initializing the <a href="IContextManager.html" title="interface in passwordmanager.gui.manager"><code>IContextManager</code></a> in accordance with the passed
  values</div>
 <dl class="notes">
 <dt>Parameters:</dt>
@@ -261,11 +261,11 @@ loadScripts(document, 'script');</script>
 <li>
 <section class="detail" id="getContext()">
 <h3>getContext</h3>
-<div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="return-type"><a href="ManagerContext.html" title="interface in passwordmanager.gui.manager">ManagerContext</a></span>&nbsp;<span class="element-name">getContext</span>()</div>
-<div class="block">Method for getting a link to the created <a href="ManagerContext.html" title="interface in passwordmanager.gui.manager"><code>ManagerContext</code></a></div>
+<div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="return-type"><a href="IContextManager.html" title="interface in passwordmanager.gui.manager">IContextManager</a></span>&nbsp;<span class="element-name">getContext</span>()</div>
+<div class="block">Method for getting a link to the created <a href="IContextManager.html" title="interface in passwordmanager.gui.manager"><code>IContextManager</code></a></div>
 <dl class="notes">
 <dt>Returns:</dt>
-<dd>manager context <a href="ManagerContext.html" title="interface in passwordmanager.gui.manager"><code>ManagerContext</code></a></dd>
+<dd>manager context <a href="IContextManager.html" title="interface in passwordmanager.gui.manager"><code>IContextManager</code></a></dd>
 </dl>
 </section>
 </li>

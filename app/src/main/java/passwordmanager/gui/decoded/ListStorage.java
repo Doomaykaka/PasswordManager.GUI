@@ -1,25 +1,25 @@
 package passwordmanager.gui.decoded;
 
+import java.util.ArrayList;
 import java.util.Iterator;
-import java.util.LinkedList;
 import java.util.List;
 
 import passwordmanager.gui.manager.Logger;
 
 /**
  * Implementation of a data structure with decrypted records in the form of
- * linked list
+ * array list
  * 
- * @see Storage
- * @see Record
+ * @see IStorage
+ * @see IRecord
  * @author Doomaykaka MIT License
  * @since 2023-12-14
  */
-public class ListStorage implements Storage {
+public class ListStorage implements IStorage {
     /**
      * List of decrypted records
      */
-    private List<Record> storage;
+    private List<IRecord> storage;
     /**
      * Name of an decrypted data structure
      */
@@ -31,7 +31,7 @@ public class ListStorage implements Storage {
      */
     public ListStorage() {
         Logger.addLog("Storage", "creating");
-        storage = new LinkedList<Record>();
+        storage = new ArrayList<IRecord>();
         name = "default";
     }
 
@@ -41,7 +41,7 @@ public class ListStorage implements Storage {
      * @param record decoded record
      */
     @Override
-    public void create(Record record) {
+    public void create(IRecord record) {
         Logger.addLog("Storage", "record added");
         storage.add(record);
     }
@@ -52,7 +52,7 @@ public class ListStorage implements Storage {
      * @param index Index of entry to read in structure
      */
     @Override
-    public Record read(int index) {
+    public IRecord getByIndex(int index) {
         Logger.addLog("Storage", "record readed");
         return storage.get(index);
     }
@@ -63,10 +63,10 @@ public class ListStorage implements Storage {
      * @param record decrypted record to be updated
      */
     @Override
-    public void update(Record record) {
+    public void update(IRecord record) {
         Logger.addLog("Storage", "record changed");
-        Record findedRecord = null;
-        for (Record rec : storage) {
+        IRecord findedRecord = null;
+        for (IRecord rec : storage) {
             if (rec.getInfo().equals(record.getInfo())) {
                 findedRecord = rec;
             }
@@ -152,7 +152,27 @@ public class ListStorage implements Storage {
      * 
      * @return list iterator
      */
-    public Iterator<Record> iterator() {
+    public Iterator<IRecord> iterator() {
         return storage.iterator();
+    }
+
+    /**
+     * Method for filtering structure records
+     * 
+     * @param query filter string
+     */
+    public ListStorage filterByInfo(String query) {
+        ListStorage filterResult = new ListStorage();
+        String info = "";
+
+        for (IRecord record : storage) {
+            info = record.getInfo().toLowerCase();
+
+            if (info.contains(query)) {
+                filterResult.create(record);
+            }
+        }
+
+        return filterResult;
     }
 }

@@ -6,10 +6,11 @@ import java.util.List;
 /**
  * Data structure with encrypted records
  * 
+ * @see IRecoverable
  * @author Doomaykaka MIT License
  * @since 2023-12-14
  */
-public interface RawData extends Cloneable, Serializable {
+public interface IRawData extends Cloneable, Serializable, IRecoverable {
     /**
      * Method for getting a list of encrypted records from a structure
      * 
@@ -36,7 +37,7 @@ public interface RawData extends Cloneable, Serializable {
      * 
      * @return cloned structure
      */
-    public RawData clone();
+    public IRawData clone();
 
     /**
      * Method for getting the name of an encrypted data structure

@@ -90,12 +90,12 @@ loadScripts(document, 'script');</script>
 <section class="class-description" id="class-description">
 <dl class="notes">
 <dt>All Implemented Interfaces:</dt>
-<dd><code><a href="Encoder.html" title="interface in passwordmanager.gui.encoder">Encoder</a></code></dd>
+<dd><code><a href="IEncoder.html" title="interface in passwordmanager.gui.encoder">IEncoder</a></code></dd>
 </dl>
 <hr>
 <div class="type-signature"><span class="modifiers">public class </span><span class="element-name type-name-label">DefaultEncoder</span>
 <span class="extends-implements">extends <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/Object.html" title="class or interface in java.lang" class="external-link">Object</a>
-implements <a href="Encoder.html" title="interface in passwordmanager.gui.encoder">Encoder</a></span></div>
+implements <a href="IEncoder.html" title="interface in passwordmanager.gui.encoder">IEncoder</a></span></div>
 <div class="block">A standard encoder implementation that allows you to encrypt and decrypt both
  text data and data structures</div>
 <dl class="notes">
@@ -104,10 +104,10 @@ implements <a href="Encoder.html" title="interface in passwordmanager.gui.encode
 <dt>See Also:</dt>
 <dd>
 <ul class="tag-list">
-<li><a href="Encoder.html" title="interface in passwordmanager.gui.encoder"><code>Encoder</code></a></li>
-<li><a href="Encoder.EncoderAlgorithm.html" title="enum class in passwordmanager.gui.encoder"><code>Encoder.EncoderAlgorithm</code></a></li>
-<li><a href="../decoded/Storage.html" title="interface in passwordmanager.gui.decoded"><code>Storage</code></a></li>
-<li><a href="../encoded/RawData.html" title="interface in passwordmanager.gui.encoded"><code>RawData</code></a></li>
+<li><a href="IEncoder.html" title="interface in passwordmanager.gui.encoder"><code>IEncoder</code></a></li>
+<li><a href="IEncoder.EncoderAlgorithm.html" title="enum class in passwordmanager.gui.encoder"><code>IEncoder.EncoderAlgorithm</code></a></li>
+<li><a href="../decoded/IStorage.html" title="interface in passwordmanager.gui.decoded"><code>IStorage</code></a></li>
+<li><a href="../encoded/IRawData.html" title="interface in passwordmanager.gui.encoded"><code>IRawData</code></a></li>
 </ul>
 </dd>
 </dl>
@@ -119,8 +119,8 @@ implements <a href="Encoder.html" title="interface in passwordmanager.gui.encode
 <section class="nested-class-summary" id="nested-class-summary">
 <h2>Nested Class Summary</h2>
 <div class="inherited-list">
-<h2 id="nested-classes-inherited-from-class-passwordmanager.gui.encoder.Encoder">Nested classes/interfaces inherited from interface&nbsp;passwordmanager.gui.encoder.<a href="Encoder.html" title="interface in passwordmanager.gui.encoder">Encoder</a></h2>
-<code><a href="Encoder.EncoderAlgorithm.html" title="enum class in passwordmanager.gui.encoder">Encoder.EncoderAlgorithm</a></code></div>
+<h2 id="nested-classes-inherited-from-class-passwordmanager.gui.encoder.IEncoder">Nested classes/interfaces inherited from interface&nbsp;passwordmanager.gui.encoder.<a href="IEncoder.html" title="interface in passwordmanager.gui.encoder">IEncoder</a></h2>
+<code><a href="IEncoder.EncoderAlgorithm.html" title="enum class in passwordmanager.gui.encoder">IEncoder.EncoderAlgorithm</a></code></div>
 </section>
 </li>
 <!-- =========== FIELD SUMMARY =========== -->
@@ -132,10 +132,10 @@ implements <a href="Encoder.html" title="interface in passwordmanager.gui.encode
 <div class="table-header col-first">Modifier and Type</div>
 <div class="table-header col-second">Field</div>
 <div class="table-header col-last">Description</div>
-<div class="col-first even-row-color"><code>private <a href="Encoder.EncoderAlgorithm.html" title="enum class in passwordmanager.gui.encoder">Encoder.EncoderAlgorithm</a></code></div>
+<div class="col-first even-row-color"><code>private <a href="IEncoder.EncoderAlgorithm.html" title="enum class in passwordmanager.gui.encoder">IEncoder.EncoderAlgorithm</a></code></div>
 <div class="col-second even-row-color"><code><a href="#encoderAlgorithm" class="member-name-link">encoderAlgorithm</a></code></div>
 <div class="col-last even-row-color">
-<div class="block">Link to encoding algorithm (<a href="Encoder.EncoderAlgorithm.html" title="enum class in passwordmanager.gui.encoder"><code>Encoder.EncoderAlgorithm</code></a>)</div>
+<div class="block">Link to encoding algorithm (<a href="IEncoder.EncoderAlgorithm.html" title="enum class in passwordmanager.gui.encoder"><code>IEncoder.EncoderAlgorithm</code></a>)</div>
 </div>
 <div class="col-first odd-row-color"><code>private org.jasypt.encryption.pbe.StandardPBEStringEncryptor</code></div>
 <div class="col-second odd-row-color"><code><a href="#textEncryptor" class="member-name-link">textEncryptor</a></code></div>
@@ -172,34 +172,34 @@ implements <a href="Encoder.html" title="interface in passwordmanager.gui.encode
 <div class="table-header col-first">Modifier and Type</div>
 <div class="table-header col-second">Method</div>
 <div class="table-header col-last">Description</div>
-<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#changeAlgorithm(passwordmanager.gui.encoder.Encoder.EncoderAlgorithm)" class="member-name-link">changeAlgorithm</a><wbr>(<a href="Encoder.EncoderAlgorithm.html" title="enum class in passwordmanager.gui.encoder">Encoder.EncoderAlgorithm</a>&nbsp;algo)</code></div>
-<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
-<div class="block">Method for changing the encryption/decryption algorithm</div>
-</div>
-<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#decodeData(java.lang.String,java.lang.String)" class="member-name-link">decodeData</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;encodedData,
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#decodeString(java.lang.String,java.lang.String)" class="member-name-link">decodeString</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;encodedData,
  <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;key)</code></div>
-<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
 <div class="block">Method for decrypting text data</div>
 </div>
-<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="../decoded/Storage.html" title="interface in passwordmanager.gui.decoded">Storage</a></code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#decodeStruct(passwordmanager.gui.encoded.RawData,java.lang.String)" class="member-name-link">decodeStruct</a><wbr>(<a href="../encoded/RawData.html" title="interface in passwordmanager.gui.encoded">RawData</a>&nbsp;rawData,
- <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;key)</code></div>
-<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
-<div class="block">Method for decrypting data structure</div>
-</div>
-<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#encodeData(java.lang.String,java.lang.String)" class="member-name-link">encodeData</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;decodedData,
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="../decoded/IStorage.html" title="interface in passwordmanager.gui.decoded">IStorage</a></code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#decodeStruct(passwordmanager.gui.encoded.IRawData,java.lang.String)" class="member-name-link">decodeStruct</a><wbr>(<a href="../encoded/IRawData.html" title="interface in passwordmanager.gui.encoded">IRawData</a>&nbsp;rawData,
  <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;key)</code></div>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
-<div class="block">Method for encrypting text data</div>
+<div class="block">Method for decrypting data structure</div>
 </div>
-<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="../encoded/RawData.html" title="interface in passwordmanager.gui.encoded">RawData</a></code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#encodeStruct(passwordmanager.gui.decoded.Storage,java.lang.String)" class="member-name-link">encodeStruct</a><wbr>(<a href="../decoded/Storage.html" title="interface in passwordmanager.gui.decoded">Storage</a>&nbsp;data,
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#encodeString(java.lang.String,java.lang.String)" class="member-name-link">encodeString</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;decodedData,
  <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;key)</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="block">Method for encrypting text data</div>
+</div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="../encoded/IRawData.html" title="interface in passwordmanager.gui.encoded">IRawData</a></code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#encodeStruct(passwordmanager.gui.decoded.IStorage,java.lang.String)" class="member-name-link">encodeStruct</a><wbr>(<a href="../decoded/IStorage.html" title="interface in passwordmanager.gui.decoded">IStorage</a>&nbsp;data,
+ <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;key)</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
 <div class="block">Method for encrypting data structure</div>
+</div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#setAlgorithm(passwordmanager.gui.encoder.IEncoder.EncoderAlgorithm)" class="member-name-link">setAlgorithm</a><wbr>(<a href="IEncoder.EncoderAlgorithm.html" title="enum class in passwordmanager.gui.encoder">IEncoder.EncoderAlgorithm</a>&nbsp;algo)</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="block">Method for changing the encryption/decryption algorithm</div>
 </div>
 </div>
 </div>
@@ -221,8 +221,8 @@ implements <a href="Encoder.html" title="interface in passwordmanager.gui.encode
 <li>
 <section class="detail" id="encoderAlgorithm">
 <h3>encoderAlgorithm</h3>
-<div class="member-signature"><span class="modifiers">private</span>&nbsp;<span class="return-type"><a href="Encoder.EncoderAlgorithm.html" title="enum class in passwordmanager.gui.encoder">Encoder.EncoderAlgorithm</a></span>&nbsp;<span class="element-name">encoderAlgorithm</span></div>
-<div class="block">Link to encoding algorithm (<a href="Encoder.EncoderAlgorithm.html" title="enum class in passwordmanager.gui.encoder"><code>Encoder.EncoderAlgorithm</code></a>)</div>
+<div class="member-signature"><span class="modifiers">private</span>&nbsp;<span class="return-type"><a href="IEncoder.EncoderAlgorithm.html" title="enum class in passwordmanager.gui.encoder">IEncoder.EncoderAlgorithm</a></span>&nbsp;<span class="element-name">encoderAlgorithm</span></div>
+<div class="block">Link to encoding algorithm (<a href="IEncoder.EncoderAlgorithm.html" title="enum class in passwordmanager.gui.encoder"><code>IEncoder.EncoderAlgorithm</code></a>)</div>
 </section>
 </li>
 <li>
@@ -257,14 +257,14 @@ implements <a href="Encoder.html" title="interface in passwordmanager.gui.encode
 <h2>Method Details</h2>
 <ul class="member-list">
 <li>
-<section class="detail" id="decodeData(java.lang.String,java.lang.String)">
-<h3>decodeData</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></span>&nbsp;<span class="element-name">decodeData</span><wbr><span class="parameters">(<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;encodedData,
+<section class="detail" id="decodeString(java.lang.String,java.lang.String)">
+<h3>decodeString</h3>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></span>&nbsp;<span class="element-name">decodeString</span><wbr><span class="parameters">(<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;encodedData,
  <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;key)</span></div>
 <div class="block">Method for decrypting text data</div>
 <dl class="notes">
 <dt>Specified by:</dt>
-<dd><code><a href="Encoder.html#decodeData(java.lang.String,java.lang.String)">decodeData</a></code>&nbsp;in interface&nbsp;<code><a href="Encoder.html" title="interface in passwordmanager.gui.encoder">Encoder</a></code></dd>
+<dd><code><a href="IEncoder.html#decodeString(java.lang.String,java.lang.String)">decodeString</a></code>&nbsp;in interface&nbsp;<code><a href="IEncoder.html" title="interface in passwordmanager.gui.encoder">IEncoder</a></code></dd>
 <dt>Parameters:</dt>
 <dd><code>encodedData</code> - encrypted text</dd>
 <dd><code>key</code> - decryption key</dd>
@@ -274,14 +274,14 @@ implements <a href="Encoder.html" title="interface in passwordmanager.gui.encode
 </section>
 </li>
 <li>
-<section class="detail" id="decodeStruct(passwordmanager.gui.encoded.RawData,java.lang.String)">
+<section class="detail" id="decodeStruct(passwordmanager.gui.encoded.IRawData,java.lang.String)">
 <h3>decodeStruct</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="../decoded/Storage.html" title="interface in passwordmanager.gui.decoded">Storage</a></span>&nbsp;<span class="element-name">decodeStruct</span><wbr><span class="parameters">(<a href="../encoded/RawData.html" title="interface in passwordmanager.gui.encoded">RawData</a>&nbsp;rawData,
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="../decoded/IStorage.html" title="interface in passwordmanager.gui.decoded">IStorage</a></span>&nbsp;<span class="element-name">decodeStruct</span><wbr><span class="parameters">(<a href="../encoded/IRawData.html" title="interface in passwordmanager.gui.encoded">IRawData</a>&nbsp;rawData,
  <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;key)</span></div>
 <div class="block">Method for decrypting data structure</div>
 <dl class="notes">
 <dt>Specified by:</dt>
-<dd><code><a href="Encoder.html#decodeStruct(passwordmanager.gui.encoded.RawData,java.lang.String)">decodeStruct</a></code>&nbsp;in interface&nbsp;<code><a href="Encoder.html" title="interface in passwordmanager.gui.encoder">Encoder</a></code></dd>
+<dd><code><a href="IEncoder.html#decodeStruct(passwordmanager.gui.encoded.IRawData,java.lang.String)">decodeStruct</a></code>&nbsp;in interface&nbsp;<code><a href="IEncoder.html" title="interface in passwordmanager.gui.encoder">IEncoder</a></code></dd>
 <dt>Parameters:</dt>
 <dd><code>rawData</code> - encrypted data structure</dd>
 <dd><code>key</code> - decryption key</dd>
@@ -291,14 +291,14 @@ implements <a href="Encoder.html" title="interface in passwordmanager.gui.encode
 </section>
 </li>
 <li>
-<section class="detail" id="encodeData(java.lang.String,java.lang.String)">
-<h3>encodeData</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></span>&nbsp;<span class="element-name">encodeData</span><wbr><span class="parameters">(<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;decodedData,
+<section class="detail" id="encodeString(java.lang.String,java.lang.String)">
+<h3>encodeString</h3>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></span>&nbsp;<span class="element-name">encodeString</span><wbr><span class="parameters">(<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;decodedData,
  <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;key)</span></div>
 <div class="block">Method for encrypting text data</div>
 <dl class="notes">
 <dt>Specified by:</dt>
-<dd><code><a href="Encoder.html#encodeData(java.lang.String,java.lang.String)">encodeData</a></code>&nbsp;in interface&nbsp;<code><a href="Encoder.html" title="interface in passwordmanager.gui.encoder">Encoder</a></code></dd>
+<dd><code><a href="IEncoder.html#encodeString(java.lang.String,java.lang.String)">encodeString</a></code>&nbsp;in interface&nbsp;<code><a href="IEncoder.html" title="interface in passwordmanager.gui.encoder">IEncoder</a></code></dd>
 <dt>Parameters:</dt>
 <dd><code>decodedData</code> - decrypted text</dd>
 <dd><code>key</code> - encription key</dd>
@@ -308,14 +308,14 @@ implements <a href="Encoder.html" title="interface in passwordmanager.gui.encode
 </section>
 </li>
 <li>
-<section class="detail" id="encodeStruct(passwordmanager.gui.decoded.Storage,java.lang.String)">
+<section class="detail" id="encodeStruct(passwordmanager.gui.decoded.IStorage,java.lang.String)">
 <h3>encodeStruct</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="../encoded/RawData.html" title="interface in passwordmanager.gui.encoded">RawData</a></span>&nbsp;<span class="element-name">encodeStruct</span><wbr><span class="parameters">(<a href="../decoded/Storage.html" title="interface in passwordmanager.gui.decoded">Storage</a>&nbsp;data,
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="../encoded/IRawData.html" title="interface in passwordmanager.gui.encoded">IRawData</a></span>&nbsp;<span class="element-name">encodeStruct</span><wbr><span class="parameters">(<a href="../decoded/IStorage.html" title="interface in passwordmanager.gui.decoded">IStorage</a>&nbsp;data,
  <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;key)</span></div>
 <div class="block">Method for encrypting data structure</div>
 <dl class="notes">
 <dt>Specified by:</dt>
-<dd><code><a href="Encoder.html#encodeStruct(passwordmanager.gui.decoded.Storage,java.lang.String)">encodeStruct</a></code>&nbsp;in interface&nbsp;<code><a href="Encoder.html" title="interface in passwordmanager.gui.encoder">Encoder</a></code></dd>
+<dd><code><a href="IEncoder.html#encodeStruct(passwordmanager.gui.decoded.IStorage,java.lang.String)">encodeStruct</a></code>&nbsp;in interface&nbsp;<code><a href="IEncoder.html" title="interface in passwordmanager.gui.encoder">IEncoder</a></code></dd>
 <dt>Parameters:</dt>
 <dd><code>data</code> - decrypted data structure</dd>
 <dd><code>key</code> - encryption key</dd>
@@ -325,13 +325,13 @@ implements <a href="Encoder.html" title="interface in passwordmanager.gui.encode
 </section>
 </li>
 <li>
-<section class="detail" id="changeAlgorithm(passwordmanager.gui.encoder.Encoder.EncoderAlgorithm)">
-<h3>changeAlgorithm</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">changeAlgorithm</span><wbr><span class="parameters">(<a href="Encoder.EncoderAlgorithm.html" title="enum class in passwordmanager.gui.encoder">Encoder.EncoderAlgorithm</a>&nbsp;algo)</span></div>
+<section class="detail" id="setAlgorithm(passwordmanager.gui.encoder.IEncoder.EncoderAlgorithm)">
+<h3>setAlgorithm</h3>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">setAlgorithm</span><wbr><span class="parameters">(<a href="IEncoder.EncoderAlgorithm.html" title="enum class in passwordmanager.gui.encoder">IEncoder.EncoderAlgorithm</a>&nbsp;algo)</span></div>
 <div class="block">Method for changing the encryption/decryption algorithm</div>
 <dl class="notes">
 <dt>Specified by:</dt>
-<dd><code><a href="Encoder.html#changeAlgorithm(passwordmanager.gui.encoder.Encoder.EncoderAlgorithm)">changeAlgorithm</a></code>&nbsp;in interface&nbsp;<code><a href="Encoder.html" title="interface in passwordmanager.gui.encoder">Encoder</a></code></dd>
+<dd><code><a href="IEncoder.html#setAlgorithm(passwordmanager.gui.encoder.IEncoder.EncoderAlgorithm)">setAlgorithm</a></code>&nbsp;in interface&nbsp;<code><a href="IEncoder.html" title="interface in passwordmanager.gui.encoder">IEncoder</a></code></dd>
 <dt>Parameters:</dt>
 <dd><code>algo</code> - new encryption/decryption algorithm</dd>
 </dl>
