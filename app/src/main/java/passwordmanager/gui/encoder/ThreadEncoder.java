@@ -32,11 +32,17 @@ import passwordmanager.gui.manager.Manager;
  * @since 2023-12-14
  */
 public class ThreadEncoder implements Encoder {
-    /** Link to encoding algorithm ({@link EncoderAlgorithm}) */
+    /**
+     * Link to encoding algorithm ({@link EncoderAlgorithm})
+     */
     private EncoderAlgorithm encoderAlgorithm;
-    /** Link to encryptor */
+    /**
+     * Link to encryptor
+     */
     private PooledPBEStringEncryptor textEncryptor;
-    /** Field storing the number of threads available for use */
+    /**
+     * Field storing the number of threads available for use
+     */
     private int numberOfThreads;
 
     /**

@@ -32,9 +32,13 @@ import passwordmanager.gui.manager.Manager;
  * @since 2023-12-14
  */
 public class DefaultEncoder implements Encoder {
-    /** Link to encoding algorithm ({@link EncoderAlgorithm}) */
+    /**
+     * Link to encoding algorithm ({@link EncoderAlgorithm})
+     */
     private EncoderAlgorithm encoderAlgorithm;
-    /** Link to encryptor */
+    /**
+     * Link to encryptor
+     */
     private StandardPBEStringEncryptor textEncryptor;
 
     /**

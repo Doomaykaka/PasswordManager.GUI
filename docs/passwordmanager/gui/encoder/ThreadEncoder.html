@@ -38,7 +38,7 @@ loadScripts(document, 'script');</script>
 <p>Summary:</p>
 <ul>
 <li><a href="#nested-class-summary">Nested</a></li>
-<li>Field</li>
+<li><a href="#field-summary">Field</a></li>
 <li><a href="#constructor-summary">Constr</a></li>
 <li><a href="#method-summary">Method</a></li>
 </ul>
@@ -46,7 +46,7 @@ loadScripts(document, 'script');</script>
 <li>
 <p>Detail:</p>
 <ul>
-<li>Field</li>
+<li><a href="#field-detail">Field</a></li>
 <li><a href="#constructor-detail">Constr</a></li>
 <li><a href="#method-detail">Method</a></li>
 </ul>
@@ -58,13 +58,13 @@ loadScripts(document, 'script');</script>
 <ul class="sub-nav-list">
 <li>Summary:&nbsp;</li>
 <li><a href="#nested-class-summary">Nested</a>&nbsp;|&nbsp;</li>
-<li>Field&nbsp;|&nbsp;</li>
+<li><a href="#field-summary">Field</a>&nbsp;|&nbsp;</li>
 <li><a href="#constructor-summary">Constr</a>&nbsp;|&nbsp;</li>
 <li><a href="#method-summary">Method</a></li>
 </ul>
 <ul class="sub-nav-list">
 <li>Detail:&nbsp;</li>
-<li>Field&nbsp;|&nbsp;</li>
+<li><a href="#field-detail">Field</a>&nbsp;|&nbsp;</li>
 <li><a href="#constructor-detail">Constr</a>&nbsp;|&nbsp;</li>
 <li><a href="#method-detail">Method</a></li>
 </ul>
@@ -120,6 +120,33 @@ implements <a href="Encoder.html" title="interface in passwordmanager.gui.encode
 <div class="inherited-list">
 <h2 id="nested-classes-inherited-from-class-passwordmanager.gui.encoder.Encoder">Nested classes/interfaces inherited from interface&nbsp;passwordmanager.gui.encoder.<a href="Encoder.html" title="interface in passwordmanager.gui.encoder">Encoder</a></h2>
 <code><a href="Encoder.EncoderAlgorithm.html" title="enum class in passwordmanager.gui.encoder">Encoder.EncoderAlgorithm</a></code></div>
+</section>
+</li>
+<!-- =========== FIELD SUMMARY =========== -->
+<li>
+<section class="field-summary" id="field-summary">
+<h2>Field Summary</h2>
+<div class="caption"><span>Fields</span></div>
+<div class="summary-table three-column-summary">
+<div class="table-header col-first">Modifier and Type</div>
+<div class="table-header col-second">Field</div>
+<div class="table-header col-last">Description</div>
+<div class="col-first even-row-color"><code>private <a href="Encoder.EncoderAlgorithm.html" title="enum class in passwordmanager.gui.encoder">Encoder.EncoderAlgorithm</a></code></div>
+<div class="col-second even-row-color"><code><a href="#encoderAlgorithm" class="member-name-link">encoderAlgorithm</a></code></div>
+<div class="col-last even-row-color">
+<div class="block">Link to encoding algorithm (<a href="Encoder.EncoderAlgorithm.html" title="enum class in passwordmanager.gui.encoder"><code>Encoder.EncoderAlgorithm</code></a>)</div>
+</div>
+<div class="col-first odd-row-color"><code>private int</code></div>
+<div class="col-second odd-row-color"><code><a href="#numberOfThreads" class="member-name-link">numberOfThreads</a></code></div>
+<div class="col-last odd-row-color">
+<div class="block">Field storing the number of threads available for use</div>
+</div>
+<div class="col-first even-row-color"><code>private org.jasypt.encryption.pbe.PooledPBEStringEncryptor</code></div>
+<div class="col-second even-row-color"><code><a href="#textEncryptor" class="member-name-link">textEncryptor</a></code></div>
+<div class="col-last even-row-color">
+<div class="block">Link to encryptor</div>
+</div>
+</div>
 </section>
 </li>
 <!-- ======== CONSTRUCTOR SUMMARY ======== -->
@@ -190,6 +217,35 @@ implements <a href="Encoder.html" title="interface in passwordmanager.gui.encode
 </section>
 <section class="details">
 <ul class="details-list">
+<!-- ============ FIELD DETAIL =========== -->
+<li>
+<section class="field-details" id="field-detail">
+<h2>Field Details</h2>
+<ul class="member-list">
+<li>
+<section class="detail" id="encoderAlgorithm">
+<h3>encoderAlgorithm</h3>
+<div class="member-signature"><span class="modifiers">private</span>&nbsp;<span class="return-type"><a href="Encoder.EncoderAlgorithm.html" title="enum class in passwordmanager.gui.encoder">Encoder.EncoderAlgorithm</a></span>&nbsp;<span class="element-name">encoderAlgorithm</span></div>
+<div class="block">Link to encoding algorithm (<a href="Encoder.EncoderAlgorithm.html" title="enum class in passwordmanager.gui.encoder"><code>Encoder.EncoderAlgorithm</code></a>)</div>
+</section>
+</li>
+<li>
+<section class="detail" id="textEncryptor">
+<h3>textEncryptor</h3>
+<div class="member-signature"><span class="modifiers">private</span>&nbsp;<span class="return-type">org.jasypt.encryption.pbe.PooledPBEStringEncryptor</span>&nbsp;<span class="element-name">textEncryptor</span></div>
+<div class="block">Link to encryptor</div>
+</section>
+</li>
+<li>
+<section class="detail" id="numberOfThreads">
+<h3>numberOfThreads</h3>
+<div class="member-signature"><span class="modifiers">private</span>&nbsp;<span class="return-type">int</span>&nbsp;<span class="element-name">numberOfThreads</span></div>
+<div class="block">Field storing the number of threads available for use</div>
+</section>
+</li>
+</ul>
+</section>
+</li>
 <!-- ========= CONSTRUCTOR DETAIL ======== -->
 <li>
 <section class="constructor-details" id="constructor-detail">

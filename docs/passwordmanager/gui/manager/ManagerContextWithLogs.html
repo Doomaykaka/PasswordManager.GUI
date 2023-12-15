@@ -38,7 +38,7 @@ loadScripts(document, 'script');</script>
 <p>Summary:</p>
 <ul>
 <li>Nested</li>
-<li>Field</li>
+<li><a href="#field-summary">Field</a></li>
 <li><a href="#constructor-summary">Constr</a></li>
 <li><a href="#method-summary">Method</a></li>
 </ul>
@@ -46,7 +46,7 @@ loadScripts(document, 'script');</script>
 <li>
 <p>Detail:</p>
 <ul>
-<li>Field</li>
+<li><a href="#field-detail">Field</a></li>
 <li><a href="#constructor-detail">Constr</a></li>
 <li><a href="#method-detail">Method</a></li>
 </ul>
@@ -58,13 +58,13 @@ loadScripts(document, 'script');</script>
 <ul class="sub-nav-list">
 <li>Summary:&nbsp;</li>
 <li>Nested&nbsp;|&nbsp;</li>
-<li>Field&nbsp;|&nbsp;</li>
+<li><a href="#field-summary">Field</a>&nbsp;|&nbsp;</li>
 <li><a href="#constructor-summary">Constr</a>&nbsp;|&nbsp;</li>
 <li><a href="#method-summary">Method</a></li>
 </ul>
 <ul class="sub-nav-list">
 <li>Detail:&nbsp;</li>
-<li>Field&nbsp;|&nbsp;</li>
+<li><a href="#field-detail">Field</a>&nbsp;|&nbsp;</li>
 <li><a href="#constructor-detail">Constr</a>&nbsp;|&nbsp;</li>
 <li><a href="#method-detail">Method</a></li>
 </ul>
@@ -114,6 +114,33 @@ implements <a href="ManagerContext.html" title="interface in passwordmanager.gui
 </section>
 <section class="summary">
 <ul class="summary-list">
+<!-- =========== FIELD SUMMARY =========== -->
+<li>
+<section class="field-summary" id="field-summary">
+<h2>Field Summary</h2>
+<div class="caption"><span>Fields</span></div>
+<div class="summary-table three-column-summary">
+<div class="table-header col-first">Modifier and Type</div>
+<div class="table-header col-second">Field</div>
+<div class="table-header col-last">Description</div>
+<div class="col-first even-row-color"><code>private <a href="../encoder/Encoder.html" title="interface in passwordmanager.gui.encoder">Encoder</a></code></div>
+<div class="col-second even-row-color"><code><a href="#encoder" class="member-name-link">encoder</a></code></div>
+<div class="col-last even-row-color">
+<div class="block">Link to encoder (<a href="../decoded/Storage.html" title="interface in passwordmanager.gui.decoded"><code>Storage</code></a>)</div>
+</div>
+<div class="col-first odd-row-color"><code>private <a href="../encoded/RawData.html" title="interface in passwordmanager.gui.encoded">RawData</a></code></div>
+<div class="col-second odd-row-color"><code><a href="#rawData" class="member-name-link">rawData</a></code></div>
+<div class="col-last odd-row-color">
+<div class="block">Link to encrypted data (<a href="../encoded/RawData.html" title="interface in passwordmanager.gui.encoded"><code>RawData</code></a>)</div>
+</div>
+<div class="col-first even-row-color"><code>private <a href="../decoded/Storage.html" title="interface in passwordmanager.gui.decoded">Storage</a></code></div>
+<div class="col-second even-row-color"><code><a href="#storage" class="member-name-link">storage</a></code></div>
+<div class="col-last even-row-color">
+<div class="block">Link to decrypted data storage (<a href="../decoded/Storage.html" title="interface in passwordmanager.gui.decoded"><code>Storage</code></a>)</div>
+</div>
+</div>
+</section>
+</li>
 <!-- ======== CONSTRUCTOR SUMMARY ======== -->
 <li>
 <section class="constructor-summary" id="constructor-summary">
@@ -182,6 +209,35 @@ implements <a href="ManagerContext.html" title="interface in passwordmanager.gui
 </section>
 <section class="details">
 <ul class="details-list">
+<!-- ============ FIELD DETAIL =========== -->
+<li>
+<section class="field-details" id="field-detail">
+<h2>Field Details</h2>
+<ul class="member-list">
+<li>
+<section class="detail" id="rawData">
+<h3>rawData</h3>
+<div class="member-signature"><span class="modifiers">private</span>&nbsp;<span class="return-type"><a href="../encoded/RawData.html" title="interface in passwordmanager.gui.encoded">RawData</a></span>&nbsp;<span class="element-name">rawData</span></div>
+<div class="block">Link to encrypted data (<a href="../encoded/RawData.html" title="interface in passwordmanager.gui.encoded"><code>RawData</code></a>)</div>
+</section>
+</li>
+<li>
+<section class="detail" id="storage">
+<h3>storage</h3>
+<div class="member-signature"><span class="modifiers">private</span>&nbsp;<span class="return-type"><a href="../decoded/Storage.html" title="interface in passwordmanager.gui.decoded">Storage</a></span>&nbsp;<span class="element-name">storage</span></div>
+<div class="block">Link to decrypted data storage (<a href="../decoded/Storage.html" title="interface in passwordmanager.gui.decoded"><code>Storage</code></a>)</div>
+</section>
+</li>
+<li>
+<section class="detail" id="encoder">
+<h3>encoder</h3>
+<div class="member-signature"><span class="modifiers">private</span>&nbsp;<span class="return-type"><a href="../encoder/Encoder.html" title="interface in passwordmanager.gui.encoder">Encoder</a></span>&nbsp;<span class="element-name">encoder</span></div>
+<div class="block">Link to encoder (<a href="../decoded/Storage.html" title="interface in passwordmanager.gui.decoded"><code>Storage</code></a>)</div>
+</section>
+</li>
+</ul>
+</section>
+</li>
 <!-- ========= CONSTRUCTOR DETAIL ======== -->
 <li>
 <section class="constructor-details" id="constructor-detail">

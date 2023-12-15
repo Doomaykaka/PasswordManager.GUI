@@ -16,11 +16,20 @@ import passwordmanager.gui.encoder.Encoder;
  * @since 2023-12-14
  */
 public class DefaultManagerContext implements ManagerContext {
-    /** Link to encrypted data ({@link RawData}) */
+
+    /**
+     * Link to encrypted data ({@link RawData}).
+     */
     private RawData rawData;
-    /** Link to decrypted data storage ({@link Storage}) */
+
+    /**
+     * Link to decrypted data storage ({@link Storage}).
+     */
     private Storage storage;
-    /** Link to encoder ({@link Storage}) */
+
+    /**
+     * Link to encoder ({@link Storage}).
+     */
     private Encoder encoder;
 
     /**

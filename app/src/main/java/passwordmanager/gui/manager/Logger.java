@@ -11,9 +11,13 @@ import java.util.List;
  * @since 2023-12-14
  */
 public class Logger {
-    /** List of logs */
+    /**
+     * List of logs
+     */
     private static List<String> logs;
-    /** Field indicating whether the log is enabled */
+    /**
+     * Field indicating whether the log is enabled
+     */
     private static boolean enabled;
 
     /**
@@ -31,7 +35,7 @@ public class Logger {
         inicialize();
         enabled = enabledIn;
     }
-    
+
     /**
      * Method initializing the {@link Logger} in accordance with the passed values
      */
@@ -40,11 +44,11 @@ public class Logger {
             logs = new ArrayList<String>();
         }
     }
-    
+
     /**
      * Method that creates a log entry
      * 
-     * @param prefix indicates the place from which the information was transmitted
+     * @param prefix  indicates the place from which the information was transmitted
      * @param message stores information about the event
      */
     public static void addLog(String prefix, String message) {
@@ -53,7 +57,7 @@ public class Logger {
             logs.add(LocalDateTime.now() + " " + prefix + ":" + message);
         }
     }
-    
+
     /**
      * Method that returns a list of log entries
      * 
@@ -65,7 +69,7 @@ public class Logger {
         }
         return logs;
     }
-    
+
     /**
      * Method that clears a list of log entries
      */

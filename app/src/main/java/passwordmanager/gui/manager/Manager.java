@@ -28,9 +28,13 @@ import passwordmanager.gui.encoder.ThreadEncoder;
  * @since 2023-12-14
  */
 public class Manager {
-    /** Link to context ({@link ManagerContext}) */
+    /**
+     * Link to context ({@link ManagerContext})
+     */
     private static ManagerContext context;
-    /** Field indicating the need to use logs */
+    /**
+     * Field indicating the need to use logs
+     */
     private static boolean logsUsing;
 
     /**
