@@ -42,3 +42,7 @@ tasks.named('test') {
     // Use JUnit Platform for unit tests.
     useJUnitPlatform()
 }
+
+javadoc{
+	destinationDir = file("${project.rootDir}/docs")
+}
