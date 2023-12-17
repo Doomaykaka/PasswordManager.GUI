@@ -17,6 +17,7 @@ import passwordmanager.gui.encoder.IEncoder;
 import passwordmanager.gui.encoder.IEncoder.EncoderAlgorithm;
 import passwordmanager.gui.manager.Logger;
 import passwordmanager.gui.manager.Manager;
+import passwordmanager.gui.ui.MainWindow;
 
 public class App {
     public static void main(String[] args) {
@@ -98,6 +99,11 @@ public class App {
         System.out.print("Right key: " + decodeRecord.getLogin());
         System.out.print("," + decodeRecord.getPassword());
         System.out.println("," + decodeRecord.getInfo());
+
+        System.out.println("=========Restoring=========");
+        
+        MainWindow mainWindow = new MainWindow();
+        mainWindow.create();
 
         System.out.println("=========Log=========");
 
