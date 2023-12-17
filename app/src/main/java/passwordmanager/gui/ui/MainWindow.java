@@ -1,6 +1,9 @@
 package passwordmanager.gui.ui;
 
 import com.formdev.flatlaf.FlatDarkLaf;
+
+import passwordmanager.gui.manager.Logger;
+
 import java.awt.Dimension;
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
@@ -11,47 +14,63 @@ import javax.swing.JTextField;
 import javax.swing.UIManager;
 
 public class MainWindow {
-	public void create() {
-		// FlatDarculaLaf.setup();
-		FlatDarkLaf.setup();
+    private JFrame mainFrame;
+    private JPanel mainPanel;
 
-		try {
-			// UIManager.setLookAndFeel(new FlatDraculaIJTheme());
-			UIManager.setLookAndFeel(new FlatDarkLaf());
-		} catch (Exception ex) {
-			System.err.println("Failed to initialize LaF");
-		}
+    public void create() {
+        // FlatDarculaLaf.setup();
+        FlatDarkLaf.setup();
 
-		JFrame frame = new JFrame("Test frame");
-		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        try {
+            // UIManager.setLookAndFeel(new FlatDraculaIJTheme());
+            UIManager.setLookAndFeel(new FlatDarkLaf());
+        } catch (Exception ex) {
+            Logger.addLog("MainWindow", "failed to initialize LaF");
+        }
 
-		JPanel panel = new JPanel();
-		panel.setLayout(null);
+        startCreateWindow();
 
-		JLabel label = new JLabel("Test label");
-		label.setBounds(150, 80, 100, 20);
-		panel.add(label);
+        generateComponents();
 
-		JButton button = new JButton();
-		button.setText("Click me");
-		button.setBounds(150, 120, 100, 20);
-		panel.add(button);
+        finishCreateWindow();
 
-		JCheckBox checkBox = new JCheckBox();
-		checkBox.setText("Check me");
-		checkBox.setBounds(150, 40, 100, 20);
-		panel.add(checkBox);
+    }
 
-		JTextField field = new JTextField();
-		field.setText("Input me");
-		field.setBounds(150, 160, 100, 20);
-		panel.add(field);
+    public void startCreateWindow() {
+        mainFrame = new JFrame("Password manager by Doomayka");
+        mainFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
-		frame.add(panel);
+        mainPanel = new JPanel();
+        mainPanel.setLayout(null);
+    }
 
-		frame.setPreferredSize(new Dimension(400, 400));
+    public void finishCreateWindow() {
+        mainFrame.add(mainPanel);
 
-		frame.pack();
-		frame.setVisible(true);
-	}
+        mainFrame.setPreferredSize(new Dimension(400, 400));
+
+        mainFrame.pack();
+        mainFrame.setVisible(true);
+    }
+
+    public void generateComponents() {
+        JLabel label = new JLabel("Test label");
+        label.setBounds(150, 80, 100, 20);
+        mainPanel.add(label);
+
+        JButton button = new JButton();
+        button.setText("Click me");
+        button.setBounds(150, 120, 100, 20);
+        mainPanel.add(button);
+
+        JCheckBox checkBox = new JCheckBox();
+        checkBox.setText("Check me");
+        checkBox.setBounds(150, 40, 100, 20);
+        mainPanel.add(checkBox);
+
+        JTextField field = new JTextField();
+        field.setText("Input me");
+        field.setBounds(150, 160, 100, 20);
+        mainPanel.add(field);
+    }
 }
