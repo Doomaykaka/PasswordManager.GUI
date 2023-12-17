@@ -18,79 +18,82 @@ import passwordmanager.gui.encoder.IEncoder;
  */
 public class DefaultContextManager implements IContextManager {
 
-    /**
-     * Link to encrypted data ({@link IRawData})
-     */
-    private IRawData rawData;
+	/**
+	 * Link to encrypted data ({@link IRawData})
+	 */
+	private IRawData rawData;
 
-    /**
-     * Link to decrypted data storage ({@link IStorage})
-     */
-    private IStorage storage;
+	/**
+	 * Link to decrypted data storage ({@link IStorage})
+	 */
+	private IStorage storage;
 
-    /**
-     * Link to encoder ({@link IStorage})
-     */
-    private IEncoder encoder;
+	/**
+	 * Link to encoder ({@link IStorage})
+	 */
+	private IEncoder encoder;
 
-    /**
-     * Receiving encrypted data ({@link IRawData})
-     * 
-     * @return encrypted data
-     */
-    @Override
-    public IRawData getRawData() {
-        return rawData;
-    }
+	/**
+	 * Receiving encrypted data ({@link IRawData})
+	 * 
+	 * @return encrypted data
+	 */
+	@Override
+	public IRawData getRawData() {
+		return rawData;
+	}
 
-    /**
-     * Changing encrypted data ({@link IRawData})
-     * 
-     * @param rawData encrypted data
-     */
-    @Override
-    public void setRawData(IRawData rawData) {
-        this.rawData = rawData;
-    }
+	/**
+	 * Changing encrypted data ({@link IRawData})
+	 * 
+	 * @param rawData
+	 *            encrypted data
+	 */
+	@Override
+	public void setRawData(IRawData rawData) {
+		this.rawData = rawData;
+	}
 
-    /**
-     * Receiving decrypted data storage ({@link IStorage})
-     * 
-     * @return decrypted data
-     */
-    @Override
-    public IStorage getStorage() {
-        return storage;
-    }
+	/**
+	 * Receiving decrypted data storage ({@link IStorage})
+	 * 
+	 * @return decrypted data
+	 */
+	@Override
+	public IStorage getStorage() {
+		return storage;
+	}
 
-    /**
-     * Changing decrypted data storage ({@link IStorage})
-     * 
-     * @param storage decrypted data storage
-     */
-    @Override
-    public void setStorage(IStorage storage) {
-        this.storage = storage;
-    }
+	/**
+	 * Changing decrypted data storage ({@link IStorage})
+	 * 
+	 * @param storage
+	 *            decrypted data storage
+	 */
+	@Override
+	public void setStorage(IStorage storage) {
+		this.storage = storage;
+	}
 
-    /**
-     * Receiving encoder ({@link IEncoder})
-     * 
-     * @return encoder
-     */
-    @Override
-    public IEncoder getEncoder() {
-        return encoder;
-    }
+	/**
+	 * Receiving encoder ({@link IEncoder})
+	 * 
+	 * @return encoder
+	 */
+	@Override
+	public IEncoder getEncoder() {
+		return encoder;
+	}
 
-    /**
-     * Changing encoder ({@link IEncoder})
-     * 
-     * @param encoder encoder
-     */
-    @Override
-    public void setEncoder(IEncoder encoder) {
-        this.encoder = encoder;
-    }
+	/**
+	 * Changing encoder ({@link IEncoder})
+	 * 
+	 * @param encoder
+	 *            encoder
+	 */
+	@Override
+	public void setEncoder(IEncoder encoder) {
+		this.encoder = encoder;
+	}
 
 }

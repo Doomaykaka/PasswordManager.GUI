@@ -7,13 +7,13 @@ package passwordmanager.gui.encoded;
  * @since 2023-12-14
  */
 public interface IRecoverable {
-    /**
-     * Method for saving structure
-     */
-    public void save();
+	/**
+	 * Method for saving structure
+	 */
+	public void save();
 
-    /**
-     * Method for restoring structure
-     */
-    public void load();
+	/**
+	 * Method for restoring structure
+	 */
+	public void load();
 }
