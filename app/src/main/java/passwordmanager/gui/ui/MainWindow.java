@@ -75,9 +75,9 @@ public class MainWindow {
 
         generateAddButton();
         generateLoadButton();
-        
-        //Error
-        //generateFilterPanel();
+
+        // Error
+        generateFilterPanel();
 
         generatePasswordGroupsList();
     }
@@ -92,7 +92,18 @@ public class MainWindow {
         JButton button = new JButton();
         button.setText("+");
         button.setBounds(150, 80, 40, 20);
-        //button.setPreferredSize(new Dimension(100, 20));
+        button.setPreferredSize(new Dimension(100, 20));
+
+        //
+        button.addActionListener(new ActionListener() {
+
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                // Temp
+                addPasswordGroupToList("Test");
+            }
+        });
+        //
 
         mainPanel.add(button);
     }
@@ -101,7 +112,18 @@ public class MainWindow {
         JButton button = new JButton();
         button.setText("▼");
         button.setBounds(210, 80, 40, 20);
-        //button.setPreferredSize(new Dimension(100, 20));
+        button.setPreferredSize(new Dimension(100, 20));
+
+        //
+        button.addActionListener(new ActionListener() {
+
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                // Temp
+                addPasswordGroupToList("Test");
+            }
+        });
+        //
 
         mainPanel.add(button);
     }
@@ -111,12 +133,25 @@ public class MainWindow {
 
         JPanel panel = new JPanel();
         panel.setLayout(layout);
-        panel.setBounds(20, 120, 360, 80);
+        panel.setBounds(20, 120, 360, 40);
 
         JTextField field = new JTextField();
         field.setText("Search");
+        field.setPreferredSize(new Dimension(200, 20));
         JButton searchButton = new JButton();
         searchButton.setText("find");
+        searchButton.setPreferredSize(new Dimension(140, 20));
+
+        //
+        searchButton.addActionListener(new ActionListener() {
+
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                // Temp
+                addPasswordGroupToList("Test");
+            }
+        });
+        //
 
         panel.add(field);
         panel.add(searchButton);
@@ -132,7 +167,7 @@ public class MainWindow {
         groupSPane = new JScrollPane(groupPanel, JScrollPane.VERTICAL_SCROLLBAR_ALWAYS,
                 JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
         groupSPane.setLayout(new ScrollPaneLayout());
-        
+
         groupSPane.setBounds(20, 160, 340, 80);
         groupSPane.setAutoscrolls(true);
 
@@ -144,6 +179,7 @@ public class MainWindow {
         gridLayout.setColumns(2);
         gridLayout.setRows(0);
         gridLayout.setVgap(5);
+        gridLayout.setHgap(5);
 
         JPanel panel = new JPanel();
         panel.setLayout(gridLayout);
@@ -151,16 +187,15 @@ public class MainWindow {
 
         JButton button = new JButton();
         button.setText("Open");
-        button.setBounds(0, 0, 100, 20);
 
         JLabel label = new JLabel(groupName);
-        label.setBounds(0, 0, 100, 20);
 
         //
         button.addActionListener(new ActionListener() {
 
             @Override
             public void actionPerformed(ActionEvent e) {
+                // Temp
                 addPasswordGroupToList("Test");
             }
         });
