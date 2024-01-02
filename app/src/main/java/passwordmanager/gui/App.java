@@ -5,15 +5,15 @@ package passwordmanager.gui;
 
 import java.util.ArrayList;
 import java.util.Arrays;
-import passwordmanager.gui.decoded.DefaultRecord;
-import passwordmanager.gui.decoded.IRecord;
-import passwordmanager.gui.decoded.IStorage;
-import passwordmanager.gui.encoded.IRawData;
-import passwordmanager.gui.encoder.IEncoder;
-import passwordmanager.gui.encoder.IEncoder.EncoderAlgorithm;
-import passwordmanager.gui.manager.Logger;
-import passwordmanager.gui.manager.Manager;
+import passwordmanager.decoded.DefaultRecord;
+import passwordmanager.decoded.IRecord;
+import passwordmanager.decoded.IStorage;
+import passwordmanager.encoded.IRawData;
+import passwordmanager.encoder.IEncoder;
+import passwordmanager.encoder.IEncoder.EncoderAlgorithm;
 import passwordmanager.gui.ui.MainWindow;
+import passwordmanager.manager.Logger;
+import passwordmanager.manager.Manager;
 
 public class App {
 	public static void main(String[] args) {
@@ -96,7 +96,7 @@ public class App {
 		System.out.print("," + decodeRecord.getPassword());
 		System.out.println("," + decodeRecord.getInfo());
 
-		System.out.println("=========Restoring=========");
+		System.out.println("=========Window=========");
 
 		MainWindow mainWindow = new MainWindow();
 		mainWindow.create();
