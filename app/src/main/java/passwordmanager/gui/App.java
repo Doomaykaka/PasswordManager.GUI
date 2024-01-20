@@ -74,6 +74,7 @@ public class App {
 		String dataNew = "";
 
 		System.out.println("RawData: ");
+		newRaw.setName("Raw");
 		newRaw.save();
 		dataOld = Arrays.toString(newRaw.getData().toArray());
 		System.out.print(dataOld);

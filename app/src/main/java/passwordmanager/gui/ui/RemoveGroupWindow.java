@@ -1,5 +1,5 @@
 package passwordmanager.gui.ui;
 
-public class GroupWindow {
-    
+public class RemoveGroupWindow {
+
 }

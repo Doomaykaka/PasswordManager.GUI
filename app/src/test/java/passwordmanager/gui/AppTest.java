@@ -6,16 +6,107 @@ package passwordmanager.gui;
 import static org.junit.jupiter.api.Assertions.*;
 
 import java.lang.reflect.Method;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import org.junit.jupiter.api.Test;
+import passwordmanager.decoded.DefaultRecord;
+import passwordmanager.decoded.IRecord;
+import passwordmanager.decoded.IStorage;
+import passwordmanager.encoded.IRawData;
+import passwordmanager.encoder.IEncoder.EncoderAlgorithm;
+import passwordmanager.manager.Manager;
 
 class AppTest {
+	void managerInitialize() {
+		boolean needsLogs = false;
+		boolean needRawDataChecked = true;
+		boolean needMapStorage = false;
+		boolean needThreadEncoder = true;
+		Manager.initialize(needsLogs, needRawDataChecked, needMapStorage, needThreadEncoder);
+
+		Manager.getContext().getEncoder().setAlgorithm(EncoderAlgorithm.SHA256);
+	}
+
 	@Test
 	void appHasAMain() {
 		App classUnderTest = new App();
 		Method[] methods = classUnderTest.getClass().getMethods();
 		List<String> methodsNames = Arrays.stream(methods).map(method -> method.getName()).toList();
 		assertTrue(methodsNames.contains("main"), "app should have a main");
+	}
+
+	@Test
+	void savingRestoringWithNames() {
+		managerInitialize();
+
+		// Raw1 data
+		IRecord newRecord = new DefaultRecord();
+		newRecord.setLogin("admin");
+		newRecord.setPassword("123");
+		newRecord.setInfo("info");
+		IRecord newRecord2 = new DefaultRecord();
+		newRecord2.setLogin("admin2");
+		newRecord2.setPassword("123");
+		newRecord2.setInfo("info");
+		Manager.getContext().getStorage().create(newRecord);
+		Manager.getContext().getStorage().create(newRecord2);
+
+		IRawData newRaw = Manager.getContext().getEncoder().encodeStruct(Manager.getContext().getStorage(), "123");
+
+		newRaw.setName("Raw");
+		newRaw.save();
+
+		newRaw.setData(new ArrayList<String>());
+		newRaw.getData().forEach(System.out::print);
+
+		newRaw.load();
+
+		IStorage storage = Manager.getContext().getEncoder().decodeStruct(newRaw, "123");
+		IRecord decodeRecord = storage.getByIndex(0);
+		IRecord decodeRecord2 = storage.getByIndex(1);
+
+		assertNotNull(storage);
+		assertNotNull(decodeRecord);
+		assertNotNull(decodeRecord2);
+
+		// Raw2 data
+		IRecord newRecord3 = new DefaultRecord();
+		newRecord3.setLogin("admin3");
+		newRecord3.setPassword("123");
+		newRecord3.setInfo("info");
+		IRecord newRecord4 = new DefaultRecord();
+		newRecord4.setLogin("admin4");
+		newRecord4.setPassword("123");
+		newRecord4.setInfo("info");
+		Manager.getContext().getStorage().clear();
+		Manager.getContext().getStorage().create(newRecord3);
+		Manager.getContext().getStorage().create(newRecord4);
+
+		newRaw = Manager.getContext().getEncoder().encodeStruct(Manager.getContext().getStorage(), "321");
+
+		newRaw.setName("Raw2");
+		newRaw.save();
+
+		newRaw.setData(new ArrayList<String>());
+		newRaw.getData().forEach(System.out::print);
+
+		newRaw.load();
+
+		storage = Manager.getContext().getEncoder().decodeStruct(newRaw, "321");
+		IRecord decodeRecord3 = storage.getByIndex(0);
+		IRecord decodeRecord4 = storage.getByIndex(1);
+
+		assertNotNull(storage);
+		assertNotNull(decodeRecord3);
+		assertNotNull(decodeRecord4);
+
+		// Check Raw1 data
+		assertEquals("admin", decodeRecord.getLogin());
+		assertEquals("admin2", decodeRecord2.getLogin());
+
+		// Check Raw2 data
+		assertEquals("admin3", decodeRecord3.getLogin());
+		assertEquals("admin4", decodeRecord4.getLogin());
 	}
 }
