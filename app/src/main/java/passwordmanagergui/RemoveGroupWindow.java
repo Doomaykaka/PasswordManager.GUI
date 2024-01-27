@@ -1,4 +1,4 @@
-package passwordmanager.gui.ui;
+package passwordmanagergui;
 
 public class RemoveGroupWindow {
 

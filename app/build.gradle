@@ -8,6 +8,7 @@
 plugins {
     // Apply the application plugin to add support for building a CLI application in Java.
     id 'application'
+    id 'eclipse'
     id "io.toolebox.git-versioner" version "1.6.7"
     id 'checkstyle'
     id "com.diffplug.spotless" version "6.13.0"
@@ -32,7 +33,6 @@ dependencies {
     implementation 'com.formdev:flatlaf:3.2.5'
     implementation 'com.diffplug.spotless:spotless-plugin-gradle:6.13.0'
     implementation 'com.github.Doomaykaka:PasswordManager:1.0.1'
-    
 }
 
 // Apply a specific Java toolchain to ease working on different environments.
@@ -95,3 +95,6 @@ checkstyleMain{
 checkstyleTest{
 	ant.lifecycleLogLevel = "INFO"
 }
+
+eclipse.classpath.downloadJavadoc = true
+eclipse.classpath.downloadSources = true

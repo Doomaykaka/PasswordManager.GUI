@@ -1,4 +1,4 @@
-package passwordmanager.gui.ui;
+package passwordmanagergui;
 
 import java.io.File;
 import java.net.URISyntaxException;
@@ -54,6 +54,36 @@ public class UIHelper {
                 groups.add(groupFile.getName().substring(0, nameEndIndex));
             }
         }
+    }
+
+    public static File getGroupFileByName(String groupName) {
+        File findedGroupFile = null;
+
+        for (File groupFile : groupFiles) {
+            if (groupFile.getName().contains(".dat")) {
+                int nameEndIndex = groupFile.getName().indexOf(".dat");
+
+                if (groupFile.getName().substring(0, nameEndIndex).equals(groupName)) {
+                    findedGroupFile = groupFile;
+                }
+            }
+        }
+
+        return findedGroupFile;
+    }
+
+    public static String getGroupNameByFile(File groupFile) {
+        String findedGroupName = null;
+
+        if (groupFile.getName().contains(".dat")) {
+            int nameEndIndex = groupFile.getName().indexOf(".dat");
+
+            if (groupFile.exists()) {
+                findedGroupName = groupFile.getName().substring(0, nameEndIndex);
+            }
+        }
+
+        return findedGroupName;
     }
 
     private static List<File> searchGroupsInPath() {

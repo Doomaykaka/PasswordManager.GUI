@@ -16,6 +16,7 @@ import passwordmanager.decoded.IStorage;
 import passwordmanager.encoded.IRawData;
 import passwordmanager.encoder.IEncoder.EncoderAlgorithm;
 import passwordmanager.manager.Manager;
+import passwordmanagergui.App;
 
 class AppTest {
 	void managerInitialize() {
