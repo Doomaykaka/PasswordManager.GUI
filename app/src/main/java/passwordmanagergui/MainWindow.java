@@ -1,11 +1,15 @@
 package passwordmanagergui;
 
 import com.formdev.flatlaf.FlatDarkLaf;
+
+import java.awt.Color;
 import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
+import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.GridLayout;
+import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
@@ -33,6 +37,7 @@ public class MainWindow {
 	private JPanel mainPanel;
 	private JPanel groupPanel;
 	private JScrollPane groupSPane;
+	private int recordsCount = 0;
 
 	public void create() {
 		FlatDarkLaf.setup();
@@ -189,12 +194,13 @@ public class MainWindow {
 
 	public void generatePasswordGroupsList() {
 		groupPanel = new JPanel();
-		// groupPanel.setLayout(new BoxLayout(groupPanel, BoxLayout.Y_AXIS));
-		GridLayout gridLayout = new GridLayout();
-		gridLayout.setColumns(1);
-		gridLayout.setRows(0);
-		gridLayout.setVgap(5);
-		gridLayout.setHgap(0);
+		//groupPanel.setLayout(new BoxLayout(groupPanel, BoxLayout.Y_AXIS));
+//		GridLayout gridLayout = new GridLayout();
+//		gridLayout.setColumns(1);
+//		gridLayout.setRows(0);
+//		gridLayout.setVgap(5);
+//		gridLayout.setHgap(0);
+		GridBagLayout gridLayout = new GridBagLayout();
 		groupPanel.setLayout(gridLayout);
 		//
 		groupPanel.setBounds(0, 160, 340, 380);
@@ -216,9 +222,12 @@ public class MainWindow {
 
 		GridBagLayout gridLayout = new GridBagLayout();
 		gridLayout.columnWidths = new int[]{230, 40, 10};
+		GridBagConstraints gridConstraint = new GridBagConstraints();  
 
 		JPanel panel = new JPanel();
 		panel.setLayout(gridLayout);
+		panel.setSize(new Dimension(0, 0));
+		//panel.setBackground(Color.WHITE);
 		// wpanel.setBounds(20, 200, 360, 80);
 
 		JButton openButton = new JButton();
@@ -232,6 +241,8 @@ public class MainWindow {
 		JLabel label = new JLabel(groupName);
 		// label.setHorizontalAlignment(SwingConstants.LEFT);
 		// label.setPreferredSize(new Dimension(10, 20));//
+		
+		JLabel whitespace = new JLabel("         ");
 
 		//
 		String groupNameCopy = String.valueOf(groupName);
@@ -275,8 +286,19 @@ public class MainWindow {
 		panel.add(label);
 		panel.add(openButton);
 		panel.add(removeButton);
-
-		groupPanel.add(panel);
+		
+		gridConstraint.gridx = 0;  
+        gridConstraint.gridy = 1; 
+		panel.add(whitespace, gridConstraint);
+		
+		GridBagConstraints constraints = new GridBagConstraints();
+		constraints.fill = GridBagConstraints.HORIZONTAL;
+		constraints.anchor = GridBagConstraints.NORTH;
+		constraints.gridy = recordsCount;
+		
+		groupPanel.add(panel, constraints);
+		
+		recordsCount++;
 	}
 
 	public void repaintListFromData() {
@@ -311,6 +333,7 @@ public class MainWindow {
 	}
 
 	public void removePasswordGroupFromList(String groupName) {
+	    recordsCount = 0;
 		UIHelper.removeGroup(groupName);
 		repaintListFromData();
 	}
