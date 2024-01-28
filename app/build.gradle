@@ -48,9 +48,9 @@ versioner {
     }
 
     startFrom {
-        major = 0
-        minor = 2
-        patch = 10
+        major = 1
+        minor = 0
+        patch = 0
     }
 }
 
