@@ -1,26 +1,25 @@
 package passwordmanagergui;
 
-import java.awt.BorderLayout;
-import java.awt.Color;
 import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
-import java.awt.GridLayout;
-import java.awt.Insets;
 import java.awt.Toolkit;
 import java.awt.datatransfer.Clipboard;
 import java.awt.datatransfer.StringSelection;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
-import javax.swing.BoxLayout;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -81,7 +80,7 @@ public class GroupWindow {
     }
 
     public void getBadPasswordMessage() {
-        JOptionPane.showMessageDialog(null, "Bad password");
+        JOptionPane.showMessageDialog(null, "Wrong password");
     }
 
     public boolean decodeStruct(String password) {
@@ -199,26 +198,48 @@ public class GroupWindow {
 
         JTextField field = new JTextField();
         field.setText("Search");
-        field.setPreferredSize(new Dimension(200, 20));
-        JButton searchButton = new JButton();
-        searchButton.setText("find");
-        searchButton.setPreferredSize(new Dimension(140, 20));
+        field.setPreferredSize(new Dimension(350, 20));
+//        JButton searchButton = new JButton();
+//        searchButton.setText("find");
+//        searchButton.setPreferredSize(new Dimension(140, 20));
 
-        //
-        searchButton.addActionListener(new ActionListener() {
+        field.addKeyListener(new KeyListener() {
 
             @Override
-            public void actionPerformed(ActionEvent e) {
-                // Temp
-                filterPasswordsGroup(""); // reset filter
+            public void keyTyped(KeyEvent e) {
+                // TODO Auto-generated method stub
+            }
 
-                filterPasswordsGroup(field.getText());
+            @Override
+            public void keyReleased(KeyEvent e) {
+                // TODO Auto-generated method stub
+            }
+
+            @Override
+            public void keyPressed(KeyEvent e) {
+                if (e.getKeyCode() == KeyEvent.VK_ENTER) {
+                    filterPasswordsGroup(""); // reset filter
+
+                    filterPasswordsGroup(field.getText());
+                }
             }
         });
+
+        //
+//        searchButton.addActionListener(new ActionListener() {
+//
+//            @Override
+//            public void actionPerformed(ActionEvent e) {
+//                // Temp
+//                filterPasswordsGroup(""); // reset filter
+//
+//                filterPasswordsGroup(field.getText());
+//            }
+//        });
         //
 
         panel.add(field);
-        panel.add(searchButton);
+//        panel.add(searchButton);
 
         mainPanel.add(panel);
     }
@@ -309,20 +330,70 @@ public class GroupWindow {
         loginLabel.setEditable(false);
 
         String password = record.getPassword();
+        String hidedPassword = password.replaceAll(".", "*");
+        
+        String tempPassword = "";       
         // String password = "aaaaaaaaaaaaaaaaaaaaaaaa"; //6
         JTextArea passwordLabel = new JTextArea();
         if (password.length() > 18) {
             for (int i = 0; i < password.length(); i += 18) {
                 if (i + 18 < password.length() - 1) {
-                    passwordLabel.append(password.substring(i, i + 18) + "\n");
+                    tempPassword += password.substring(i, i + 18) + "\n";
+                    passwordLabel.append(hidedPassword.substring(i, i + 18) + "\n");
                 } else {
-                    passwordLabel.append(password.substring(i, password.length() - 1) + "\n");
+                    tempPassword += password.substring(i, password.length() - 1) + "\n";
+                    passwordLabel.append(hidedPassword.substring(i, hidedPassword.length() - 1) + "\n");
                 }
             }
         } else {
-            passwordLabel.setText(password);
+            tempPassword = password;
+            passwordLabel.setText(hidedPassword);
         }
         passwordLabel.setEditable(false);
+        
+        String normalTextCopy = String.valueOf(tempPassword);
+        passwordLabel.addMouseListener(new MouseListener() {
+            
+            private String normalText =  String.valueOf(normalTextCopy);
+            private String hidedText = String.copyValueOf(hidedPassword.toCharArray());
+            private boolean isHided = true;
+            
+            @Override
+            public void mouseReleased(MouseEvent e) {
+                // TODO Auto-generated method stub
+            }
+            
+            @Override
+            public void mousePressed(MouseEvent e) {
+                // TODO Auto-generated method stub
+            }
+            
+            @Override
+            public void mouseExited(MouseEvent e) {
+                // TODO Auto-generated method stub
+            }
+            
+            @Override
+            public void mouseEntered(MouseEvent e) {
+                // TODO Auto-generated method stub
+            }
+            
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                passwordLabel.setEditable(true);
+                
+                if(isHided) {
+                    passwordLabel.setText(normalText);   
+                } else {
+                    passwordLabel.setText(hidedText);
+                }
+                
+                isHided = !isHided;
+                
+                passwordLabel.setEditable(false);
+            }
+        });
+        
         // JLabel passwordLabel = new JLabel(record.getPassword());
         // label.setHorizontalAlignment(SwingConstants.LEFT);
         // label.setPreferredSize(new Dimension(10, 20));//
@@ -386,8 +457,7 @@ public class GroupWindow {
 
                 if (getConfirm(confirmMessage)) {
                     PasswordWindow passwordWindow = new PasswordWindow();
-                    passwordWindow.update(groupFrame, info, login, password,
-                            groupPassword, encodedGroup);
+                    passwordWindow.update(groupFrame, info, login, password, groupPassword, encodedGroup);
 
                     encodedGroup.load();
 
@@ -485,10 +555,19 @@ public class GroupWindow {
 
     public void filterPasswordsGroup(String expression) {
         if (!expression.equals("")) {
-            for (Component panel : groupPanel.getComponents()) {
-                Component label = ((JPanel) panel).getComponents()[0];
-                if (!((JLabel) label).getText().contains(expression)) {
-                    groupPanel.remove(panel);
+            Component[] components = groupPanel.getComponents();
+            for (Component panel : components) {
+                for (Component recordElement : ((JPanel) panel).getComponents()) {
+                    if (recordElement.getClass().equals(JTextArea.class)) {
+                        JTextArea label = ((JTextArea) recordElement);
+                        String text = label.getText();
+
+                        if (!text.contains(expression.replace("\n", ""))) {
+                            groupPanel.remove(panel);
+                        } else {
+                            break;
+                        }
+                    }
                 }
             }
 

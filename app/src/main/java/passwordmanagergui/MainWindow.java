@@ -2,21 +2,18 @@ package passwordmanagergui;
 
 import com.formdev.flatlaf.FlatDarkLaf;
 
-import java.awt.Color;
 import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
-import java.awt.GridLayout;
-import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
 import java.io.File;
-import java.io.StringReader;
 import java.util.ArrayList;
 import java.util.List;
-import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import javax.swing.JFileChooser;
 import javax.swing.JFrame;
@@ -26,9 +23,8 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTextField;
 import javax.swing.ScrollPaneLayout;
-import javax.swing.SwingConstants;
 import javax.swing.UIManager;
-import org.checkerframework.checker.fenum.qual.SwingBoxOrientation;
+
 import passwordmanager.encoded.IRawData;
 import passwordmanager.manager.Logger;
 
@@ -55,10 +51,8 @@ public class MainWindow {
 		finishCreateWindow();
 
 		UIHelper.readGroupsFromPath();
-
-		for (String groupName : UIHelper.getGroups()) {
-			addPasswordGroupToListGUI(groupName);
-		}
+		
+		repaintListFromData();
 
 	}
 
@@ -168,26 +162,48 @@ public class MainWindow {
 
 		JTextField field = new JTextField();
 		field.setText("Search");
-		field.setPreferredSize(new Dimension(200, 20));
-		JButton searchButton = new JButton();
-		searchButton.setText("find");
-		searchButton.setPreferredSize(new Dimension(140, 20));
+		field.setPreferredSize(new Dimension(350, 20));
+//		JButton searchButton = new JButton();
+//		searchButton.setText("find");
+//		searchButton.setPreferredSize(new Dimension(140, 20));
+		
+		field.addKeyListener(new KeyListener() {
+            
+            @Override
+            public void keyTyped(KeyEvent e) {
+                // TODO Auto-generated method stub
+            }
+            
+            @Override
+            public void keyReleased(KeyEvent e) {
+                // TODO Auto-generated method stub 
+            }
+            
+            @Override
+            public void keyPressed(KeyEvent e) {
+                if(e.getKeyCode() == KeyEvent.VK_ENTER) {
+                    filterPasswordGroups(""); // reset filter
+
+                    filterPasswordGroups(field.getText());
+                }
+            }
+        });
 
 		//
-		searchButton.addActionListener(new ActionListener() {
-
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				// Temp
-				filterPasswordGroups(""); // reset filter
-
-				filterPasswordGroups(field.getText());
-			}
-		});
+//		searchButton.addActionListener(new ActionListener() {
+//
+//			@Override
+//			public void actionPerformed(ActionEvent e) {
+//				// Temp
+//				filterPasswordGroups(""); // reset filter
+//
+//				filterPasswordGroups(field.getText());
+//			}
+//		});
 		//
 
 		panel.add(field);
-		panel.add(searchButton);
+//		panel.add(searchButton);
 
 		mainPanel.add(panel);
 	}

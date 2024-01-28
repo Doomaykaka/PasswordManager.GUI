@@ -16,7 +16,6 @@ import javax.swing.JTextField;
 import passwordmanager.decoded.DefaultRecord;
 import passwordmanager.decoded.IRecord;
 import passwordmanager.decoded.IStorage;
-import passwordmanager.decoded.ListStorage;
 import passwordmanager.encoded.IRawData;
 import passwordmanager.manager.Manager;
 
