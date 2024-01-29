@@ -11,6 +11,7 @@ import javax.swing.JButton;
 import javax.swing.JDialog;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
+import javax.swing.JPasswordField;
 import javax.swing.JTextField;
 
 import passwordmanager.decoded.DefaultRecord;
@@ -27,7 +28,7 @@ public class PasswordWindow {
     private String recordPassword = "default";
     private JTextField recordInfoField = null;
     private JTextField recordLoginField = null;
-    private JTextField recordPasswordField = null;
+    private JPasswordField recordPasswordField = null;
     private IRawData rawData = null;
     private String password = "";
 
@@ -57,7 +58,7 @@ public class PasswordWindow {
         recordLoginField = new JTextField();
         recordLoginField.setText("Record login");
         recordLoginField.setPreferredSize(new Dimension(200, 20));
-        recordPasswordField = new JTextField();
+        recordPasswordField = new JPasswordField();
         recordPasswordField.setText("Record password");
         recordPasswordField.setPreferredSize(new Dimension(200, 20));
 
@@ -73,8 +74,8 @@ public class PasswordWindow {
             @Override
             public void actionPerformed(ActionEvent e) {
                 recordInfo = recordInfoField.getText();
-                recordLogin = recordInfoField.getText();
-                recordPassword = recordPasswordField.getText();
+                recordLogin = recordLoginField.getText();
+                recordPassword = new String(recordPasswordField.getPassword());
 
                 if (!recordInfo.equals("") && !recordLogin.equals("") && !recordPassword.equals("")) {
                     createPasswordRecord();
@@ -171,7 +172,7 @@ public class PasswordWindow {
         recordLoginField = new JTextField();
         recordLoginField.setText(oldRecordLogin);
         recordLoginField.setPreferredSize(new Dimension(200, 20));
-        recordPasswordField = new JTextField();
+        recordPasswordField = new JPasswordField();
         recordPasswordField.setText(oldRecordPassword);
         recordPasswordField.setPreferredSize(new Dimension(200, 20));
 
@@ -188,7 +189,7 @@ public class PasswordWindow {
             public void actionPerformed(ActionEvent e) {
                 recordInfo = recordInfoField.getText();
                 recordLogin = recordInfoField.getText();
-                recordPassword = recordPasswordField.getText();
+                recordPassword = new String(recordPasswordField.getPassword());
 
                 if (!recordInfo.equals("") && !recordLogin.equals("") && !recordPassword.equals("")) {
                     editPasswordRecord(oldRecordLogin, oldRecordPassword);
@@ -227,7 +228,8 @@ public class PasswordWindow {
         for (int i = 0; i < passwordGroup.size(); i++) {
             IRecord passwordRecord = passwordGroup.getByIndex(i);
 
-            if (passwordRecord.getLogin().equals(oldRecordLogin) && passwordRecord.getPassword().equals(oldRecordPassword)) {
+            if (passwordRecord.getLogin().equals(oldRecordLogin)
+                    && passwordRecord.getPassword().equals(oldRecordPassword)) {
                 findedRecord = passwordRecord;
             }
         }

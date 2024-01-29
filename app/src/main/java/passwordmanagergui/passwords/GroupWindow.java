@@ -300,65 +300,78 @@ public class GroupWindow {
         // button.setPreferredSize(new Dimension(30, 20));//
 
         String info = record.getInfo();
+        String infoWithBreaks = "";
         // String info = "aaaaaa"; //6
         JTextArea infoLabel = new JTextArea();
+
+        infoWithBreaks = info;
         if (info.length() > 18) {
-            for (int i = 0; i < info.length(); i += 18) {
-                if (i + 6 < info.length() - 1) {
-                    infoLabel.append(info.substring(i, i + 18) + "\n");
-                } else {
-                    infoLabel.append(info.substring(i, info.length() - 1) + "\n");
-                }
-            }
-        } else {
-            infoLabel.setText(info);
+//            for (int i = 0; i < info.length(); i += 18) {
+//                if (i + 6 < info.length() - 1) {
+//                    infoLabel.append(info.substring(i, i + 18) + "\n");
+//                } else {
+//                    infoLabel.append(info.substring(i, info.length() - 1) + "\n");
+//                }
+//            }
+//        } else {
+//            infoLabel.setText(info);
+
+            infoWithBreaks = insertBreaksIntoString(info, 18.0);
         }
+        infoLabel.setText(infoWithBreaks);
         infoLabel.setEditable(false);
         // JLabel infoLabel = new JLabel(record.getInfo());
         // JLabel loginLabel = new JLabel(record.getLogin());
         String login = record.getLogin();
+        String loginWithBreaks = "";
         // String login = "aaaaaa"; //6
         JTextArea loginLabel = new JTextArea();
+        loginWithBreaks = login;
         if (login.length() > 18) {
-            for (int i = 0; i < login.length(); i += 18) {
-                if (i + 18 < login.length() - 1) {
-                    loginLabel.append(login.substring(i, i + 18) + "\n");
-                } else {
-                    loginLabel.append(login.substring(i, login.length() - 1) + "\n");
-                }
-            }
-        } else {
-            loginLabel.setText(login);
+//            for (int i = 0; i < login.length(); i += 18) {
+//                if (i + 18 < login.length() - 1) {
+//                    loginLabel.append(login.substring(i, i + 18) + "\n");
+//                } else {
+//                    loginLabel.append(login.substring(i, login.length() - 1) + "\n");
+//                }
+//            }
+
+            loginWithBreaks = insertBreaksIntoString(login, 18.0);
         }
+        loginLabel.setText(loginWithBreaks);
         loginLabel.setEditable(false);
 
         String password = record.getPassword();
+        String passwordWithBreaks = "";
         String hidedPassword = password.replaceAll(".", "*");
+        String hidedPasswordWithBreaks = "";
 
-        String tempPassword = "";
         // String password = "aaaaaaaaaaaaaaaaaaaaaaaa"; //6
         JTextArea passwordLabel = new JTextArea();
+        passwordWithBreaks = password;
+        hidedPasswordWithBreaks = hidedPassword;
         if (password.length() > 18) {
-            for (int i = 0; i < password.length(); i += 18) {
-                if (i + 18 < password.length() - 1) {
-                    tempPassword += password.substring(i, i + 18) + "\n";
-                    passwordLabel.append(hidedPassword.substring(i, i + 18) + "\n");
-                } else {
-                    tempPassword += password.substring(i, password.length() - 1) + "\n";
-                    passwordLabel.append(hidedPassword.substring(i, hidedPassword.length() - 1) + "\n");
-                }
-            }
-        } else {
-            tempPassword = password;
-            passwordLabel.setText(hidedPassword);
+//            for (int i = 0; i < password.length(); i += 18) {
+//                if (i + 18 < password.length() - 1) {
+//                    tempPassword += password.substring(i, i + 18) + "\n";
+//                    passwordLabel.append(hidedPassword.substring(i, i + 18) + "\n");
+//                } else {
+//                    tempPassword += password.substring(i, password.length() - 1) + "\n";
+//                    passwordLabel.append(hidedPassword.substring(i, hidedPassword.length() - 1) + "\n");
+//                }
+//            }
+            passwordWithBreaks = insertBreaksIntoString(password, 18.0);
+            hidedPasswordWithBreaks = insertBreaksIntoString(hidedPassword, 18.0);
         }
+        passwordLabel.setText(hidedPasswordWithBreaks);
         passwordLabel.setEditable(false);
 
-        String normalTextCopy = String.valueOf(tempPassword);
+        String normalTextCopy = String.valueOf(passwordWithBreaks);
+        String hidedTextCopy = String.valueOf(hidedPasswordWithBreaks);
         passwordLabel.addMouseListener(new MouseListener() {
 
-            private String normalText = String.valueOf(normalTextCopy);
-            private String hidedText = String.copyValueOf(hidedPassword.toCharArray());
+            private String normalText = normalTextCopy;
+            private String hidedText = hidedTextCopy;
             private boolean isHided = true;
 
             @Override
@@ -512,6 +525,18 @@ public class GroupWindow {
         accountsPanel.add(accountPanel, constraints);
 
         recordsCount++;
+    }
+
+    public String insertBreaksIntoString(String text, double partLength) {
+        String resultText = "";
+
+        String[] loginTextParts = text.split("(?<=\\G.{" + (int) Math.ceil(text.length() / partLength) + "})");
+        for (String loginTextPart : loginTextParts) {
+            resultText += loginTextPart + "\n";
+        }
+        resultText = resultText.substring(0, resultText.lastIndexOf('\n'));
+
+        return resultText;
     }
 
     public void initializeConstraint(GridBagConstraints gridConstraint, int fillConstraint, int cellXPosition,

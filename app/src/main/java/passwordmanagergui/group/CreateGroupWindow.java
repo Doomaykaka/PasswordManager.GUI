@@ -25,6 +25,7 @@ public class CreateGroupWindow {
     private JTextField groupNameField = null;
     private JTextField groupPasswordField = null;
     private IRawData resultGroup = null;
+    private final String allNotWhitespaceSymbolsRegexp = "[^A-Za-zА-Яа-я0-9]";
 
     public IRawData create(JFrame mainWindow) {
         JDialog groupCreateDialog = new JDialog(mainWindow, "Group creating", windowIsModal);
@@ -113,8 +114,8 @@ public class CreateGroupWindow {
     }
 
     public String checkAndRemoveFieldWhitespaces(String fieldText) {
-        if (!fieldText.replaceAll("[^A-Za-zА-Яа-я0-9]", "").equals("")) {
-            fieldText = fieldText.replaceAll("[^A-Za-zА-Яа-я0-9]", "_");
+        if (!fieldText.replaceAll(allNotWhitespaceSymbolsRegexp, "").equals("")) {
+            fieldText = fieldText.replaceAll(allNotWhitespaceSymbolsRegexp, "_");
         }
 
         return fieldText;

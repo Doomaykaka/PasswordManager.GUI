@@ -36,6 +36,7 @@ public class MainWindow {
     private JPanel groupsPanel;
     private JScrollPane groupSPane;
     private int recordsCount = 0;
+    private final int maxGroupNameLength = 36;
 
     public void create() {
         FlatDarkLaf.setup();
@@ -112,7 +113,7 @@ public class MainWindow {
                 IRawData newPasswordGroup = createGroupWindow.create(mainWindow);
                 if (newPasswordGroup != null) {
                     addPasswordGroupToListGUI(newPasswordGroup.getName());
-                    UIHelper.addGroup(new File(newPasswordGroup.getName() + ".dat"));
+                    UIHelper.addGroup(new File(newPasswordGroup.getName() + UIHelper.getSuffix()));
                     repaintListFromData();
                 }
             }
@@ -142,7 +143,7 @@ public class MainWindow {
                 if (questionDialogResult == JFileChooser.APPROVE_OPTION) {
                     File selectedFile = fileChooser.getSelectedFile();
                     // System.out.println("Selected file: " + selectedFile.getAbsolutePath());
-                    String endOfSelectedFileName = ".dat";
+                    String endOfSelectedFileName = UIHelper.getSuffix();
                     int endOfSelectedFileNameIndex = selectedFile.getName().indexOf(endOfSelectedFileName);
                     addPasswordGroupToListGUI(selectedFile.getName().substring(0, endOfSelectedFileNameIndex));
                     UIHelper.addGroup(selectedFile);
@@ -236,8 +237,9 @@ public class MainWindow {
     }
 
     public void addPasswordGroupToListGUI(String groupName) {
-        if (groupName.length() > 36) {
-            groupName = groupName.substring(0, 33) + "...";
+        if (groupName.length() > maxGroupNameLength) {
+            String dotString = "...";
+            groupName = groupName.substring(0, maxGroupNameLength - dotString.length()) + dotString;
         }
 
         GridBagLayout gridLayout = new GridBagLayout();
