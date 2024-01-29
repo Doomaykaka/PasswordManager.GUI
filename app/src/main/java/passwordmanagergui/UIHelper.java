@@ -95,28 +95,28 @@ public class UIHelper {
             pathToSaveFiles = Manager.getContext().getClass().getProtectionDomain().getCodeSource().getLocation()
                     .toURI().toString();
 
-            int dirSlashIdx = 0;
-            dirSlashIdx = pathToSaveFiles.lastIndexOf("/");
-            if (dirSlashIdx != -1) {
-                pathToSaveFiles = pathToSaveFiles.substring(0, dirSlashIdx);
+            int dirSlashIndex = 0;
+            dirSlashIndex = pathToSaveFiles.lastIndexOf("/");
+            if (dirSlashIndex != -1) {
+                pathToSaveFiles = pathToSaveFiles.substring(0, dirSlashIndex);
                 separator = "/";
             } else {
                 separator = "/";
-                dirSlashIdx = pathToSaveFiles.lastIndexOf("\\");
-                if (dirSlashIdx != -1) {
-                    pathToSaveFiles = pathToSaveFiles.substring(0, dirSlashIdx);
+                dirSlashIndex = pathToSaveFiles.lastIndexOf("\\");
+                if (dirSlashIndex != -1) {
+                    pathToSaveFiles = pathToSaveFiles.substring(0, dirSlashIndex);
                 } else {
                     throw new URISyntaxException("checkRootPathString", "Bad path");
                 }
             }
 
-            dirSlashIdx = pathToSaveFiles.indexOf(separator);
-            pathToSaveFiles = pathToSaveFiles.substring(dirSlashIdx + 1);
+            dirSlashIndex = pathToSaveFiles.indexOf(separator);
+            pathToSaveFiles = pathToSaveFiles.substring(dirSlashIndex + 1);
             pathToSaveFiles = pathToSaveFiles + separator; // + getName() + ".dat";
 
-            File dir = new File(pathToSaveFiles); // path указывает на директорию
-            File[] arrFiles = dir.listFiles();
-            groupFiles = Arrays.asList(arrFiles);
+            File saveDirectory = new File(pathToSaveFiles); // path указывает на директорию
+            File[] saveDirectoryFiles = saveDirectory.listFiles();
+            groupFiles = Arrays.asList(saveDirectoryFiles);
         } catch (URISyntaxException e) {
             Logger.addLog("RawData", "getting root path error");
         }
