@@ -10,6 +10,7 @@ import javax.swing.JButton;
 import javax.swing.JDialog;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
+import javax.swing.JPasswordField;
 import javax.swing.JTextField;
 import passwordmanager.decoded.DefaultRecord;
 import passwordmanager.decoded.IRecord;
@@ -17,115 +18,168 @@ import passwordmanager.decoded.IStorage;
 import passwordmanager.encoded.IRawData;
 import passwordmanager.manager.Manager;
 
+/**
+ * Window for creating a new password group
+ * 
+ * @author Doomaykaka MIT License
+ * @since 2024-01-31
+ */
 public class CreateGroupWindow {
-    private final boolean windowIsModal = true;
-    private boolean windowIsClosed = false;
-    private String groupName = "default";
-    private String groupPassword = "default";
-    private JTextField groupNameField = null;
-    private JTextField groupPasswordField = null;
-    private IRawData resultGroup = null;
-    private final String allNotWhitespaceSymbolsRegexp = "[^A-Za-zА-Яа-я0-9]";
+	/**
+	 * Field responsible for whether the window is modal
+	 */
+	private final boolean windowIsModal = true;
+	/**
+	 * Window closed status
+	 */
+	private boolean windowIsClosed = false;
+	/**
+	 * Name of the group being created
+	 */
+	private String groupName = "default";
+	/**
+	 * Password of the created group
+	 */
+	private String groupPassword = "default";
+	/**
+	 * Group name entry field
+	 */
+	private JTextField groupNameField = null;
+	/**
+	 * Group password entry field
+	 */
+	private JPasswordField groupPasswordField = null;
+	/**
+	 * Created group of passwords in encrypted form
+	 */
+	private IRawData resultGroup = null;
+	/**
+	 * Expression to remove whitespace characters from a password group name
+	 */
+	private final String allNotWhitespaceSymbolsRegexp = "[^A-Za-zА-Яа-я0-9]";
 
-    public IRawData create(JFrame mainWindow) {
-        JDialog groupCreateDialog = new JDialog(mainWindow, "Group creating", windowIsModal);
-        groupCreateDialog.setSize(250, 160);
-        groupCreateDialog.addWindowListener(new WindowAdapter() {
-            @Override
-            public void windowClosing(WindowEvent e) {
-                e.getWindow().dispose();
-                windowIsClosed = true;
-            }
-        });
+	/**
+	 * A method that creates a window for entering information about a new group of
+	 * passwords with the ability to confirm or cancel the creation of a new group
+	 * of passwords
+	 * 
+	 * @param mainWindow
+	 *            parent window
+	 * @return reference to an encoded password group object
+	 */
+	public IRawData create(JFrame mainWindow) {
+		JDialog groupCreateDialog = new JDialog(mainWindow, "Group creating", windowIsModal);
+		groupCreateDialog.setSize(250, 160);
+		groupCreateDialog.addWindowListener(new WindowAdapter() {
+			@Override
+			public void windowClosing(WindowEvent e) {
+				e.getWindow().dispose();
+				windowIsClosed = true;
+			}
+		});
 
-        FlowLayout panelLayout = new FlowLayout();
+		FlowLayout panelLayout = new FlowLayout();
 
-        JPanel windowElementsPanel = new JPanel();
-        windowElementsPanel.setLayout(panelLayout);
-        windowElementsPanel.setBounds(10, 10, 230, 100);
+		JPanel windowElementsPanel = new JPanel();
+		windowElementsPanel.setLayout(panelLayout);
+		windowElementsPanel.setBounds(10, 10, 230, 100);
 
-        groupNameField = new JTextField();
-        groupNameField.setText("Group name");
-        groupNameField.setPreferredSize(new Dimension(200, 20));
-        groupPasswordField = new JTextField();
-        groupPasswordField.setText("Group password");
-        groupPasswordField.setPreferredSize(new Dimension(200, 20));
+		groupNameField = new JTextField();
+		groupNameField.setText("Group name");
+		groupNameField.setPreferredSize(new Dimension(200, 20));
+		groupPasswordField = new JPasswordField();
+		groupPasswordField.setText("Group password");
+		groupPasswordField.setPreferredSize(new Dimension(200, 20));
 
-        JButton createButton = new JButton();
-        createButton.setText("Create");
-        createButton.setPreferredSize(new Dimension(140, 20));
-        JButton cancelButton = new JButton();
-        cancelButton.setText("Cancel");
-        cancelButton.setPreferredSize(new Dimension(140, 20));
+		JButton createButton = new JButton();
+		createButton.setText("Create");
+		createButton.setPreferredSize(new Dimension(140, 20));
+		JButton cancelButton = new JButton();
+		cancelButton.setText("Cancel");
+		cancelButton.setPreferredSize(new Dimension(140, 20));
 
-        createButton.addActionListener(new ActionListener() {
+		createButton.addActionListener(new ActionListener() {
 
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                resultGroup = createPasswordGroup();
-                groupCreateDialog.dispose();
-                windowIsClosed = true;
-            }
-        });
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				resultGroup = createPasswordGroup();
+				groupCreateDialog.dispose();
+				windowIsClosed = true;
+			}
+		});
 
-        cancelButton.addActionListener(new ActionListener() {
+		cancelButton.addActionListener(new ActionListener() {
 
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                groupCreateDialog.dispose();
-                windowIsClosed = true;
-            }
-        });
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				groupCreateDialog.dispose();
+				windowIsClosed = true;
+			}
+		});
 
-        windowElementsPanel.add(groupNameField);
-        windowElementsPanel.add(groupPasswordField);
-        windowElementsPanel.add(createButton);
-        windowElementsPanel.add(cancelButton);
-        groupCreateDialog.add(windowElementsPanel);
+		windowElementsPanel.add(groupNameField);
+		windowElementsPanel.add(groupPasswordField);
+		windowElementsPanel.add(createButton);
+		windowElementsPanel.add(cancelButton);
+		groupCreateDialog.add(windowElementsPanel);
 
-        groupCreateDialog.setVisible(true);
+		groupCreateDialog.setVisible(true);
 
-        waitWindowClose();
+		waitWindowClose();
 
-        return resultGroup;
-    }
+		return resultGroup;
+	}
 
-    public IRawData createPasswordGroup() {
-        groupName = checkAndRemoveFieldWhitespaces(groupNameField.getText());
+	/**
+	 * Method that creates an encrypted group of passwords
+	 * 
+	 * @return reference to an encoded password group object
+	 */
+	public IRawData createPasswordGroup() {
+		groupName = checkAndRemoveFieldWhitespaces(groupNameField.getText());
 
-        groupPassword = checkAndRemoveFieldWhitespaces(groupPasswordField.getText());
+		groupPassword = checkAndRemoveFieldWhitespaces(new String(groupPasswordField.getPassword()));
 
-        IRecord whiteRecord = new DefaultRecord();
-        whiteRecord.setInfo("Its white record");
-        whiteRecord.setLogin("admin");
-        whiteRecord.setPassword("qwerty");
+		IRecord whiteRecord = new DefaultRecord();
+		whiteRecord.setInfo("Its white record");
+		whiteRecord.setLogin("admin");
+		whiteRecord.setPassword("qwerty");
 
-        IStorage newPasswordGroup = Manager.getContext().getStorage();
-        newPasswordGroup.clear();
-        newPasswordGroup.create(whiteRecord);
+		IStorage newPasswordGroup = Manager.getContext().getStorage();
+		newPasswordGroup.clear();
+		newPasswordGroup.create(whiteRecord);
 
-        IRawData newPasswordGroupEncoded = Manager.getContext().getEncoder().encodeStruct(newPasswordGroup,
-                groupPassword);
+		IRawData newPasswordGroupEncoded = Manager.getContext().getEncoder().encodeStruct(newPasswordGroup,
+				groupPassword);
 
-        newPasswordGroupEncoded.setName(groupName);
-        newPasswordGroupEncoded.save();
+		newPasswordGroupEncoded.setName(groupName);
+		newPasswordGroupEncoded.save();
 
-        return newPasswordGroupEncoded;
-    }
+		return newPasswordGroupEncoded;
+	}
 
-    public String checkAndRemoveFieldWhitespaces(String fieldText) {
-        if (!fieldText.replaceAll(allNotWhitespaceSymbolsRegexp, "").equals("")) {
-            fieldText = fieldText.replaceAll(allNotWhitespaceSymbolsRegexp, "_");
-        }
+	/**
+	 * Method that removes all whitespace characters from a string
+	 * 
+	 * @param fieldText
+	 * @return text without whitespace characters
+	 */
+	public String checkAndRemoveFieldWhitespaces(String fieldText) {
+		if (!fieldText.replaceAll(allNotWhitespaceSymbolsRegexp, "").equals("")) {
+			fieldText = fieldText.replaceAll(allNotWhitespaceSymbolsRegexp, "_");
+		}
 
-        return fieldText;
-    }
+		return fieldText;
+	}
 
-    private void waitWindowClose() {
-        while (true) {
-            if (windowIsClosed) {
-                break;
-            }
-        }
-    }
+	/**
+	 * Method that waits for the window to close and then returns the created group
+	 */
+	private void waitWindowClose() {
+		while (true) {
+			if (windowIsClosed) {
+				break;
+			}
+		}
+	}
 }

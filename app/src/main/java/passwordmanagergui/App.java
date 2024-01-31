@@ -7,26 +7,46 @@ import passwordmanager.manager.Logger;
 import passwordmanager.manager.Manager;
 import passwordmanagergui.group.MainWindow;
 
+/**
+ * Application entry point that initializes and launches the GUI
+ * 
+ * @see MainWindow
+ * @author Doomaykaka MIT License
+ * @since 2024-01-31
+ */
 public class App {
-    public static void main(String[] args) {
-        initializePasswordManager();
-        launchApp();
-    }
+	/**
+	 * The method is the entry point to the application, initializes the manager and
+	 * creates the {@link MainWindow}
+	 * 
+	 * @param args
+	 *            array of arguments with which the application was launched
+	 */
+	public static void main(String[] args) {
+		initializePasswordManager();
+		launchApp();
+	}
 
-    public static void initializePasswordManager() {
-        boolean needsLogs = false;
-        boolean needRawDataChecked = true;
-        boolean needMapStorage = false;
-        boolean needThreadEncoder = true;
-        Manager.initialize(needsLogs, needRawDataChecked, needMapStorage, needThreadEncoder);
-    }
+	/**
+	 * Method initializing manager
+	 */
+	public static void initializePasswordManager() {
+		boolean needsLogs = false;
+		boolean needRawDataChecked = true;
+		boolean needMapStorage = false;
+		boolean needThreadEncoder = true;
+		Manager.initialize(needsLogs, needRawDataChecked, needMapStorage, needThreadEncoder);
+	}
 
-    public static void launchApp() {
-        MainWindow mainWindow = new MainWindow();
-        mainWindow.create();
+	/**
+	 * Method that creates {@link MainWindow}
+	 */
+	public static void launchApp() {
+		MainWindow mainWindow = new MainWindow();
+		mainWindow.create();
 
-        for (String log : Logger.getLogs()) {
-            System.out.println(log);
-        }
-    }
+		for (String log : Logger.getLogs()) {
+			System.out.println(log);
+		}
+	}
 }

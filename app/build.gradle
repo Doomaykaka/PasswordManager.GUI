@@ -40,6 +40,14 @@ java {
     toolchain {
         languageVersion = JavaLanguageVersion.of(21)
     }
+    
+    withJavadocJar()
+    withSourcesJar()
+}
+
+jar{
+  from sourceSets.main.allSource
+  duplicatesStrategy(DuplicatesStrategy.EXCLUDE)
 }
 
 versioner {
@@ -50,13 +58,15 @@ versioner {
     startFrom {
         major = 1
         minor = 0
-        patch = 0
+        patch = 1
     }
 }
 
+versioner.apply()
+
 application {
     // Define the main class for the application.
-    mainClass = 'passwordmanager.gui.App'
+    mainClass = 'passwordmanagergui.App'
 }
 
 tasks.named('test') {
@@ -68,7 +78,24 @@ javadoc{
 	options.memberLevel = JavadocMemberLevel.PRIVATE
 	source = sourceSets.main.allJava
 	destinationDir = file("${project.rootDir}/docs")
+	title = "Password Manager GUI v${project.version}"
 }
+
+def taskX = tasks.register('javadocCopy') {
+	def directory = file(project.rootDir.getAbsolutePath() + "/javadoc/")
+    	
+    directory.mkdir()
+    copy {
+         from "${project.rootDir}/app/build/libs/app-${project.version}-javadoc.jar"
+         into directory.toPath()
+    }
+    copy {
+         from "${project.rootDir}/app/build/libs/app-${project.version}-sources.jar"
+         into directory.toPath()
+    }
+}
+
+tasks.named("build") { finalizedBy("javadocCopy") }
 
 spotless {
   java {

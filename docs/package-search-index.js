@@ -1,1 +1,1 @@
-packageSearchIndex = [{"l":"All Packages","u":"allpackages-index.html"},{"l":"passwordmanager.gui"},{"l":"passwordmanager.gui.decoded"},{"l":"passwordmanager.gui.encoded"},{"l":"passwordmanager.gui.encoder"},{"l":"passwordmanager.gui.manager"}];updateSearchResults();
+packageSearchIndex = [{"l":"All Packages","u":"allpackages-index.html"},{"l":"passwordmanagergui"},{"l":"passwordmanagergui.group"},{"l":"passwordmanagergui.passwords"}];updateSearchResults();
