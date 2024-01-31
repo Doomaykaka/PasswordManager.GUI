@@ -12,6 +12,7 @@ plugins {
     id "io.toolebox.git-versioner" version "1.6.7"
     id 'checkstyle'
     id "com.diffplug.spotless" version "6.13.0"
+    id 'java'
 }
 
 repositories {
@@ -46,8 +47,20 @@ java {
 }
 
 jar{
-  from sourceSets.main.allSource
-  duplicatesStrategy(DuplicatesStrategy.EXCLUDE)
+  	//from sourceSets.main.allSource
+  	manifest {
+        attributes(
+                'Main-Class': 'passwordmanagergui.App'
+        )
+    }
+	// Include dependencies in jar
+	from {
+        configurations.runtimeClasspath.collect { it.isDirectory() ? it : zipTree(it) }
+    } {
+    	exclude 'META-INF/*.RSA', 'META-INF/*.SF', 'META-INF/*.DSA'
+    }
+	
+	duplicatesStrategy = DuplicatesStrategy.EXCLUDE
 }
 
 versioner {
@@ -62,7 +75,7 @@ versioner {
     }
 }
 
-versioner.apply()
+//versioner.apply()
 
 application {
     // Define the main class for the application.
