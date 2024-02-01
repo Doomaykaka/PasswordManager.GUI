@@ -9,173 +9,52 @@
 - Управление записями группы паролей.
 - Автоматическое сохранение изменений.
 
-## Как установить?
+## Как запустить?
+
+Последнюю версию приложения можно скачать с GitHub Releases.
+
+Если нет возможности запустить исполняемый файл можно воспользоваться jar файлом.
+Для использования приложения его необходимо запустить.
+
+```bash
+java -jar app.jar
+```
 
 ### Зависимости
 
-- JDK 8 и выше
+- JDK 21 и выше
 - Gradle 8.0.1 и выше
 
-### Установка библиотеки
+### Использование
 
-Для установки библиотеки необходимо изменить содержимое своего build.gradle скрипта:
+При запуске приложения мы увидим главное окно приложения.
 
-```groovy
+![Главное окно приложения](docScreens/1.png)
 
-repositories {
-    mavenCentral()
-	maven { url 'https://jitpack.io' }
-}
+В нём отображается список зашифрованных групп с паролями.
+Для создания новой группы с паролями необходимо нажать на кнопку с символом '+' и в появившемся окне ввести необходимую информацию о группе.
 
-dependencies {
-	// ваши зависимости
-	// ...
-	implementation 'com.github.Doomaykaka:PasswordManager:1.0.1'
-}
+![Окно создания группы](docScreens/2.png)
 
-```
+Для импортирования уже существующей группы из файловой системы необходимо нажать на кнопку с символом стрелки смотрящей вниз и в появившемся окне выбрать импортируемый файл группы.
 
-Для отображения документации в Eclipse необходимо изменить содержимое своего build.gradle скрипта:
+![Окно импортирования группы](docScreens/3.png)
 
-```groovy
+На главном окне имеется поле, при помощи которого можно фильтровать группы в списке для более быстрого доступа. Также мы можем удалять необходимые группы нажатием на кнопку с символом X.
 
-// ваши плагины
-// ...
+![Главное окно с фильтром](docScreens/4.png)
 
-id 'eclipse'
+Для доступа к группе паролей необходимо нажать на кнопку open и ввести мастер-пароль от группы.
 
-// ваш скрипт
-// ...
+![Окно ввода пароля от группы](docScreens/5.png)
 
-eclipse.classpath.downloadJavadoc = true
-eclipse.classpath.downloadSources = true
+После ввода пароля у нас откроется окно для работы с группой. На нём также есть возможность фильтрации записей. Содержимое записей можно копировать. Для отображения пароля у записи необходимо нажать на скрытый текст. Записи можно изменять и удалять.
 
-```
+![Окно ввода пароля от группы](docScreens/6.png)
 
-Для отображения документации в Idea необходимо изменить содержимое своего build.gradle скрипта:
+Для создания новой записи необходимо нажать на кнопку с символом '+' и в появившемся окне ввести необходимую информацию о записи.
 
-```groovy
-
-// ваши плагины
-// ...
-
-id 'idea'
-
-// ваш скрипт
-// ...
-
-idea.classpath.downloadJavadoc = true
-idea.classpath.downloadSources = true
-
-```
-
-## Использование библиотеки
-
-Для использования менеджера сначала его необходимо проинициализировать.
-Инициализацию менеджера достаточно осуществить один раз в приложении для использования менеджера.
-
-```java
-
-boolean needsLogs = false;
-boolean needRawDataChecked = true;
-boolean needMapStorage = false;
-boolean needThreadEncoder = true;
-
-Manager.initialize(needsLogs, needRawDataChecked, needMapStorage, needThreadEncoder);
-
-```
-
-Для смены алгоритма кодирования можно выбрать один из предоставленных в библиотеке.
-
-```java
-
-Manager.getContext().getEncoder().setAlgorithm(EncoderAlgorithm.MD2);
-
-```
-
-```java
-
-Manager.getContext().getEncoder().setAlgorithm(EncoderAlgorithm.MD5);
-
-```
-
-```java
-
-Manager.getContext().getEncoder().setAlgorithm(EncoderAlgorithm.SHA);
-
-```
-
-```java
-
-Manager.getContext().getEncoder().setAlgorithm(EncoderAlgorithm.SHA256);
-
-```
-
-```java
-
-Manager.getContext().getEncoder().setAlgorithm(EncoderAlgorithm.SHA384);
-
-```
-
-```java
-
-Manager.getContext().getEncoder().setAlgorithm(EncoderAlgorithm.SHA512);
-
-```
-
-Для шифрования и расшифрования текстовых данных необходимо:
-
-```java
-
-String coded = Manager.getContext().getEncoder().encodeString("Hello", "123");
-
-String decoded = Manager.getContext().getEncoder().decodeString(coded, "123");
-
-```
-
-В случае использования неправильного пароля для расшифрования, метод decodeString вернёт null.
-
-Для шифрования структур данных с логином и паролем необходимо:
-
-```java
-
-IRecord newRecord = new DefaultRecord();
-newRecord.setLogin("admin");
-newRecord.setPassword("123");
-newRecord.setInfo("info");
-
-Manager.getContext().getStorage().create(newRecord);
-
-IRawData newRaw = Manager.getContext().getEncoder().encodeStruct(Manager.getContext().getStorage(), "123");
-
-```
-
-Для расшифрования структур данных с логином и паролем необходимо:
-
-```java
-
-IStorage storage = Manager.getContext().getEncoder().decodeStruct(newRaw, "123");
-IRecord decodeRecord = storage.getByIndex(0);
-
-```
-
-В случае использования неправильного пароля для расшифрования, метод decodeStruct вернёт null.
-
-Для сохранения шифрованных структур данных в файловой системе необходимо:
-
-```java
-
-newRaw.save();
-
-```
-
-Для чтения шифрованных структур данных из файловой системе необходимо:
-
-```java
-
-newRaw.load();
-
-```
+![Окно создания записи](docScreens/7.png)
 
 ## Документация
 

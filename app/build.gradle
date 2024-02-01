@@ -47,12 +47,12 @@ java {
 }
 
 jar{
-  	//from sourceSets.main.allSource
   	manifest {
         attributes(
                 'Main-Class': 'passwordmanagergui.App'
         )
     }
+    
 	// Include dependencies in jar
 	from {
         configurations.runtimeClasspath.collect { it.isDirectory() ? it : zipTree(it) }
@@ -75,7 +75,7 @@ versioner {
     }
 }
 
-//versioner.apply()
+versioner.apply()
 
 application {
     // Define the main class for the application.
@@ -113,7 +113,6 @@ tasks.named("build") { finalizedBy("javadocCopy") }
 spotless {
   java {
     importOrder()
-    //removeUnusedImports() //can creates errors
     eclipse()
     formatAnnotations()
   }
