@@ -2,6 +2,8 @@ package passwordmanagergui.group;
 
 import java.awt.Dimension;
 import java.awt.FlowLayout;
+import java.awt.GraphicsEnvironment;
+import java.awt.Point;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.WindowAdapter;
@@ -68,8 +70,17 @@ public class CreateGroupWindow {
 	 * @return reference to an encoded password group object
 	 */
 	public IRawData create(JFrame mainWindow) {
+		int windowWidth = 250;
+		int windowHeight = 160;
+
 		JDialog groupCreateDialog = new JDialog(mainWindow, "Group creating", windowIsModal);
-		groupCreateDialog.setSize(250, 160);
+		groupCreateDialog.setSize(windowWidth, windowHeight);
+
+		Point center = GraphicsEnvironment.getLocalGraphicsEnvironment().getCenterPoint();
+		int xLocation = (int) center.getX() - (windowWidth / 2);
+		int yLocation = (int) center.getY() - (windowHeight / 2);
+		groupCreateDialog.setLocation(xLocation, yLocation);
+
 		groupCreateDialog.addWindowListener(new WindowAdapter() {
 			@Override
 			public void windowClosing(WindowEvent e) {
@@ -85,10 +96,10 @@ public class CreateGroupWindow {
 		windowElementsPanel.setBounds(10, 10, 230, 100);
 
 		groupNameField = new JTextField();
-		groupNameField.setText("Group name");
+		groupNameField.setToolTipText("Group name");
 		groupNameField.setPreferredSize(new Dimension(200, 20));
 		groupPasswordField = new JPasswordField();
-		groupPasswordField.setText("Group password");
+		groupPasswordField.setToolTipText("Group password");
 		groupPasswordField.setPreferredSize(new Dimension(200, 20));
 
 		JButton createButton = new JButton();

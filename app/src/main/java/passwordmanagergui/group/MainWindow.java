@@ -4,8 +4,10 @@ import com.formdev.flatlaf.FlatDarkLaf;
 import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
+import java.awt.GraphicsEnvironment;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
+import java.awt.Point;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
@@ -105,9 +107,17 @@ public class MainWindow {
 	 * creation of the window
 	 */
 	public void finishCreateWindow() {
+		int windowWidth = 400;
+		int windowHeight = 600;
+
 		mainWindow.add(windowElementsPanel);
 
-		mainWindow.setPreferredSize(new Dimension(400, 600));
+		mainWindow.setPreferredSize(new Dimension(windowWidth, windowHeight));
+
+		Point center = GraphicsEnvironment.getLocalGraphicsEnvironment().getCenterPoint();
+		int xLocation = (int) center.getX() - (windowWidth / 2);
+		int yLocation = (int) center.getY() - (windowHeight / 2);
+		mainWindow.setLocation(xLocation, yLocation);
 
 		mainWindow.pack();
 		mainWindow.setResizable(false);
@@ -209,7 +219,7 @@ public class MainWindow {
 		filterPanel.setBounds(10, 120, 360, 40);
 
 		JTextField searchField = new JTextField();
-		searchField.setText("Search");
+		searchField.setToolTipText("Search");
 		searchField.setPreferredSize(new Dimension(350, 20));
 
 		searchField.addKeyListener(new KeyListener() {
@@ -321,7 +331,8 @@ public class MainWindow {
 			public boolean getConfirm(String message) {
 				boolean isConfirmed = false;
 
-				isConfirmed = JOptionPane.showConfirmDialog(mainWindow, message) == JOptionPane.YES_OPTION;
+				isConfirmed = JOptionPane.showConfirmDialog(mainWindow, message, null,
+						JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION;
 
 				return isConfirmed;
 			}

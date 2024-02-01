@@ -3,8 +3,10 @@ package passwordmanagergui.passwords;
 import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
+import java.awt.GraphicsEnvironment;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
+import java.awt.Point;
 import java.awt.Toolkit;
 import java.awt.datatransfer.Clipboard;
 import java.awt.datatransfer.StringSelection;
@@ -25,6 +27,7 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+import javax.swing.JPasswordField;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
@@ -89,7 +92,7 @@ public class GroupWindow {
 	/**
 	 * Path to copy icon
 	 */
-	private final String copyIconPath = "src/main/resources/images/copy.png";
+	private final String copyIconPath = "images/copy.png";
 
 	/**
 	 * Class constructor initializing a group file with passwords
@@ -133,7 +136,16 @@ public class GroupWindow {
 	 * @return user-entered password for the group
 	 */
 	public String getPassword() {
-		return JOptionPane.showInputDialog("Enter password:");
+		JPasswordField pf = new JPasswordField();
+
+		JOptionPane.showConfirmDialog(null, pf, "Enter password:", JOptionPane.OK_CANCEL_OPTION,
+				JOptionPane.PLAIN_MESSAGE);
+
+		if (pf.getPassword().length == 0) {
+			return null;
+		}
+
+		return new String(pf.getPassword());
 	}
 
 	/**
@@ -201,9 +213,17 @@ public class GroupWindow {
 	 * creation of the window
 	 */
 	public void finishCreateWindow() {
+		int windowWidth = 400;
+		int windowHeight = 600;
+
 		groupWindow.add(windowPanel);
 
 		groupWindow.setPreferredSize(new Dimension(400, 600));
+
+		Point center = GraphicsEnvironment.getLocalGraphicsEnvironment().getCenterPoint();
+		int xLocation = (int) center.getX() - (windowWidth / 2);
+		int yLocation = (int) center.getY() - (windowHeight / 2);
+		groupWindow.setLocation(xLocation, yLocation);
 
 		groupWindow.pack();
 		groupWindow.setResizable(false);
@@ -271,7 +291,7 @@ public class GroupWindow {
 		filterPanel.setBounds(10, 120, 360, 40);
 
 		JTextField searchField = new JTextField();
-		searchField.setText("Search");
+		searchField.setToolTipText("Search");
 		searchField.setPreferredSize(new Dimension(350, 20));
 
 		searchField.addKeyListener(new KeyListener() {
@@ -336,10 +356,10 @@ public class GroupWindow {
 		accountPanel.setSize(new Dimension(0, 0));
 
 		JButton copyLoginButton = new JButton();
-		copyLoginButton.setIcon(new ImageIcon(copyIconPath));
+		copyLoginButton.setIcon(new ImageIcon(GroupWindow.class.getClassLoader().getResource(copyIconPath)));
 
 		JButton copyPasswordButton = new JButton();
-		copyPasswordButton.setIcon(new ImageIcon(copyIconPath));
+		copyPasswordButton.setIcon(new ImageIcon(GroupWindow.class.getClassLoader().getResource(copyIconPath)));
 
 		JButton removePasswordButton = new JButton("X");
 		JButton editPasswordButton = new JButton("\u270E");
@@ -469,7 +489,8 @@ public class GroupWindow {
 			public boolean getConfirm(String message) {
 				boolean isConfirmed = false;
 
-				isConfirmed = JOptionPane.showConfirmDialog(groupWindow, message) == JOptionPane.YES_OPTION;
+				isConfirmed = JOptionPane.showConfirmDialog(groupWindow, message, null,
+						JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION;
 
 				return isConfirmed;
 			}
@@ -495,7 +516,8 @@ public class GroupWindow {
 			public boolean getConfirm(String message) {
 				boolean isConfirmed = false;
 
-				isConfirmed = JOptionPane.showConfirmDialog(groupWindow, message) == JOptionPane.YES_OPTION;
+				isConfirmed = JOptionPane.showConfirmDialog(groupWindow, message, null,
+						JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION;
 
 				return isConfirmed;
 			}

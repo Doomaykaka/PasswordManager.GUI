@@ -2,6 +2,8 @@ package passwordmanagergui.passwords;
 
 import java.awt.Dimension;
 import java.awt.FlowLayout;
+import java.awt.GraphicsEnvironment;
+import java.awt.Point;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.WindowAdapter;
@@ -81,8 +83,17 @@ public class PasswordWindow {
 		this.password = password;
 		this.rawData = rawData;
 
+		int windowWidth = 250;
+		int windowHeight = 180;
+
 		JDialog recordCreateDialog = new JDialog(mainWindow, "Record creating", windowIsModal);
-		recordCreateDialog.setSize(250, 180);
+		recordCreateDialog.setSize(windowWidth, windowHeight);
+
+		Point center = GraphicsEnvironment.getLocalGraphicsEnvironment().getCenterPoint();
+		int xLocation = (int) center.getX() - (windowWidth / 2);
+		int yLocation = (int) center.getY() - (windowHeight / 2);
+		recordCreateDialog.setLocation(xLocation, yLocation);
+
 		recordCreateDialog.addWindowListener(new WindowAdapter() {
 			@Override
 			public void windowClosing(WindowEvent e) {
@@ -98,13 +109,13 @@ public class PasswordWindow {
 		windowElementsPanel.setBounds(10, 10, 230, 100);
 
 		recordInfoField = new JTextField();
-		recordInfoField.setText("Record info");
+		recordInfoField.setToolTipText("Info");
 		recordInfoField.setPreferredSize(new Dimension(200, 20));
 		recordLoginField = new JTextField();
-		recordLoginField.setText("Record login");
+		recordLoginField.setToolTipText("Login");
 		recordLoginField.setPreferredSize(new Dimension(200, 20));
 		recordPasswordField = new JPasswordField();
-		recordPasswordField.setText("Record password");
+		recordPasswordField.setToolTipText("Password");
 		recordPasswordField.setPreferredSize(new Dimension(200, 20));
 
 		JButton createButton = new JButton();
@@ -228,11 +239,20 @@ public class PasswordWindow {
 	 */
 	public void update(JFrame mainWindow, String oldRecordInfo, String oldRecordLogin, String oldRecordPassword,
 			String password, IRawData rawData) {
+		int windowWidth = 250;
+		int windowHeight = 200;
+
 		this.password = password;
 		this.rawData = rawData;
 
 		JDialog recordUpdateDialog = new JDialog(mainWindow, "Record editing", windowIsModal);
-		recordUpdateDialog.setSize(250, 200);
+		recordUpdateDialog.setSize(windowWidth, windowHeight);
+
+		Point center = GraphicsEnvironment.getLocalGraphicsEnvironment().getCenterPoint();
+		int xLocation = (int) center.getX() - (windowWidth / 2);
+		int yLocation = (int) center.getY() - (windowHeight / 2);
+		recordUpdateDialog.setLocation(xLocation, yLocation);
+
 		recordUpdateDialog.addWindowListener(new WindowAdapter() {
 			@Override
 			public void windowClosing(WindowEvent e) {
