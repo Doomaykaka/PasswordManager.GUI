@@ -162,21 +162,6 @@ public class UIHelper {
 			Logger.addLog("RawData", "getting root path error");
 		}
 
-		try {
-			if (pathToSaveFiles == null || pathToSaveFiles.equals("")) {
-				pathToSaveFiles = System.getProperty("launch4j.exedir");
-
-				path = Paths.get(pathToSaveFiles);
-			}
-
-			if (pathToSaveFiles == null || pathToSaveFiles.equals("")) {
-				throw new URISyntaxException("null", "bad path");
-			}
-		} catch (URISyntaxException e) {
-			path = null;
-			Logger.addLog("RawData", "getting root path error");
-		}
-
 		File saveDirectory = new File(path.toUri());
 		for (File saveFile : saveDirectory.listFiles()) {
 			addGroup(saveFile);
