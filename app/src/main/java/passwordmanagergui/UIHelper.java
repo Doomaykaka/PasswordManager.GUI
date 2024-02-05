@@ -6,6 +6,7 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
+import javax.swing.JOptionPane;
 import passwordmanager.manager.Logger;
 import passwordmanager.manager.Manager;
 
@@ -146,20 +147,40 @@ public class UIHelper {
 	 * Method for retrieving group files from the encoded group storage directory
 	 */
 	private static void searchGroupsInPath() {
+
+		String pathToSaveFiles = "";
+		Path path = null;
+
 		try {
-			String pathToSaveFiles = "";
 			pathToSaveFiles = Manager.getContext().getClass().getProtectionDomain().getCodeSource().getLocation()
 					.toURI().toString();
 
-			Path path = Paths.get(pathToSaveFiles.substring(6));
+			path = Paths.get(pathToSaveFiles.substring(6));
 			path = path.getParent().toAbsolutePath();
-
-			File saveDirectory = new File(path.toUri());
-			for (File saveFile : saveDirectory.listFiles()) {
-				addGroup(saveFile);
-			}
 		} catch (URISyntaxException e) {
+			path = null;
 			Logger.addLog("RawData", "getting root path error");
 		}
+
+		try {
+			if (pathToSaveFiles == null || pathToSaveFiles.equals("")) {
+				pathToSaveFiles = System.getProperty("launch4j.exedir");
+
+				path = Paths.get(pathToSaveFiles);
+			}
+
+			if (pathToSaveFiles == null || pathToSaveFiles.equals("")) {
+				throw new URISyntaxException("null", "bad path");
+			}
+		} catch (URISyntaxException e) {
+			path = null;
+			Logger.addLog("RawData", "getting root path error");
+		}
+
+		File saveDirectory = new File(path.toUri());
+		for (File saveFile : saveDirectory.listFiles()) {
+			addGroup(saveFile);
+		}
+
 	}
 }
