@@ -109,9 +109,8 @@ def copy_docs(output_folder: Path):
 
 def create_archive(source_folder: Path, target_folder: Path) -> Path:
     logger.info("Creating archive")
-    make_archive(str(target_folder / "Release"), "zip", source_folder)
 
-    return target_folder / "Release.zip"
+    return make_archive(str(target_folder / "Release"), "zip", source_folder)
 
 
 def make_release(project_name: str, project_version: str, path_to_archive: Path):
