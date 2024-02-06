@@ -13,6 +13,7 @@ plugins {
     id 'checkstyle'
     id "com.diffplug.spotless" version "6.13.0"
     id 'java'
+    id 'edu.sc.seis.launch4j' version '3.0.5'
 }
 
 repositories {
@@ -133,6 +134,20 @@ checkstyleMain{
 
 checkstyleTest{
 	ant.lifecycleLogLevel = "INFO"
+}
+
+launch4j {
+  mainClassName = 'passwordmanagergui.App'
+  icon = "${project.rootDir}/assets/favicon.ico"
+  dontWrapJar = true
+  headerType = "gui"
+  jarTask = jar
+  //jar = "${project.rootDir}/app/build/libs/app-${project.version}.jar"
+  outfile = "PasswordManagerGUI.exe"
+  priority = "normal"
+  stayAlive = false
+  restartOnCrash = false
+  bundledJrePath = "JRE"
 }
 
 eclipse.classpath.downloadJavadoc = true
