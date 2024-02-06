@@ -41,7 +41,7 @@ java {
     toolchain {
         languageVersion = JavaLanguageVersion.of(21)
     }
-    
+
     withJavadocJar()
     withSourcesJar()
 }
@@ -52,14 +52,14 @@ jar{
                 'Main-Class': 'passwordmanagergui.App'
         )
     }
-    
+
 	// Include dependencies in jar
 	from {
         configurations.runtimeClasspath.collect { it.isDirectory() ? it : zipTree(it) }
     } {
     	exclude 'META-INF/*.RSA', 'META-INF/*.SF', 'META-INF/*.DSA'
     }
-	
+
 	duplicatesStrategy = DuplicatesStrategy.EXCLUDE
 }
 
@@ -71,7 +71,7 @@ versioner {
     startFrom {
         major = 1
         minor = 0
-        patch = 1
+        patch = 2
     }
 }
 
@@ -96,7 +96,7 @@ javadoc{
 
 def taskX = tasks.register('javadocCopy') {
 	def directory = file(project.rootDir.getAbsolutePath() + "/javadoc/")
-    	
+
     directory.mkdir()
     copy {
          from "${project.rootDir}/app/build/libs/app-${project.version}-javadoc.jar"
