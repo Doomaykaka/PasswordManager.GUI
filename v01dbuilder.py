@@ -68,7 +68,7 @@ def main():
 
 def get_project_version() -> str:
     for file in (BUILD_FOLDER / "libs").iterdir():
-        res = match(r"app-(\d.\d.\d).jar", file.name)
+        res = match(r"app-(\d\.\d\.\d)\.jar", file.name)
         if res:
             return res.group(1)
 
