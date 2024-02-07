@@ -1,15 +1,15 @@
-import java.util.logging.Level;
-import java.util.logging.Logger;
-import java.util.zip.ZipOutputStream;
-import java.util.zip.ZipEntry;
-import groovy.cli.commons.CliBuilder;
+import java.util.logging.Level
+import java.util.logging.Logger
+import java.util.zip.ZipOutputStream
+import java.util.zip.ZipEntry
+import groovy.cli.commons.CliBuilder
 import java.nio.file.Path
 import java.nio.file.Paths
 import groovy.io.FileType
-import java.nio.file.*;
-import java.nio.file.attribute.BasicFileAttributes;
+import java.nio.file.*
+import java.nio.file.attribute.BasicFileAttributes
 
-logger = Logger.getLogger("Logger");
+logger = Logger.getLogger("Logger")
 
 jrePath = null
 BUILD_FOLDER = Paths.get("./app/build")
@@ -19,17 +19,11 @@ def app(){
 
 	createCli()
 
-	println(BUILD_FOLDER.toString())
-	println(jrePath)
-
 	def outputFolder = Paths.get(BUILD_FOLDER.toString(), "/launch4j")
-	println(outputFolder.toString())
 
 	def version = getProjectVersion()
-	println(version)
 
 	def projectName = getExecutableName(outputFolder)
-	println(projectName)
 
 	logger.log(Level.INFO, """Building ${projectName} v${version}!""")
 
@@ -39,6 +33,9 @@ def app(){
 
 	pathToArchive = createArchive(outputFolder, BUILD_FOLDER)
 
+	makeRelease(projectName, version, pathToArchive)
+
+	logger.log(Level.INFO, "Done!")
 }
 
 def createCli(){
@@ -75,7 +72,7 @@ def String getProjectVersion(){
 		file ->
 			def fileName = new File(file.toString()).name
 			def pattern = ~ /app-(\d\.\d\.\d)\.jar/
-			res = pattern.matcher(fileName);
+			res = pattern.matcher(fileName)
   			if(res.matches()){
 				findedGroup = res.group(1)
 			}
@@ -118,12 +115,12 @@ def copyJre(Path jrePath, Path outputFolder){
 	Files.walk(jrePath)
                 .forEach(sourcePath -> {
                     try {
-                        Path targetPath = outputDir.toPath().resolve(jrePath.relativize(sourcePath));
-                        Files.copy(sourcePath, targetPath, StandardCopyOption.REPLACE_EXISTING);
+                        Path targetPath = outputDir.toPath().resolve(jrePath.relativize(sourcePath))
+                        Files.copy(sourcePath, targetPath, StandardCopyOption.REPLACE_EXISTING)
                     } catch (IOException ex) {
 						throw new RuntimeException("Failed to copy JRE: " + ex.getMessage())
                     }
-                });
+                })
 }
 
 def copyJar(String projectVersion, Path outputFolder){
@@ -135,30 +132,39 @@ def copyJar(String projectVersion, Path outputFolder){
         @Override
         public FileVisitResult postVisitDirectory(
           Path dir, IOException exc) throws IOException {
-            Files.delete(dir);
-            return FileVisitResult.CONTINUE;
+            Files.delete(dir)
+            return FileVisitResult.CONTINUE
         }
 
         @Override
         public FileVisitResult visitFile(
           Path file, BasicFileAttributes attrs)
           throws IOException {
-            Files.delete(file);
-            return FileVisitResult.CONTINUE;
+            Files.delete(file)
+            return FileVisitResult.CONTINUE
         }
-    });
+    })
 
 	libDir.mkdir()
 
 	def jarFullPath = Paths.get(BUILD_FOLDER.toString(), "libs", """app-${projectVersion}.jar""")
 	logger.log(Level.INFO, """Copying ${jarFullPath} to ${libDir.toPath()}""")
 
-	Files.copy(jarFullPath, Paths.get(libDir.toString(), """app-${projectVersion}.jar"""), StandardCopyOption.REPLACE_EXISTING)
+	Files.copy(
+		jarFullPath,
+		Paths.get(libDir.toString(),
+		"""app-${projectVersion}.jar"""),
+		StandardCopyOption.REPLACE_EXISTING
+	)
 }
 
 def copyDocs(Path outputFolder){
 	logger.log(Level.INFO, """Copying docs to ${outputFolder.toString()}""")
-    Files.copy(Paths.get(".", "README.md"), Paths.get(outputFolder.toString(), "README.md"), StandardCopyOption.REPLACE_EXISTING)
+    Files.copy(
+		Paths.get(".", "README.md"),
+		Paths.get(outputFolder.toString(), "README.md"),
+		StandardCopyOption.REPLACE_EXISTING
+	)
 }
 
 def createArchive(Path sourceFolder, Path targetFolder){
@@ -181,13 +187,30 @@ def createArchive(Path sourceFolder, Path targetFolder){
     })
     zos.close()
 
-	return zipFile
+	return Paths.get(targetFolder.toString(), "Release.zip")
 }
 
-def makeRelease(){
+def makeRelease(String projectName, String projectVersion, Path pathToArchive){
 	logger.log(Level.INFO, "Releasing!")
 
+	def command = ([
+					"gh",
+					"release",
+					"create",
+					projectVersion,
+					"--target",
+					"main",
+					"-t",
+					"""\'${projectName} v${projectVersion}\'""",
+					"--notes",
+					"Release",
+					"""\'${pathToArchive}\'""",
+				  ].join(" "))
 
+	println(command)
+
+	Process proc = Runtime.getRuntime().exec(command)
+	proc.waitFor()
 }
 
 
