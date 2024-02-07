@@ -1,5 +1,7 @@
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import java.util.zip.ZipOutputStream;
+import java.util.zip.ZipEntry;
 import groovy.cli.commons.CliBuilder;
 import java.nio.file.Path
 import java.nio.file.Paths
@@ -33,6 +35,9 @@ def app(){
 
 	copyJre(Paths.get(jrePath), outputFolder)
 	copyJar(version, outputFolder)
+	copyDocs(outputFolder)
+
+	pathToArchive = createArchive(outputFolder, BUILD_FOLDER)
 
 }
 
@@ -147,8 +152,42 @@ def copyJar(String projectVersion, Path outputFolder){
 
 	def jarFullPath = Paths.get(BUILD_FOLDER.toString(), "libs", """app-${projectVersion}.jar""")
 	logger.log(Level.INFO, """Copying ${jarFullPath} to ${libDir.toPath()}""")
-	//Error
-	//Files.copy(jarFullPath, libDir.resolve(new File(jarFullPath.toString()).name), StandardCopyOption.REPLACE_EXISTING)
+
+	Files.copy(jarFullPath, Paths.get(libDir.toString(), """app-${projectVersion}.jar"""), StandardCopyOption.REPLACE_EXISTING)
+}
+
+def copyDocs(Path outputFolder){
+	logger.log(Level.INFO, """Copying docs to ${outputFolder.toString()}""")
+    Files.copy(Paths.get(".", "README.md"), Paths.get(outputFolder.toString(), "README.md"), StandardCopyOption.REPLACE_EXISTING)
+}
+
+def createArchive(Path sourceFolder, Path targetFolder){
+	logger.log(Level.INFO, "Creating archive")
+
+	zipFile = new File(Paths.get(targetFolder.toString(), "Release.zip").toString())
+	zipFile.createNewFile()
+
+	ZipOutputStream zos = new ZipOutputStream(new FileOutputStream(zipFile))
+    sourceFolder.eachFileRecurse({
+        if((new File(it.toString())).isFile()) {
+			zos.putNextEntry(
+				new ZipEntry(
+					it.toString().replace(".\\app\\build\\launch4j\\","")
+				)
+			)
+			zos << it.bytes
+		}
+        zos.closeEntry()
+    })
+    zos.close()
+
+	return zipFile
+}
+
+def makeRelease(){
+	logger.log(Level.INFO, "Releasing!")
+
+
 }
 
 
