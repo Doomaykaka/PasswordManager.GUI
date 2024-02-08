@@ -9,210 +9,226 @@ import groovy.io.FileType
 import java.nio.file.*
 import java.nio.file.attribute.BasicFileAttributes
 
-logger = Logger.getLogger("Logger")
+logger = Logger.getLogger('Logger')
 
 jrePath = null
-BUILD_FOLDER = Paths.get("./app/build")
+BUILD_FOLDER = Paths.get('./app/build')
 
-def app(){
-	logger.log(Level.INFO, "Hello")
+def app() {
+    logger.log(Level.INFO, 'Hello')
 
-	createCli()
+    createCli()
 
-	def outputFolder = Paths.get(BUILD_FOLDER.toString(), "/launch4j")
+    def outputFolder = Paths.get(BUILD_FOLDER.toString(), '/launch4j')
 
-	def version = getProjectVersion()
+    def version = getProjectVersion()
 
-	def projectName = getExecutableName(outputFolder)
+    def projectName = getExecutableName(outputFolder)
 
-	logger.log(Level.INFO, """Building ${projectName} v${version}!""")
+    logger.log(Level.INFO, """Building ${projectName} v${version}!""")
 
-	copyJre(Paths.get(jrePath), outputFolder)
-	copyJar(version, outputFolder)
-	copyDocs(outputFolder)
+    copyJre(Paths.get(jrePath), outputFolder)
+    copyJar(version, outputFolder)
+    copyDocs(outputFolder)
 
-	pathToArchive = createArchive(outputFolder, BUILD_FOLDER)
+    pathToArchive = createArchive(outputFolder, BUILD_FOLDER)
 
-	makeRelease(projectName, version, pathToArchive)
+    makeRelease(projectName, version, pathToArchive)
 
-	logger.log(Level.INFO, "Done!")
+    logger.log(Level.INFO, 'Done!')
 }
 
-def createCli(){
-	def cli = new CliBuilder(usage:'doomaykaReleaseBuilder [options]')
-	cli.j(args:1, 'Path to JRE')
-	cli.jrePath(args:1, 'Path to JRE')
-	cli.h('Help')
-	cli.stopAtNonOption=false
-	def options = cli.parse(args)
+def createCli() {
+    def cli = new CliBuilder(usage:'doomaykaReleaseBuilder [options]')
+    cli.j(args:1, 'Path to JRE')
+    cli.jrePath(args:1, 'Path to JRE')
+    cli.h('Help')
+    cli.stopAtNonOption = false
+    def options = cli.parse(args)
 
-	if(options.h){
-		cli.usage()
-		System.exit(0)
-	}
+    if (options.h) {
+        cli.usage()
+        System.exit(0)
+    }
 
-	if(options.j || options.jrePath){
-		if(options.j){
-			jrePath = options.j
-		}
+    if (options.j || options.jrePath) {
+        if (options.j) {
+            jrePath = options.j
+        }
 
-		if(options.j){
-			jrePath = options.j
-		}
-	} else {
-		logger.log(Level.WARNING, "JRE path required")
-		System.exit(0)
-	}
+        if (options.j) {
+            jrePath = options.j
+        }
+    } else {
+        logger.log(Level.WARNING, 'JRE path required')
+        System.exit(0)
+    }
 }
 
-def String getProjectVersion(){
-	def findedGroup = null
+def String getProjectVersion() {
+    def findedGroup = null
 
-	Paths.get(BUILD_FOLDER.toString(), "/libs").eachFile(FileType.FILES){
-		file ->
-			def fileName = new File(file.toString()).name
-			def pattern = ~ /app-(\d\.\d\.\d)\.jar/
-			res = pattern.matcher(fileName)
-  			if(res.matches()){
-				findedGroup = res.group(1)
-			}
-	}
+    Paths.get(BUILD_FOLDER.toString(), '/libs').eachFile(FileType.FILES) {
+        file ->
+            def fileName = new File(file.toString()).name
+            def pattern = ~ /app-(\d\.\d\.\d)\.jar/
+            res = pattern.matcher(fileName)
+        if (res.matches()) {
+                findedGroup = res.group(1)
+        }
+    }
 
-	if(findedGroup){
-		return findedGroup
-	} else {
-		throw new RuntimeException("Failed to parse project version")
-	}
+    if (findedGroup) {
+        return findedGroup
+    } else {
+        throw new RuntimeException('Failed to parse project version')
+    }
 }
 
-def getExecutableName(Path outputFolder){
-	def findedName = null
+def getExecutableName(Path outputFolder) {
+    def findedName = null
 
-	outputFolder.eachFile(FileType.FILES){
-		file ->
-			def fileName = new File(file.toString()).name
-  			if(fileName.endsWith(".exe")){
-				findedName = fileName.reverse().replaceFirst(".exe".reverse(),"").reverse()
-			}
-	}
+    outputFolder.eachFile(FileType.FILES) {
+        file ->
+            def fileName = new File(file.toString()).name
+        if (fileName.endsWith('.exe')) {
+                findedName = fileName.reverse().replaceFirst('.exe'.reverse(), '').reverse()
+        }
+    }
 
-	if(findedName){
-		return findedName
-	} else {
-		throw new RuntimeException("Failed to parse executable name")
-	}
+    if (findedName) {
+        return findedName
+    } else {
+        throw new RuntimeException('Failed to parse executable name')
+    }
 }
 
-def copyJre(Path jrePath, Path outputFolder){
+def copyJre(Path jrePath, Path outputFolder) {
     jreFolderName = new File(jrePath.toString()).name
     jreOutputPath = Paths.get(outputFolder.toString(), jreFolderName)
 
-	logger.log(Level.INFO, """Copying JRE from ${jrePath} to ${jreOutputPath}""")
+    logger.log(Level.INFO, """Copying JRE from ${jrePath} to ${jreOutputPath}""")
 
-	def outputDir = new File(jreOutputPath.toString())
-	outputDir.mkdir()
+    def outputDir = new File(jreOutputPath.toString())
+    outputDir.mkdir()
 
-	Files.walk(jrePath)
+    Files.walk(jrePath)
                 .forEach(sourcePath -> {
                     try {
                         Path targetPath = outputDir.toPath().resolve(jrePath.relativize(sourcePath))
+
                         Files.copy(sourcePath, targetPath, StandardCopyOption.REPLACE_EXISTING)
                     } catch (IOException ex) {
-						throw new RuntimeException("Failed to copy JRE: " + ex.getMessage())
+                        throw new RuntimeException('Failed to copy JRE: ' + ex.getMessage())
                     }
                 })
 }
 
-def copyJar(String projectVersion, Path outputFolder){
-	def libDir = new File(Paths.get(outputFolder.toString(), "lib").toString())
-	logger.log(Level.INFO, """Removing ${libDir.toPath().toString()}""")
+def copyJar(String projectVersion, Path outputFolder) {
+    def libDir = new File(Paths.get(outputFolder.toString(), 'lib').toString())
+    logger.log(Level.INFO, """Removing ${libDir.toPath().toString()}""")
 
-	Files.walkFileTree(libDir.toPath(),
-      new SimpleFileVisitor<Path>() {
+    Files.walkFileTree(libDir.toPath(),
+new SimpleFileVisitor<Path>() {
+
         @Override
-        public FileVisitResult postVisitDirectory(
+    public FileVisitResult postVisitDirectory(
           Path dir, IOException exc) throws IOException {
-            Files.delete(dir)
-            return FileVisitResult.CONTINUE
-        }
+        Files.delete(dir)
+        return FileVisitResult.CONTINUE
+          }
 
         @Override
-        public FileVisitResult visitFile(
+    public FileVisitResult visitFile(
           Path file, BasicFileAttributes attrs)
           throws IOException {
-            Files.delete(file)
-            return FileVisitResult.CONTINUE
-        }
-    })
+        Files.delete(file)
+        return FileVisitResult.CONTINUE
+          }
 
-	libDir.mkdir()
+})
 
-	def jarFullPath = Paths.get(BUILD_FOLDER.toString(), "libs", """app-${projectVersion}.jar""")
-	logger.log(Level.INFO, """Copying ${jarFullPath} to ${libDir.toPath()}""")
+    libDir.mkdir()
 
-	Files.copy(
-		jarFullPath,
-		Paths.get(libDir.toString(),
-		"""app-${projectVersion}.jar"""),
-		StandardCopyOption.REPLACE_EXISTING
-	)
-}
+    def jarFullPath = Paths.get(BUILD_FOLDER.toString(), 'libs', """app-${projectVersion}.jar""")
+    logger.log(Level.INFO, """Copying ${jarFullPath} to ${libDir.toPath()}""")
 
-def copyDocs(Path outputFolder){
-	logger.log(Level.INFO, """Copying docs to ${outputFolder.toString()}""")
     Files.copy(
-		Paths.get(".", "README.md"),
-		Paths.get(outputFolder.toString(), "README.md"),
-		StandardCopyOption.REPLACE_EXISTING
-	)
+        jarFullPath,
+        Paths.get(libDir.toString(),
+        """app-${projectVersion}.jar"""),
+        StandardCopyOption.REPLACE_EXISTING
+    )
 }
 
-def createArchive(Path sourceFolder, Path targetFolder){
-	logger.log(Level.INFO, "Creating archive")
+def copyDocs(Path outputFolder) {
+    logger.log(Level.INFO, """Copying docs to ${outputFolder.toString()}""")
+    Files.copy(
+        Paths.get('.', 'README.md'),
+        Paths.get(outputFolder.toString(), 'README.md'),
+        StandardCopyOption.REPLACE_EXISTING
+    )
+}
 
-	zipFile = new File(Paths.get(targetFolder.toString(), "Release.zip").toString())
-	zipFile.createNewFile()
+def createArchive(Path sourceFolder, Path targetFolder) {
+    logger.log(Level.INFO, 'Creating archive')
 
-	ZipOutputStream zos = new ZipOutputStream(new FileOutputStream(zipFile))
+    zipFile = new File(Paths.get(targetFolder.toString(), 'Release.zip').toString())
+    zipFile.createNewFile()
+
+    ZipOutputStream zos = new ZipOutputStream(new FileOutputStream(zipFile))
     sourceFolder.eachFileRecurse({
-        if((new File(it.toString())).isFile()) {
-			zos.putNextEntry(
-				new ZipEntry(
-					it.toString().replace(".\\app\\build\\launch4j\\","")
-				)
-			)
-			zos << it.bytes
-		}
+        if ((new File(it.toString())).isFile()) {
+            zos.putNextEntry(
+                new ZipEntry(
+                    it.toString().replace('.\\app\\build\\launch4j\\', '')
+                )
+            )
+            zos << it.bytes
+        }
         zos.closeEntry()
     })
     zos.close()
 
-	return Paths.get(targetFolder.toString(), "Release.zip")
+    return Paths.get(targetFolder.toString(), 'Release.zip')
 }
 
-def makeRelease(String projectName, String projectVersion, Path pathToArchive){
-	logger.log(Level.INFO, "Releasing!")
+def makeRelease(String projectName, String projectVersion, Path pathToArchive) {
+    logger.log(Level.INFO, 'Releasing!')
 
-	def command = ([
-					"gh",
-					"release",
-					"create",
-					projectVersion,
-					"--target",
-					"main",
-					"-t",
-					"""\'${projectName} v${projectVersion}\'""",
-					"--notes",
-					"Release",
-					"""\'${pathToArchive}\'""",
-				  ].join(" "))
+    def command = [
+        'gh',
+        'release',
+        'create',
+        projectVersion,
+        '--target',
+        'main',
+        '-t',
+        """\'${projectName} v${projectVersion}\'""",
+        '--notes',
+        'Release',
+        """\'${pathToArchive}\'""",
+    ].join(' ')
 
-	println(command)
+    def executer = [
+        'bash',
+        '-c',
+        '\'',
+        command.toString(),
+        '\'',
+    ].join(' ')
 
-	Process proc = Runtime.getRuntime().exec(command)
-	proc.waitFor()
+    def process = executer.execute()
+
+    def (output, error) = new StringWriter().with {
+         o -> new StringWriter().with {
+            e -> process.waitForProcessOutput(o, e)
+            [ o, e ]*.toString()
+         }
+    }
+
+    println("Release output: $output".replace('\n', ''))
+    println("Release error: $error".replace('\n', ''))
 }
-
-
 
 app()
