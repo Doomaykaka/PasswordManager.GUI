@@ -112,43 +112,26 @@ def copyJre(Path jrePath, Path outputFolder) {
     def outputDir = new File(jreOutputPath.toString())
     outputDir.mkdir()
 
-    Files.walk(jrePath)
-                .forEach(sourcePath -> {
-                    try {
-                        Path targetPath = outputDir.toPath().resolve(jrePath.relativize(sourcePath))
+    Files.walk(jrePath).forEach(
+        sourcePath -> {
+            try {
+                Path targetPath = outputDir.toPath().resolve(jrePath.relativize(sourcePath))
 
-                        removeIfExists(targetPath)
+                removeIfExists(targetPath)
 
-                        Files.copy(sourcePath, targetPath, StandardCopyOption.REPLACE_EXISTING)
-                    } catch (IOException ex) {
-                        throw new RuntimeException('Failed to copy JRE: ' + ex.getMessage())
-                    }
-                })
+                Files.copy(sourcePath, targetPath, StandardCopyOption.REPLACE_EXISTING)
+            } catch (IOException ex) {
+                throw new RuntimeException('Failed to copy JRE: ' + ex.getMessage())
+            }
+        }
+    )
 }
 
 def copyJar(String projectVersion, Path outputFolder) {
     def libDir = new File(Paths.get(outputFolder.toString(), 'lib').toString())
     logger.log(Level.INFO, """Removing ${libDir.toPath().toString()}""")
 
-    Files.walkFileTree(libDir.toPath(),
-new SimpleFileVisitor<Path>() {
-
-        @Override
-    public FileVisitResult postVisitDirectory(
-          Path dir, IOException exc) throws IOException {
-        Files.delete(dir)
-        return FileVisitResult.CONTINUE
-          }
-
-        @Override
-    public FileVisitResult visitFile(
-          Path file, BasicFileAttributes attrs)
-          throws IOException {
-        Files.delete(file)
-        return FileVisitResult.CONTINUE
-          }
-
-})
+    removeIfExists(Paths.get(outputFolder.toString(), 'lib'))
 
     libDir.mkdir()
 
@@ -165,6 +148,9 @@ new SimpleFileVisitor<Path>() {
 
 def copyDocs(Path outputFolder) {
     logger.log(Level.INFO, """Copying docs to ${outputFolder.toString()}""")
+
+    removeIfExists(Paths.get(outputFolder.toString(), 'README.md'))
+
     Files.copy(
         Paths.get('.', 'README.md'),
         Paths.get(outputFolder.toString(), 'README.md'),
@@ -175,21 +161,25 @@ def copyDocs(Path outputFolder) {
 def createArchive(Path sourceFolder, Path targetFolder) {
     logger.log(Level.INFO, 'Creating archive')
 
+    removeIfExists(Paths.get(targetFolder.toString(), 'Release.zip'))
+
     zipFile = new File(Paths.get(targetFolder.toString(), 'Release.zip').toString())
     zipFile.createNewFile()
 
     ZipOutputStream zos = new ZipOutputStream(new FileOutputStream(zipFile))
-    sourceFolder.eachFileRecurse({
-        if ((new File(it.toString())).isFile()) {
-            zos.putNextEntry(
-                new ZipEntry(
-                    it.toString().replace('.\\app\\build\\launch4j\\', '')
+    sourceFolder.eachFileRecurse(
+        {
+            if ((new File(it.toString())).isFile()) {
+                zos.putNextEntry(
+                    new ZipEntry(
+                        it.toString().replace('.\\app\\build\\launch4j\\', '')
+                    )
                 )
-            )
-            zos << it.bytes
+                zos << it.bytes
+            }
+            zos.closeEntry()
         }
-        zos.closeEntry()
-    })
+    )
     zos.close()
 
     return Paths.get(targetFolder.toString(), 'Release.zip')
@@ -198,7 +188,12 @@ def createArchive(Path sourceFolder, Path targetFolder) {
 def makeRelease(String projectName, String projectVersion, Path pathToArchive) {
     logger.log(Level.INFO, 'Releasing!')
 
+    Path currentDir = Paths.get((new File(".")).getAbsolutePath())
+
     def command = [
+        'cd',
+        """\"${currentDir.toString()}\"""",
+        ';',
         'gh',
         'release',
         'create',
@@ -206,10 +201,10 @@ def makeRelease(String projectName, String projectVersion, Path pathToArchive) {
         '--target',
         'main',
         '-t',
-        """\'${projectName} v${projectVersion}\'""",
+        """\"${projectName} v${projectVersion}\"""",
         '--notes',
         '\'Release\'',
-        """\'${pathToArchive}\'""",
+        """\"${pathToArchive}\"""",
     ].join(' ')
 
     def executer = [
@@ -221,11 +216,6 @@ def makeRelease(String projectName, String projectVersion, Path pathToArchive) {
     ].join(' ')
 
     Process process = executer.execute()
-
-    //error
-    def status = process.waitFor()
-
-    println("""Status code ${status}""")
 
     def (output, error) = new StringWriter().with {
          o -> new StringWriter().with {
@@ -243,23 +233,26 @@ def removeIfExists(Path path){
 
     if(element.exists()){
         if(element.isDirectory()){
-            Files.walkFileTree(path, new SimpleFileVisitor<Path>() {
+            Files.walkFileTree(
+                path,
+                new SimpleFileVisitor<Path>() {
 
-                @Override
-                public FileVisitResult postVisitDirectory(Path dir, IOException exc) throws IOException {
-                    Files.delete(dir)
-                    return FileVisitResult.CONTINUE
+                    @Override
+                    public FileVisitResult postVisitDirectory(Path dir, IOException exc) throws IOException {
+                        Files.delete(dir)
+                        return FileVisitResult.CONTINUE
+                    }
+
+                    @Override
+                    public FileVisitResult visitFile(Path file, BasicFileAttributes attrs) throws IOException {
+                        Files.delete(file)
+                        return FileVisitResult.CONTINUE
+                    }
+
                 }
-
-                @Override
-                public FileVisitResult visitFile(Path file, BasicFileAttributes attrs) throws IOException {
-                    Files.delete(file)
-                    return FileVisitResult.CONTINUE
-                }
-
-            })
+            )
         } else {
-            Files.delete(element)
+            Files.delete(path)
         }
     }
 }
