@@ -117,6 +117,8 @@ def copyJre(Path jrePath, Path outputFolder) {
                     try {
                         Path targetPath = outputDir.toPath().resolve(jrePath.relativize(sourcePath))
 
+                        removeIfExists(targetPath)
+
                         Files.copy(sourcePath, targetPath, StandardCopyOption.REPLACE_EXISTING)
                     } catch (IOException ex) {
                         throw new RuntimeException('Failed to copy JRE: ' + ex.getMessage())
@@ -206,7 +208,7 @@ def makeRelease(String projectName, String projectVersion, Path pathToArchive) {
         '-t',
         """\'${projectName} v${projectVersion}\'""",
         '--notes',
-        'Release',
+        '\'Release\'',
         """\'${pathToArchive}\'""",
     ].join(' ')
 
@@ -218,7 +220,12 @@ def makeRelease(String projectName, String projectVersion, Path pathToArchive) {
         '\'',
     ].join(' ')
 
-    def process = executer.execute()
+    Process process = executer.execute()
+
+    //error
+    def status = process.waitFor()
+
+    println("""Status code ${status}""")
 
     def (output, error) = new StringWriter().with {
          o -> new StringWriter().with {
@@ -229,6 +236,32 @@ def makeRelease(String projectName, String projectVersion, Path pathToArchive) {
 
     println("Release output: $output".replace('\n', ''))
     println("Release error: $error".replace('\n', ''))
+}
+
+def removeIfExists(Path path){
+    def element = new File(path.toString())
+
+    if(element.exists()){
+        if(element.isDirectory()){
+            Files.walkFileTree(path, new SimpleFileVisitor<Path>() {
+
+                @Override
+                public FileVisitResult postVisitDirectory(Path dir, IOException exc) throws IOException {
+                    Files.delete(dir)
+                    return FileVisitResult.CONTINUE
+                }
+
+                @Override
+                public FileVisitResult visitFile(Path file, BasicFileAttributes attrs) throws IOException {
+                    Files.delete(file)
+                    return FileVisitResult.CONTINUE
+                }
+
+            })
+        } else {
+            Files.delete(element)
+        }
+    }
 }
 
 app()
