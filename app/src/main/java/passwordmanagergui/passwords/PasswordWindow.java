@@ -22,7 +22,7 @@ import passwordmanager.manager.Manager;
 
 /**
  * Windows for creating, updating and deleting an account
- * 
+ *
  * @author Doomaykaka MIT License
  * @since 2024-01-31
  */
@@ -71,7 +71,7 @@ public class PasswordWindow {
 	/**
 	 * A method that creates a window for entering information about a new account
 	 * with the ability to confirm or cancel the creation of a new account
-	 * 
+	 *
 	 * @param mainWindow
 	 *            parent window
 	 * @param password
@@ -194,7 +194,7 @@ public class PasswordWindow {
 
 	/**
 	 * A method that removes an account from a group and saves the group
-	 * 
+	 *
 	 * @param recordLogin
 	 *            account login
 	 * @param recordPassword
@@ -223,7 +223,7 @@ public class PasswordWindow {
 	/**
 	 * A method that creates a window for entering new information about an existing
 	 * account with the ability to confirm or cancel the account change
-	 * 
+	 *
 	 * @param mainWindow
 	 *            parent window
 	 * @param oldRecordInfo
@@ -268,12 +268,17 @@ public class PasswordWindow {
 		windowElementsPanel.setBounds(10, 10, 230, 100);
 
 		recordInfoField = new JTextField();
+		recordInfoField.setToolTipText("Info");
 		recordInfoField.setText(oldRecordInfo);
 		recordInfoField.setPreferredSize(new Dimension(200, 20));
+
 		recordLoginField = new JTextField();
+		recordInfoField.setToolTipText("Login");
 		recordLoginField.setText(oldRecordLogin);
 		recordLoginField.setPreferredSize(new Dimension(200, 20));
+
 		recordPasswordField = new JPasswordField();
+		recordInfoField.setToolTipText("Password");
 		recordPasswordField.setText(oldRecordPassword);
 		recordPasswordField.setPreferredSize(new Dimension(200, 20));
 
@@ -289,7 +294,7 @@ public class PasswordWindow {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				recordInfo = recordInfoField.getText();
-				recordLogin = recordInfoField.getText();
+				recordLogin = recordLoginField.getText();
 				recordPassword = new String(recordPasswordField.getPassword());
 
 				if (!recordInfo.equals("") && !recordLogin.equals("") && !recordPassword.equals("")) {
@@ -324,7 +329,7 @@ public class PasswordWindow {
 	/**
 	 * Method that updates information about an existing account and then saves the
 	 * group
-	 * 
+	 *
 	 * @param oldRecordLogin
 	 *            account login to find it
 	 * @param oldRecordPassword
