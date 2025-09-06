@@ -12,7 +12,7 @@ import passwordmanager.manager.Manager;
 
 /**
  * Tools to help you prepare and access your password manager
- * 
+ *
  * @author Doomaykaka MIT License
  * @since 2024-01-31
  */
@@ -32,7 +32,7 @@ public class UIHelper {
 
 	/**
 	 * Method that adds a group based on the transferred file
-	 * 
+	 *
 	 * @param groupFile
 	 *            file supposedly containing a group of passwords
 	 */
@@ -53,7 +53,7 @@ public class UIHelper {
 
 	/**
 	 * Method for deleting a password group by its name
-	 * 
+	 *
 	 * @param groupName
 	 *            name of the group to be deleted
 	 */
@@ -66,7 +66,7 @@ public class UIHelper {
 
 	/**
 	 * Method to get a list of group names
-	 * 
+	 *
 	 * @return list of group names
 	 */
 	public static List<String> getGroups() {
@@ -75,7 +75,7 @@ public class UIHelper {
 
 	/**
 	 * Method to get a list of group files
-	 * 
+	 *
 	 * @return list of group files
 	 */
 	public static List<File> getGroupFiles() {
@@ -84,7 +84,7 @@ public class UIHelper {
 
 	/**
 	 * Method for getting the extension of files storing groups of passwords
-	 * 
+	 *
 	 * @return extension of files storing groups of passwords
 	 */
 	public static String getSuffix() {
@@ -107,7 +107,7 @@ public class UIHelper {
 
 	/**
 	 * Method for obtaining a file with a password group by group name
-	 * 
+	 *
 	 * @param groupName
 	 *            group name by which the file with the group will be found
 	 * @return file containing the found group of passwords
@@ -127,7 +127,7 @@ public class UIHelper {
 	/**
 	 * Method for obtaining the name of a group with passwords from a file with an
 	 * encoded group of passwords
-	 * 
+	 *
 	 * @param groupFile
 	 *            file containing a group of passwords
 	 * @return group name
