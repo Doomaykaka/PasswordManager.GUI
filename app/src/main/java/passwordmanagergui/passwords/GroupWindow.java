@@ -6,6 +6,7 @@ import java.awt.FlowLayout;
 import java.awt.GraphicsEnvironment;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
+import java.awt.Insets;
 import java.awt.Point;
 import java.awt.Toolkit;
 import java.awt.datatransfer.Clipboard;
@@ -42,7 +43,7 @@ import passwordmanagergui.UIHelper;
 
 /**
  * Window with group records
- * 
+ *
  * @see UIHelper
  * @author Doomaykaka MIT License
  * @since 2024-01-31
@@ -88,7 +89,7 @@ public class GroupWindow {
 	 * The maximum length of account information, from which the information will be
 	 * shortened for convenient display
 	 */
-	private final double maxNameLength = 18.0;
+	private final int maxFieldLength = 25;
 	/**
 	 * Path to copy icon
 	 */
@@ -96,7 +97,7 @@ public class GroupWindow {
 
 	/**
 	 * Class constructor initializing a group file with passwords
-	 * 
+	 *
 	 * @param groupFile
 	 *            file with a group of passwords
 	 */
@@ -132,7 +133,7 @@ public class GroupWindow {
 	/**
 	 * Method that generates a window for entering a password for a group to decode
 	 * the group
-	 * 
+	 *
 	 * @return user-entered password for the group
 	 */
 	public String getPassword() {
@@ -158,7 +159,7 @@ public class GroupWindow {
 
 	/**
 	 * Method for decrypting a group of passwords
-	 * 
+	 *
 	 * @param password
 	 *            user entered password
 	 * @return status of the correctness of the group password entered by the user
@@ -327,9 +328,7 @@ public class GroupWindow {
 	 */
 	public void generatePasswordsList() {
 		accountsPanel = new JPanel();
-
-		GridBagLayout gridLayout = new GridBagLayout();
-		accountsPanel.setLayout(gridLayout);
+		accountsPanel.setLayout(new GridBagLayout());
 		accountsPanel.setBounds(0, 160, 340, 380);
 
 		passwordSPane = new JScrollPane(accountsPanel, JScrollPane.VERTICAL_SCROLLBAR_ALWAYS,
@@ -343,113 +342,130 @@ public class GroupWindow {
 
 	/**
 	 * Method that dynamically adds a new account to the list
-	 * 
+	 *
 	 * @param record
 	 *            account object to add to the list
 	 */
 	public void addPasswordToListGUI(IRecord record) {
-		GridBagLayout gridLayout = new GridBagLayout();
-		GridBagConstraints gridConstraint = new GridBagConstraints();
+		JPanel accountPanel = new JPanel(new GridBagLayout());
+		accountPanel.setBorder(javax.swing.BorderFactory.createEtchedBorder());
 
-		JPanel accountPanel = new JPanel();
-		accountPanel.setLayout(gridLayout);
-		accountPanel.setSize(new Dimension(0, 0));
+		GridBagConstraints gbc = new GridBagConstraints();
+		gbc.insets = new Insets(3, 3, 3, 3);
+		gbc.fill = GridBagConstraints.HORIZONTAL;
+		gbc.weightx = 1.0;
+
+		JLabel infoHeader = new JLabel("Info:");
+		gbc.gridx = 0;
+		gbc.gridy = 0;
+		gbc.gridwidth = 1;
+		gbc.weightx = 0.0;
+		accountPanel.add(infoHeader, gbc);
+
+		JTextArea infoLabel = new JTextArea(wrapText(record.getInfo(), maxFieldLength));
+		infoLabel.setEditable(false);
+		infoLabel.setLineWrap(true);
+		infoLabel.setWrapStyleWord(true);
+		infoLabel.setBackground(null);
+		infoLabel.setBorder(null);
+		gbc.gridx = 1;
+		gbc.weightx = 1.0;
+		accountPanel.add(infoLabel, gbc);
+
+		JLabel loginHeader = new JLabel("Login:");
+		gbc.gridx = 0;
+		gbc.gridy = 1;
+		gbc.weightx = 0.0;
+		accountPanel.add(loginHeader, gbc);
+
+		JTextArea loginLabel = new JTextArea(wrapText(record.getLogin(), maxFieldLength));
+		loginLabel.setEditable(false);
+		loginLabel.setLineWrap(true);
+		loginLabel.setWrapStyleWord(true);
+		loginLabel.setBackground(null);
+		loginLabel.setBorder(null);
+		gbc.gridx = 1;
+		gbc.weightx = 1.0;
+		accountPanel.add(loginLabel, gbc);
+
+		JPanel loginButtonPanel = new JPanel(new FlowLayout(FlowLayout.RIGHT, 2, 0));
+		loginButtonPanel.setOpaque(false);
 
 		JButton copyLoginButton = new JButton();
-		copyLoginButton.setIcon(new ImageIcon(GroupWindow.class.getClassLoader().getResource(copyIconPath)));
+		try {
+			copyLoginButton.setIcon(new ImageIcon(GroupWindow.class.getClassLoader().getResource(copyIconPath)));
+		} catch (Exception e) {
+			copyLoginButton.setText("Copy");
+		}
+		copyLoginButton.setPreferredSize(new Dimension(60, 25));
+		loginButtonPanel.add(copyLoginButton);
+
+		gbc.gridx = 2;
+		gbc.weightx = 0.0;
+		accountPanel.add(loginButtonPanel, gbc);
+
+		JLabel passwordHeader = new JLabel("Password:");
+		gbc.gridx = 0;
+		gbc.gridy = 2;
+		gbc.weightx = 0.0;
+		accountPanel.add(passwordHeader, gbc);
+
+		String hiddenPassword = record.getPassword().replaceAll(".", "*");
+		JTextArea passwordLabel = new JTextArea(wrapText(hiddenPassword, maxFieldLength));
+		passwordLabel.setEditable(false);
+		passwordLabel.setLineWrap(true);
+		passwordLabel.setWrapStyleWord(true);
+		passwordLabel.setBackground(null);
+		passwordLabel.setBorder(null);
+		gbc.gridx = 1;
+		gbc.weightx = 1.0;
+		accountPanel.add(passwordLabel, gbc);
+
+		JPanel passwordButtonPanel = new JPanel(new FlowLayout(FlowLayout.RIGHT, 2, 0));
+		passwordButtonPanel.setOpaque(false);
 
 		JButton copyPasswordButton = new JButton();
-		copyPasswordButton.setIcon(new ImageIcon(GroupWindow.class.getClassLoader().getResource(copyIconPath)));
+		try {
+			copyPasswordButton.setIcon(new ImageIcon(GroupWindow.class.getClassLoader().getResource(copyIconPath)));
+		} catch (Exception e) {
+			copyPasswordButton.setText("Copy");
+		}
+		copyPasswordButton.setPreferredSize(new Dimension(60, 25));
+		passwordButtonPanel.add(copyPasswordButton);
+
+		gbc.gridx = 2;
+		gbc.weightx = 0.0;
+		accountPanel.add(passwordButtonPanel, gbc);
+
+		JPanel controlPanel = new JPanel(new FlowLayout(FlowLayout.RIGHT, 5, 0));
+		controlPanel.setOpaque(false);
+
+		JButton editPasswordButton = new JButton("\u270E");
+		editPasswordButton.setPreferredSize(new Dimension(45, 25));
+		controlPanel.add(editPasswordButton);
 
 		JButton removePasswordButton = new JButton("X");
-		JButton editPasswordButton = new JButton("\u270E");
+		removePasswordButton.setPreferredSize(new Dimension(45, 25));
+		controlPanel.add(removePasswordButton);
 
-		String info = record.getInfo();
-		String infoWithBreaks = "";
-		JTextArea infoLabel = new JTextArea();
+		gbc.gridx = 1;
+		gbc.gridy = 3;
+		gbc.gridwidth = 2;
+		gbc.weightx = 0.0;
+		gbc.anchor = GridBagConstraints.EAST;
+		accountPanel.add(controlPanel, gbc);
 
-		infoWithBreaks = info;
-		if (info.length() > maxNameLength) {
-			infoWithBreaks = insertBreaksIntoString(info, maxNameLength);
-		}
-		infoLabel.setText(infoWithBreaks);
-		infoLabel.setEditable(false);
-
-		String login = record.getLogin();
-		String loginWithBreaks = "";
-		JTextArea loginLabel = new JTextArea();
-
-		loginWithBreaks = login;
-		if (login.length() > maxNameLength) {
-			loginWithBreaks = insertBreaksIntoString(login, maxNameLength);
-		}
-		loginLabel.setText(loginWithBreaks);
-		loginLabel.setEditable(false);
-
-		String password = record.getPassword();
-		String passwordWithBreaks = "";
-		String hidedPassword = password.replaceAll(".", "*");
-		String hidedPasswordWithBreaks = "";
-		JTextArea passwordLabel = new JTextArea();
-
-		passwordWithBreaks = password;
-		hidedPasswordWithBreaks = hidedPassword;
-		if (password.length() > maxNameLength) {
-			passwordWithBreaks = insertBreaksIntoString(password, maxNameLength);
-			hidedPasswordWithBreaks = insertBreaksIntoString(hidedPassword, maxNameLength);
-		}
-		passwordLabel.setText(hidedPasswordWithBreaks);
-		passwordLabel.setEditable(false);
-
-		String normalTextCopy = String.valueOf(passwordWithBreaks);
-		String hidedTextCopy = String.valueOf(hidedPasswordWithBreaks);
-		passwordLabel.addMouseListener(new MouseListener() {
-
-			private String normalText = normalTextCopy;
-			private String hidedText = hidedTextCopy;
-			private boolean isHided = true;
-
-			@Override
-			public void mouseReleased(MouseEvent e) {
-				// TODO Auto-generated method stub
-			}
-
-			@Override
-			public void mousePressed(MouseEvent e) {
-				// TODO Auto-generated method stub
-			}
-
-			@Override
-			public void mouseExited(MouseEvent e) {
-				// TODO Auto-generated method stub
-			}
-
-			@Override
-			public void mouseEntered(MouseEvent e) {
-				// TODO Auto-generated method stub
-			}
-
-			@Override
-			public void mouseClicked(MouseEvent e) {
-				passwordLabel.setEditable(true);
-
-				if (isHided) {
-					passwordLabel.setText(normalText);
-				} else {
-					passwordLabel.setText(hidedText);
-				}
-
-				isHided = !isHided;
-
-				passwordLabel.setEditable(false);
-			}
-		});
-
-		JLabel whitespaceLabel = new JLabel("         ");
+		GridBagConstraints panelConstraints = new GridBagConstraints();
+		panelConstraints.fill = GridBagConstraints.HORIZONTAL;
+		panelConstraints.anchor = GridBagConstraints.NORTH;
+		panelConstraints.gridy = recordsCount;
+		panelConstraints.weightx = 1.0;
+		panelConstraints.insets = new Insets(2, 2, 2, 2);
 
 		String loginCopy = String.valueOf(record.getLogin());
-		copyLoginButton.addActionListener(new ActionListener() {
+		String passwordCopy = String.valueOf(record.getPassword());
 
+		copyLoginButton.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				StringSelection selection = new StringSelection(loginCopy);
@@ -458,9 +474,7 @@ public class GroupWindow {
 			}
 		});
 
-		String passwordCopy = String.valueOf(record.getPassword());
 		copyPasswordButton.addActionListener(new ActionListener() {
-
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				StringSelection selection = new StringSelection(passwordCopy);
@@ -469,142 +483,117 @@ public class GroupWindow {
 			}
 		});
 
+		passwordLabel.addMouseListener(new MouseListener() {
+			private boolean isHidden = true;
+
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				isHidden = !isHidden;
+				if (isHidden) {
+					passwordLabel.setText(wrapText(hiddenPassword, maxFieldLength));
+				} else {
+					passwordLabel.setText(wrapText(record.getPassword(), maxFieldLength));
+				}
+				passwordLabel.setCaretPosition(0);
+			}
+
+			@Override
+			public void mousePressed(MouseEvent e) {
+			}
+
+			@Override
+			public void mouseReleased(MouseEvent e) {
+			}
+
+			@Override
+			public void mouseEntered(MouseEvent e) {
+			}
+
+			@Override
+			public void mouseExited(MouseEvent e) {
+			}
+		});
+
 		removePasswordButton.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				String confirmMessage = "You realy want to remove record " + record.getLogin();
-
+				String confirmMessage = "You really want to remove record " + record.getLogin();
 				if (getConfirm(confirmMessage)) {
 					PasswordWindow passwordWindow = new PasswordWindow();
 					passwordWindow.removePasswordRecord(loginCopy, passwordCopy, groupPassword, encodedGroup);
-
 					encodedGroup.load();
-
 					decodedGroup = Manager.getContext().getEncoder().decodeStruct(encodedGroup, groupPassword);
-
 					repaintListFromData();
 				}
 			}
 
 			public boolean getConfirm(String message) {
-				boolean isConfirmed = false;
-
-				isConfirmed = JOptionPane.showConfirmDialog(groupWindow, message, null,
+				return JOptionPane.showConfirmDialog(groupWindow, message, null,
 						JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION;
-
-				return isConfirmed;
 			}
 		});
 
 		editPasswordButton.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				String confirmMessage = "You realy want to edit record " + record.getLogin();
-
+				String confirmMessage = "You really want to edit record " + record.getLogin();
 				if (getConfirm(confirmMessage)) {
 					PasswordWindow passwordWindow = new PasswordWindow();
-					passwordWindow.update(groupWindow, info, login, password, groupPassword, encodedGroup);
-
+					passwordWindow.update(groupWindow, record.getInfo(), record.getLogin(), record.getPassword(),
+							groupPassword, encodedGroup);
 					encodedGroup.load();
-
 					decodedGroup = Manager.getContext().getEncoder().decodeStruct(encodedGroup, groupPassword);
-
 					repaintListFromData();
 				}
 			}
 
 			public boolean getConfirm(String message) {
-				boolean isConfirmed = false;
-
-				isConfirmed = JOptionPane.showConfirmDialog(groupWindow, message, null,
+				return JOptionPane.showConfirmDialog(groupWindow, message, null,
 						JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION;
-
-				return isConfirmed;
 			}
 		});
 
-		initializeConstraint(gridConstraint, GridBagConstraints.HORIZONTAL, 0, 0, true);
-		accountPanel.add(infoLabel, gridConstraint);
-
-		initializeConstraint(gridConstraint, GridBagConstraints.HORIZONTAL, 0, 1, false);
-		accountPanel.add(loginLabel, gridConstraint);
-
-		initializeConstraint(gridConstraint, GridBagConstraints.HORIZONTAL, 1, 1, true);
-		accountPanel.add(copyLoginButton, gridConstraint);
-
-		initializeConstraint(gridConstraint, GridBagConstraints.HORIZONTAL, 0, 2, false);
-		accountPanel.add(passwordLabel, gridConstraint);
-
-		initializeConstraint(gridConstraint, GridBagConstraints.HORIZONTAL, 1, 2, true);
-		accountPanel.add(copyPasswordButton, gridConstraint);
-
-		initializeConstraint(gridConstraint, GridBagConstraints.HORIZONTAL, 0, 3, true);
-		accountPanel.add(editPasswordButton, gridConstraint);
-
-		initializeConstraint(gridConstraint, GridBagConstraints.HORIZONTAL, 1, 3, true);
-		accountPanel.add(removePasswordButton, gridConstraint);
-
-		initializeConstraint(gridConstraint, GridBagConstraints.HORIZONTAL, 0, 4, true); // maybe 5
-		accountPanel.add(whitespaceLabel, gridConstraint);
-
-		GridBagConstraints constraints = new GridBagConstraints();
-
-		constraints.fill = GridBagConstraints.HORIZONTAL;
-		constraints.anchor = GridBagConstraints.NORTH;
-		constraints.gridy = recordsCount;
-
-		accountsPanel.add(accountPanel, constraints);
-
+		accountsPanel.add(accountPanel, panelConstraints);
 		recordsCount++;
 	}
 
 	/**
-	 * Method that splits a string into equal parts
-	 * 
+	 * Method that wraps text to fit within specified width
+	 *
 	 * @param text
-	 *            the string that needs to be split
-	 * @param partLength
-	 *            maximum length of a text part
-	 * @return a line with breaks separating parts of the text
+	 *            text to wrap
+	 * @param maxLength
+	 *            maximum line length
+	 * @return wrapped text
 	 */
-	public String insertBreaksIntoString(String text, double partLength) {
-		String resultText = "";
-		StringBuilder resultTextBuilder = new StringBuilder();
-
-		String[] loginTextParts = text.split("(?<=\\G.{" + (int) Math.ceil(text.length() / partLength) + "})");
-		for (String loginTextPart : loginTextParts) {
-			resultTextBuilder.append(loginTextPart);
-			resultTextBuilder.append("\n");
+	private String wrapText(String text, int maxLength) {
+		if (text == null || text.length() <= maxLength) {
+			return text;
 		}
-		resultText = resultTextBuilder.toString();
-		resultText = resultText.substring(0, resultText.lastIndexOf('\n'));
 
-		return resultText;
-	}
+		StringBuilder wrapped = new StringBuilder();
+		String[] words = text.split(" ");
+		StringBuilder line = new StringBuilder();
 
-	/**
-	 * Method that determines the location of elements in an account record in the
-	 * list of accounts
-	 * 
-	 * @param gridConstraint
-	 *            object defining restrictions
-	 * @param fillConstraint
-	 *            container filling order rule
-	 * @param cellXPosition
-	 *            element x position
-	 * @param cellYPosition
-	 *            element y position
-	 * @param isPageEnd
-	 *            the need to go to a new line
-	 */
-	public void initializeConstraint(GridBagConstraints gridConstraint, int fillConstraint, int cellXPosition,
-			int cellYPosition, boolean isPageEnd) {
-		gridConstraint.fill = fillConstraint;
-		gridConstraint.gridx = cellXPosition;
-		gridConstraint.gridy = cellYPosition;
-		if (isPageEnd) {
-			gridConstraint.anchor = GridBagConstraints.PAGE_END;
+		for (String word : words) {
+			if (line.length() + word.length() + 1 <= maxLength) {
+				if (line.length() > 0) {
+					line.append(" ");
+				}
+				line.append(word);
+			} else {
+				if (line.length() > 0) {
+					wrapped.append(line.toString()).append("\n");
+				}
+				line = new StringBuilder(word);
+			}
 		}
+
+		if (line.length() > 0) {
+			wrapped.append(line.toString());
+		}
+
+		return wrapped.toString();
 	}
 
 	/**
@@ -612,17 +601,22 @@ public class GroupWindow {
 	 */
 	public void repaintListFromData() {
 		accountsPanel.setVisible(false);
-
 		accountsPanel.removeAll();
+		recordsCount = 0;
 
-		for (int i = 0; i < decodedGroup.size(); i++) {
-			IRecord accountRecord = decodedGroup.getByIndex(i);
-			if (!accountRecord.getLogin().contains("Its white record") && !accountRecord.getLogin().contains("admin")
-					&& !accountRecord.getPassword().contains("qwerty")) {
-				addPasswordToListGUI(accountRecord);
+		if (decodedGroup != null) {
+			for (int i = 0; i < decodedGroup.size(); i++) {
+				IRecord accountRecord = decodedGroup.getByIndex(i);
+				if (!accountRecord.getLogin().contains("Its white record")
+						&& !accountRecord.getLogin().contains("admin")
+						&& !accountRecord.getPassword().contains("qwerty")) {
+					addPasswordToListGUI(accountRecord);
+				}
 			}
 		}
 
+		accountsPanel.revalidate();
+		accountsPanel.repaint();
 		accountsPanel.setVisible(true);
 	}
 
@@ -632,11 +626,12 @@ public class GroupWindow {
 	 */
 	public void repaintList() {
 		accountsPanel.revalidate();
+		accountsPanel.repaint();
 	}
 
 	/**
 	 * Method that filters the list of accounts
-	 * 
+	 *
 	 * @param expression
 	 *            expression expected in records that satisfy the filter
 	 */
@@ -644,20 +639,21 @@ public class GroupWindow {
 		if (!expression.equals("")) {
 			Component[] accountPanels = accountsPanel.getComponents();
 			for (Component accountPanel : accountPanels) {
+				boolean shouldRemove = true;
 				for (Component recordElement : ((JPanel) accountPanel).getComponents()) {
-					if (recordElement.getClass().equals(JTextArea.class)) {
+					if (recordElement instanceof JTextArea) {
 						JTextArea recordFieldLabel = ((JTextArea) recordElement);
-						String recordFieldText = recordFieldLabel.getText();
-
-						if (!recordFieldText.contains(expression.replace("\n", ""))) {
-							accountsPanel.remove(accountPanel);
-						} else {
+						String recordFieldText = recordFieldLabel.getText().replace("\n", "");
+						if (recordFieldText.toLowerCase().contains(expression.toLowerCase())) {
+							shouldRemove = false;
 							break;
 						}
 					}
 				}
+				if (shouldRemove) {
+					accountsPanel.remove(accountPanel);
+				}
 			}
-
 			repaintList();
 		} else {
 			repaintListFromData();

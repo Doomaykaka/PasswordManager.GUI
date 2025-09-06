@@ -7,6 +7,7 @@ import java.awt.FlowLayout;
 import java.awt.GraphicsEnvironment;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
+import java.awt.Insets;
 import java.awt.Point;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -33,7 +34,7 @@ import passwordmanagergui.passwords.GroupWindow;
 /**
  * Main window with a list of groups and elements for manipulating password
  * groups
- * 
+ *
  * @see UIHelper
  * @see GroupWindow
  * @author Doomaykaka MIT License
@@ -274,7 +275,7 @@ public class MainWindow {
 
 	/**
 	 * Method that dynamically adds a new group to the list
-	 * 
+	 *
 	 * @param groupName
 	 *            name of the group to add to the list
 	 */
@@ -288,32 +289,57 @@ public class MainWindow {
 			groupName = groupName.substring(0, maxGroupNameLength - dotString.length()) + dotString;
 		}
 
-		GridBagLayout gridLayout = new GridBagLayout();
-		gridLayout.columnWidths = new int[]{230, 40, 10};
-		GridBagConstraints gridConstraint = new GridBagConstraints();
-
+		// Создаем панель группы с правильной разметкой
 		JPanel groupPanel = new JPanel();
-		groupPanel.setLayout(gridLayout);
-		groupPanel.setSize(new Dimension(0, 0));
+		GridBagLayout groupLayout = new GridBagLayout();
+		groupPanel.setLayout(groupLayout);
 
-		JButton openGroupButton = new JButton();
-		openGroupButton.setText("Open");
+		GridBagConstraints gbc = new GridBagConstraints();
+		gbc.insets = new Insets(2, 2, 2, 2); // Отступы между компонентами
+		gbc.fill = GridBagConstraints.HORIZONTAL;
 
-		JButton removeGroupButton = new JButton();
-		removeGroupButton.setText("X");
-
+		// Название группы - занимает основную ширину
 		JLabel groupNameLabel = new JLabel(groupName);
+		gbc.gridx = 0;
+		gbc.gridy = 0;
+		gbc.weightx = 1.0; // Распределяем доступное пространство
+		gbc.anchor = GridBagConstraints.WEST;
+		groupPanel.add(groupNameLabel, gbc);
 
-		JLabel whitespaceLabel = new JLabel("         ");
+		// Панель с кнопками
+		JPanel buttonPanel = new JPanel(new FlowLayout(FlowLayout.RIGHT, 5, 0));
+		buttonPanel.setOpaque(false);
+
+		JButton openGroupButton = new JButton("Open");
+		openGroupButton.setPreferredSize(new Dimension(60, 25));
+
+		JButton removeGroupButton = new JButton("X");
+		removeGroupButton.setPreferredSize(new Dimension(45, 25));
+
+		buttonPanel.add(openGroupButton);
+		buttonPanel.add(removeGroupButton);
+
+		gbc.gridx = 1;
+		gbc.gridy = 0;
+		gbc.weightx = 0.0; // Кнопки не растягиваются
+		gbc.anchor = GridBagConstraints.EAST;
+		groupPanel.add(buttonPanel, gbc);
+
+		// Настройка контейнера для группы
+		GridBagConstraints panelGbc = new GridBagConstraints();
+		panelGbc.fill = GridBagConstraints.HORIZONTAL;
+		panelGbc.anchor = GridBagConstraints.NORTH;
+		panelGbc.gridy = recordsCount;
+		panelGbc.weightx = 1.0;
+		panelGbc.insets = new Insets(1, 1, 1, 1);
 
 		String groupNameCopy = String.valueOf(groupName);
-		openGroupButton.addActionListener(new ActionListener() {
 
+		openGroupButton.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				GroupWindow groupWindow = new GroupWindow(UIHelper.getGroupFileByName(groupNameCopy));
 				groupWindow.open();
-
 				repaintListFromData();
 			}
 		});
@@ -321,8 +347,7 @@ public class MainWindow {
 		removeGroupButton.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				String confirmRemoveMessage = "You realy want to remove " + groupNameCopy;
-
+				String confirmRemoveMessage = "You really want to remove " + groupNameCopy;
 				if (getConfirm(confirmRemoveMessage)) {
 					removePasswordGroupFromList(groupNameLabel.getText());
 				}
@@ -330,29 +355,13 @@ public class MainWindow {
 
 			public boolean getConfirm(String message) {
 				boolean isConfirmed = false;
-
 				isConfirmed = JOptionPane.showConfirmDialog(mainWindow, message, null,
 						JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION;
-
 				return isConfirmed;
 			}
 		});
 
-		groupPanel.add(groupNameLabel);
-		groupPanel.add(openGroupButton);
-		groupPanel.add(removeGroupButton);
-
-		gridConstraint.gridx = 0;
-		gridConstraint.gridy = 1;
-		groupPanel.add(whitespaceLabel, gridConstraint);
-
-		GridBagConstraints gridConstraints = new GridBagConstraints();
-		gridConstraints.fill = GridBagConstraints.HORIZONTAL;
-		gridConstraints.anchor = GridBagConstraints.NORTH;
-		gridConstraints.gridy = recordsCount;
-
-		groupsPanel.add(groupPanel, gridConstraints);
-
+		groupsPanel.add(groupPanel, panelGbc);
 		recordsCount++;
 	}
 
@@ -362,17 +371,18 @@ public class MainWindow {
 	 */
 	public void repaintListFromData() {
 		groupsPanel.setVisible(false);
-
 		groupsPanel.removeAll();
 
 		UIHelper.clearData();
-
 		UIHelper.readGroupsFromPath();
 
+		recordsCount = 0; // Сбрасываем счетчик
 		for (String groupName : UIHelper.getGroups()) {
 			addPasswordGroupToListGUI(groupName);
 		}
 
+		groupsPanel.revalidate();
+		groupsPanel.repaint();
 		groupsPanel.setVisible(true);
 	}
 
@@ -384,25 +394,29 @@ public class MainWindow {
 		List<String> groupNames = new ArrayList<String>();
 
 		for (Component groupPanel : groupsPanel.getComponents()) {
-			Component groupNameLabel = ((JPanel) groupPanel).getComponents()[0];
-			groupNames.add(((JLabel) groupNameLabel).getText());
+			Component[] components = ((JPanel) groupPanel).getComponents();
+			if (components.length > 0 && components[0] instanceof JLabel) {
+				groupNames.add(((JLabel) components[0]).getText());
+			}
 		}
 
 		groupsPanel.setVisible(false);
-
 		groupsPanel.removeAll();
 
+		recordsCount = 0; // Сбрасываем счетчик
 		for (String groupName : groupNames) {
 			addPasswordGroupToListGUI(groupName);
 		}
 
+		groupsPanel.revalidate();
+		groupsPanel.repaint();
 		groupsPanel.setVisible(true);
 	}
 
 	/**
 	 * Method that removes a group from the list of displayed password groups
 	 * (necessary for filtering to work correctly)
-	 * 
+	 *
 	 * @param groupName
 	 *            name of the group to be deleted from UI
 	 */
@@ -414,16 +428,19 @@ public class MainWindow {
 
 	/**
 	 * Method that filters the list of password groups
-	 * 
+	 *
 	 * @param expression
 	 *            expression expected in records that satisfy the filter
 	 */
 	public void filterPasswordGroups(String expression) {
 		if (!expression.equals("")) {
 			for (Component groupPanel : groupsPanel.getComponents()) {
-				Component groupNameLabel = ((JPanel) groupPanel).getComponents()[0];
-				if (!((JLabel) groupNameLabel).getText().contains(expression)) {
-					groupsPanel.remove(groupPanel);
+				Component[] components = ((JPanel) groupPanel).getComponents();
+				if (components.length > 0 && components[0] instanceof JLabel) {
+					JLabel label = (JLabel) components[0];
+					if (!label.getText().contains(expression)) {
+						groupsPanel.remove(groupPanel);
+					}
 				}
 			}
 
@@ -433,10 +450,10 @@ public class MainWindow {
 		}
 
 		if (expression.toLowerCase().equals("v01d")) {
-			JOptionPane.showMessageDialog(null, "V01d nashel secret shalunishka");
+			JOptionPane.showMessageDialog(null, "v01d nashel secret shalunishka");
 		}
 
-		if (expression.toLowerCase().equals("doomayka")) {
+		if (expression.toLowerCase().equals("Doomayka")) {
 			JOptionPane.showMessageDialog(null,
 					"Doomayka is the crappiest programmer in the world in the crappiest programming language");
 		}

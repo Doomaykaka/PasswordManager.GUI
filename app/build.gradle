@@ -11,7 +11,7 @@ plugins {
     id 'eclipse'
     id "io.toolebox.git-versioner" version "1.6.7"
     id 'checkstyle'
-    id "com.diffplug.spotless" version "6.13.0"
+    id 'com.diffplug.spotless' version '7.0.0'
     id 'java'
     id 'edu.sc.seis.launch4j' version '3.0.5'
 }
@@ -33,7 +33,7 @@ dependencies {
     implementation 'org.jasypt:jasypt:1.9.3'
     implementation 'com.formdev:flatlaf-intellij-themes:3.2.5'
     implementation 'com.formdev:flatlaf:3.2.5'
-    implementation 'com.diffplug.spotless:spotless-plugin-gradle:6.13.0'
+    implementation 'com.diffplug.spotless:spotless-plugin-gradle:7.0.0'
     implementation 'com.github.Doomaykaka:PasswordManager:1.0.1'
 }
 
@@ -72,7 +72,7 @@ versioner {
     startFrom {
         major = 1
         minor = 0
-        patch = 3
+        patch = 4
     }
 }
 
