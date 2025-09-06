@@ -41,6 +41,49 @@ import passwordmanagergui.passwords.GroupWindow;
  * @since 2024-01-31
  */
 public class MainWindow {
+	private static final int WINDOW_WIDTH = 400;
+	private static final int WINDOW_HEIGHT = 600;
+	private static final int MAIN_TITLE_X = 150;
+	private static final int MAIN_TITLE_Y = 40;
+	private static final int MAIN_TITLE_WIDTH = 100;
+	private static final int MAIN_TITLE_HEIGHT = 20;
+	private static final int ADD_BUTTON_X = 150;
+	private static final int ADD_BUTTON_Y = 80;
+	private static final int ADD_BUTTON_WIDTH = 40;
+	private static final int ADD_BUTTON_HEIGHT = 20;
+	private static final int LOAD_BUTTON_X = 210;
+	private static final int LOAD_BUTTON_Y = 80;
+	private static final int LOAD_BUTTON_WIDTH = 40;
+	private static final int LOAD_BUTTON_HEIGHT = 20;
+	private static final int BUTTON_PREFERRED_WIDTH = 100;
+	private static final int BUTTON_PREFERRED_HEIGHT = 20;
+	private static final int FILTER_PANEL_X = 10;
+	private static final int FILTER_PANEL_Y = 120;
+	private static final int FILTER_PANEL_WIDTH = 360;
+	private static final int FILTER_PANEL_HEIGHT = 40;
+	private static final int SEARCH_FIELD_WIDTH = 350;
+	private static final int SEARCH_FIELD_HEIGHT = 20;
+	private static final int GROUPS_PANEL_X = 0;
+	private static final int GROUPS_PANEL_Y = 160;
+	private static final int GROUPS_PANEL_WIDTH = 340;
+	private static final int GROUPS_PANEL_HEIGHT = 380;
+	private static final int GROUPS_SCROLL_PANE_X = 20;
+	private static final int GROUPS_SCROLL_PANE_Y = 160;
+	private static final int GROUPS_SCROLL_PANE_WIDTH = 340;
+	private static final int GROUPS_SCROLL_PANE_HEIGHT = 380;
+	private static final int OPEN_BUTTON_WIDTH = 60;
+	private static final int OPEN_BUTTON_HEIGHT = 25;
+	private static final int REMOVE_BUTTON_WIDTH = 45;
+	private static final int REMOVE_BUTTON_HEIGHT = 25;
+	private static final int BUTTON_SPACING = 5;
+	private static final int COMPONENT_INSETS = 2;
+	private static final int PANEL_INSETS = 1;
+	private static final String COPY_ICON_PATH = "images/copy.png";
+	private static final String SECRET_CODE_1 = "v01d";
+	private static final String SECRET_MESSAGE_1 = "v01d nashel secret shalunishka";
+	private static final String SECRET_CODE_2 = "Doomayka";
+	private static final String SECRET_MESSAGE_2 = "Doomayka is the crappiest programmer in the world in the crappiest programming language";
+
 	/**
 	 * Main window object
 	 */
@@ -108,16 +151,13 @@ public class MainWindow {
 	 * creation of the window
 	 */
 	public void finishCreateWindow() {
-		int windowWidth = 400;
-		int windowHeight = 600;
-
 		mainWindow.add(windowElementsPanel);
 
-		mainWindow.setPreferredSize(new Dimension(windowWidth, windowHeight));
+		mainWindow.setPreferredSize(new Dimension(WINDOW_WIDTH, WINDOW_HEIGHT));
 
 		Point center = GraphicsEnvironment.getLocalGraphicsEnvironment().getCenterPoint();
-		int xLocation = (int) center.getX() - (windowWidth / 2);
-		int yLocation = (int) center.getY() - (windowHeight / 2);
+		int xLocation = (int) center.getX() - (WINDOW_WIDTH / 2);
+		int yLocation = (int) center.getY() - (WINDOW_HEIGHT / 2);
 		mainWindow.setLocation(xLocation, yLocation);
 
 		mainWindow.pack();
@@ -145,7 +185,7 @@ public class MainWindow {
 	 */
 	public void generateMainTitle() {
 		JLabel mainTitleLabel = new JLabel("Password groups");
-		mainTitleLabel.setBounds(150, 40, 100, 20);
+		mainTitleLabel.setBounds(MAIN_TITLE_X, MAIN_TITLE_Y, MAIN_TITLE_WIDTH, MAIN_TITLE_HEIGHT);
 		windowElementsPanel.add(mainTitleLabel);
 	}
 
@@ -155,8 +195,8 @@ public class MainWindow {
 	public void generateAddButton() {
 		JButton addButton = new JButton();
 		addButton.setText("+");
-		addButton.setBounds(150, 80, 40, 20);
-		addButton.setPreferredSize(new Dimension(100, 20));
+		addButton.setBounds(ADD_BUTTON_X, ADD_BUTTON_Y, ADD_BUTTON_WIDTH, ADD_BUTTON_HEIGHT);
+		addButton.setPreferredSize(new Dimension(BUTTON_PREFERRED_WIDTH, BUTTON_PREFERRED_HEIGHT));
 
 		addButton.addActionListener(new ActionListener() {
 
@@ -183,8 +223,8 @@ public class MainWindow {
 	public void generateLoadButton() {
 		JButton loadButton = new JButton();
 		loadButton.setText("▼");
-		loadButton.setBounds(210, 80, 40, 20);
-		loadButton.setPreferredSize(new Dimension(100, 20));
+		loadButton.setBounds(LOAD_BUTTON_X, LOAD_BUTTON_Y, LOAD_BUTTON_WIDTH, LOAD_BUTTON_HEIGHT);
+		loadButton.setPreferredSize(new Dimension(BUTTON_PREFERRED_WIDTH, BUTTON_PREFERRED_HEIGHT));
 
 		loadButton.addActionListener(new ActionListener() {
 
@@ -217,11 +257,11 @@ public class MainWindow {
 
 		JPanel filterPanel = new JPanel();
 		filterPanel.setLayout(filterPanelLayout);
-		filterPanel.setBounds(10, 120, 360, 40);
+		filterPanel.setBounds(FILTER_PANEL_X, FILTER_PANEL_Y, FILTER_PANEL_WIDTH, FILTER_PANEL_HEIGHT);
 
 		JTextField searchField = new JTextField();
 		searchField.setToolTipText("Search");
-		searchField.setPreferredSize(new Dimension(350, 20));
+		searchField.setPreferredSize(new Dimension(SEARCH_FIELD_WIDTH, SEARCH_FIELD_HEIGHT));
 
 		searchField.addKeyListener(new KeyListener() {
 
@@ -262,12 +302,13 @@ public class MainWindow {
 		GridBagLayout gridLayout = new GridBagLayout();
 		groupsPanel.setLayout(gridLayout);
 
-		groupsPanel.setBounds(0, 160, 340, 380);
+		groupsPanel.setBounds(GROUPS_PANEL_X, GROUPS_PANEL_Y, GROUPS_PANEL_WIDTH, GROUPS_PANEL_HEIGHT);
 
 		groupSPane = new JScrollPane(groupsPanel, JScrollPane.VERTICAL_SCROLLBAR_ALWAYS,
 				JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
 		groupSPane.setLayout(new ScrollPaneLayout());
-		groupSPane.setBounds(20, 160, 340, 380);
+		groupSPane.setBounds(GROUPS_SCROLL_PANE_X, GROUPS_SCROLL_PANE_Y, GROUPS_SCROLL_PANE_WIDTH,
+				GROUPS_SCROLL_PANE_HEIGHT);
 		groupSPane.setAutoscrolls(true);
 
 		windowElementsPanel.add(groupSPane);
@@ -295,7 +336,9 @@ public class MainWindow {
 		groupPanel.setLayout(groupLayout);
 
 		GridBagConstraints gbc = new GridBagConstraints();
-		gbc.insets = new Insets(2, 2, 2, 2); // Отступы между компонентами
+		gbc.insets = new Insets(COMPONENT_INSETS, COMPONENT_INSETS, COMPONENT_INSETS, COMPONENT_INSETS); // Отступы
+																											// между
+																											// компонентами
 		gbc.fill = GridBagConstraints.HORIZONTAL;
 
 		// Название группы - занимает основную ширину
@@ -307,14 +350,14 @@ public class MainWindow {
 		groupPanel.add(groupNameLabel, gbc);
 
 		// Панель с кнопками
-		JPanel buttonPanel = new JPanel(new FlowLayout(FlowLayout.RIGHT, 5, 0));
+		JPanel buttonPanel = new JPanel(new FlowLayout(FlowLayout.RIGHT, BUTTON_SPACING, 0));
 		buttonPanel.setOpaque(false);
 
 		JButton openGroupButton = new JButton("Open");
-		openGroupButton.setPreferredSize(new Dimension(60, 25));
+		openGroupButton.setPreferredSize(new Dimension(OPEN_BUTTON_WIDTH, OPEN_BUTTON_HEIGHT));
 
 		JButton removeGroupButton = new JButton("X");
-		removeGroupButton.setPreferredSize(new Dimension(45, 25));
+		removeGroupButton.setPreferredSize(new Dimension(REMOVE_BUTTON_WIDTH, REMOVE_BUTTON_HEIGHT));
 
 		buttonPanel.add(openGroupButton);
 		buttonPanel.add(removeGroupButton);
@@ -331,7 +374,7 @@ public class MainWindow {
 		panelGbc.anchor = GridBagConstraints.NORTH;
 		panelGbc.gridy = recordsCount;
 		panelGbc.weightx = 1.0;
-		panelGbc.insets = new Insets(1, 1, 1, 1);
+		panelGbc.insets = new Insets(PANEL_INSETS, PANEL_INSETS, PANEL_INSETS, PANEL_INSETS);
 
 		String groupNameCopy = String.valueOf(groupName);
 
@@ -449,13 +492,12 @@ public class MainWindow {
 			repaintListFromData();
 		}
 
-		if (expression.toLowerCase().equals("v01d")) {
-			JOptionPane.showMessageDialog(null, "v01d nashel secret shalunishka");
+		if (expression.toLowerCase().equals(SECRET_CODE_1)) {
+			JOptionPane.showMessageDialog(null, SECRET_MESSAGE_1);
 		}
 
-		if (expression.toLowerCase().equals("Doomayka")) {
-			JOptionPane.showMessageDialog(null,
-					"Doomayka is the crappiest programmer in the world in the crappiest programming language");
+		if (expression.toLowerCase().equals(SECRET_CODE_2)) {
+			JOptionPane.showMessageDialog(null, SECRET_MESSAGE_2);
 		}
 	}
 }

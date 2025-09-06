@@ -49,6 +49,55 @@ import passwordmanagergui.UIHelper;
  * @since 2024-01-31
  */
 public class GroupWindow {
+	private static final int WINDOW_WIDTH = 400;
+	private static final int WINDOW_HEIGHT = 600;
+	private static final int MAIN_TITLE_X = 150;
+	private static final int MAIN_TITLE_Y = 40;
+	private static final int MAIN_TITLE_WIDTH = 100;
+	private static final int MAIN_TITLE_HEIGHT = 20;
+	private static final int ADD_BUTTON_X = 150;
+	private static final int ADD_BUTTON_Y = 80;
+	private static final int ADD_BUTTON_WIDTH = 40;
+	private static final int ADD_BUTTON_HEIGHT = 20;
+	private static final int ADD_BUTTON_PREFERRED_WIDTH = 100;
+	private static final int ADD_BUTTON_PREFERRED_HEIGHT = 20;
+	private static final int FILTER_PANEL_X = 10;
+	private static final int FILTER_PANEL_Y = 120;
+	private static final int FILTER_PANEL_WIDTH = 360;
+	private static final int FILTER_PANEL_HEIGHT = 40;
+	private static final int SEARCH_FIELD_WIDTH = 350;
+	private static final int SEARCH_FIELD_HEIGHT = 20;
+	private static final int ACCOUNTS_PANEL_X = 0;
+	private static final int ACCOUNTS_PANEL_Y = 160;
+	private static final int ACCOUNTS_PANEL_WIDTH = 340;
+	private static final int ACCOUNTS_PANEL_HEIGHT = 380;
+	private static final int PASSWORD_SCROLL_PANE_X = 20;
+	private static final int PASSWORD_SCROLL_PANE_Y = 160;
+	private static final int PASSWORD_SCROLL_PANE_WIDTH = 340;
+	private static final int PASSWORD_SCROLL_PANE_HEIGHT = 380;
+	private static final int COPY_BUTTON_WIDTH = 60;
+	private static final int COPY_BUTTON_HEIGHT = 25;
+	private static final int EDIT_BUTTON_WIDTH = 45;
+	private static final int EDIT_BUTTON_HEIGHT = 25;
+	private static final int REMOVE_BUTTON_WIDTH = 45;
+	private static final int REMOVE_BUTTON_HEIGHT = 25;
+	private static final int BUTTON_SPACING_SMALL = 2;
+	private static final int BUTTON_SPACING_MEDIUM = 5;
+	private static final int COMPONENT_INSETS = 3;
+	private static final int PANEL_INSETS = 2;
+	private static final String WRONG_PASSWORD_MESSAGE = "Wrong password";
+	private static final String PASSWORD_DIALOG_TITLE = "Enter password:";
+	private static final String DECODING_ERROR_LOG = "decoding error";
+	private static final String RAW_DATA_LOG = "RawData";
+	private static final String COPY_BUTTON_TEXT = "Copy";
+	private static final String EDIT_BUTTON_TEXT = "\u270E";
+	private static final String REMOVE_BUTTON_TEXT = "X";
+	private static final String CONFIRM_REMOVE_MESSAGE = "You really want to remove record ";
+	private static final String CONFIRM_EDIT_MESSAGE = "You really want to edit record ";
+	private static final String WHITE_RECORD_FILTER = "Its white record";
+	private static final String ADMIN_FILTER = "admin";
+	private static final String QWERTY_FILTER = "qwerty";
+
 	/**
 	 * File with an encrypted group of passwords
 	 */
@@ -139,7 +188,7 @@ public class GroupWindow {
 	public String getPassword() {
 		JPasswordField pf = new JPasswordField();
 
-		JOptionPane.showConfirmDialog(null, pf, "Enter password:", JOptionPane.OK_CANCEL_OPTION,
+		JOptionPane.showConfirmDialog(null, pf, PASSWORD_DIALOG_TITLE, JOptionPane.OK_CANCEL_OPTION,
 				JOptionPane.PLAIN_MESSAGE);
 
 		if (pf.getPassword().length == 0) {
@@ -154,7 +203,7 @@ public class GroupWindow {
 	 * incorrect password for a group
 	 */
 	public void getBadPasswordMessage() {
-		JOptionPane.showMessageDialog(null, "Wrong password");
+		JOptionPane.showMessageDialog(null, WRONG_PASSWORD_MESSAGE);
 	}
 
 	/**
@@ -184,7 +233,7 @@ public class GroupWindow {
 
 					encodedGroup.save();
 				} catch (IOException e) {
-					Logger.addLog("RawData", "decoding error");
+					Logger.addLog(RAW_DATA_LOG, DECODING_ERROR_LOG);
 				}
 			}
 		}
@@ -214,16 +263,13 @@ public class GroupWindow {
 	 * creation of the window
 	 */
 	public void finishCreateWindow() {
-		int windowWidth = 400;
-		int windowHeight = 600;
-
 		groupWindow.add(windowPanel);
 
-		groupWindow.setPreferredSize(new Dimension(400, 600));
+		groupWindow.setPreferredSize(new Dimension(WINDOW_WIDTH, WINDOW_HEIGHT));
 
 		Point center = GraphicsEnvironment.getLocalGraphicsEnvironment().getCenterPoint();
-		int xLocation = (int) center.getX() - (windowWidth / 2);
-		int yLocation = (int) center.getY() - (windowHeight / 2);
+		int xLocation = (int) center.getX() - (WINDOW_WIDTH / 2);
+		int yLocation = (int) center.getY() - (WINDOW_HEIGHT / 2);
 		groupWindow.setLocation(xLocation, yLocation);
 
 		groupWindow.pack();
@@ -250,7 +296,7 @@ public class GroupWindow {
 	 */
 	public void generateMainTitle() {
 		JLabel mainTitleLabel = new JLabel("Group " + encodedGroup.getName());
-		mainTitleLabel.setBounds(150, 40, 100, 20);
+		mainTitleLabel.setBounds(MAIN_TITLE_X, MAIN_TITLE_Y, MAIN_TITLE_WIDTH, MAIN_TITLE_HEIGHT);
 		windowPanel.add(mainTitleLabel);
 	}
 
@@ -260,8 +306,8 @@ public class GroupWindow {
 	public void generateAddButton() {
 		JButton addButton = new JButton();
 		addButton.setText("+");
-		addButton.setBounds(150, 80, 40, 20);
-		addButton.setPreferredSize(new Dimension(100, 20));
+		addButton.setBounds(ADD_BUTTON_X, ADD_BUTTON_Y, ADD_BUTTON_WIDTH, ADD_BUTTON_HEIGHT);
+		addButton.setPreferredSize(new Dimension(ADD_BUTTON_PREFERRED_WIDTH, ADD_BUTTON_PREFERRED_HEIGHT));
 
 		addButton.addActionListener(new ActionListener() {
 
@@ -289,11 +335,11 @@ public class GroupWindow {
 
 		JPanel filterPanel = new JPanel();
 		filterPanel.setLayout(filterPanelLayout);
-		filterPanel.setBounds(10, 120, 360, 40);
+		filterPanel.setBounds(FILTER_PANEL_X, FILTER_PANEL_Y, FILTER_PANEL_WIDTH, FILTER_PANEL_HEIGHT);
 
 		JTextField searchField = new JTextField();
 		searchField.setToolTipText("Search");
-		searchField.setPreferredSize(new Dimension(350, 20));
+		searchField.setPreferredSize(new Dimension(SEARCH_FIELD_WIDTH, SEARCH_FIELD_HEIGHT));
 
 		searchField.addKeyListener(new KeyListener() {
 
@@ -329,12 +375,13 @@ public class GroupWindow {
 	public void generatePasswordsList() {
 		accountsPanel = new JPanel();
 		accountsPanel.setLayout(new GridBagLayout());
-		accountsPanel.setBounds(0, 160, 340, 380);
+		accountsPanel.setBounds(ACCOUNTS_PANEL_X, ACCOUNTS_PANEL_Y, ACCOUNTS_PANEL_WIDTH, ACCOUNTS_PANEL_HEIGHT);
 
 		passwordSPane = new JScrollPane(accountsPanel, JScrollPane.VERTICAL_SCROLLBAR_ALWAYS,
 				JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
 		passwordSPane.setLayout(new ScrollPaneLayout());
-		passwordSPane.setBounds(20, 160, 340, 380);
+		passwordSPane.setBounds(PASSWORD_SCROLL_PANE_X, PASSWORD_SCROLL_PANE_Y, PASSWORD_SCROLL_PANE_WIDTH,
+				PASSWORD_SCROLL_PANE_HEIGHT);
 		passwordSPane.setAutoscrolls(true);
 
 		windowPanel.add(passwordSPane);
@@ -351,7 +398,7 @@ public class GroupWindow {
 		accountPanel.setBorder(javax.swing.BorderFactory.createEtchedBorder());
 
 		GridBagConstraints gbc = new GridBagConstraints();
-		gbc.insets = new Insets(3, 3, 3, 3);
+		gbc.insets = new Insets(COMPONENT_INSETS, COMPONENT_INSETS, COMPONENT_INSETS, COMPONENT_INSETS);
 		gbc.fill = GridBagConstraints.HORIZONTAL;
 		gbc.weightx = 1.0;
 
@@ -388,16 +435,16 @@ public class GroupWindow {
 		gbc.weightx = 1.0;
 		accountPanel.add(loginLabel, gbc);
 
-		JPanel loginButtonPanel = new JPanel(new FlowLayout(FlowLayout.RIGHT, 2, 0));
+		JPanel loginButtonPanel = new JPanel(new FlowLayout(FlowLayout.RIGHT, BUTTON_SPACING_SMALL, 0));
 		loginButtonPanel.setOpaque(false);
 
 		JButton copyLoginButton = new JButton();
 		try {
 			copyLoginButton.setIcon(new ImageIcon(GroupWindow.class.getClassLoader().getResource(copyIconPath)));
 		} catch (Exception e) {
-			copyLoginButton.setText("Copy");
+			copyLoginButton.setText(COPY_BUTTON_TEXT);
 		}
-		copyLoginButton.setPreferredSize(new Dimension(60, 25));
+		copyLoginButton.setPreferredSize(new Dimension(COPY_BUTTON_WIDTH, COPY_BUTTON_HEIGHT));
 		loginButtonPanel.add(copyLoginButton);
 
 		gbc.gridx = 2;
@@ -421,31 +468,31 @@ public class GroupWindow {
 		gbc.weightx = 1.0;
 		accountPanel.add(passwordLabel, gbc);
 
-		JPanel passwordButtonPanel = new JPanel(new FlowLayout(FlowLayout.RIGHT, 2, 0));
+		JPanel passwordButtonPanel = new JPanel(new FlowLayout(FlowLayout.RIGHT, BUTTON_SPACING_SMALL, 0));
 		passwordButtonPanel.setOpaque(false);
 
 		JButton copyPasswordButton = new JButton();
 		try {
 			copyPasswordButton.setIcon(new ImageIcon(GroupWindow.class.getClassLoader().getResource(copyIconPath)));
 		} catch (Exception e) {
-			copyPasswordButton.setText("Copy");
+			copyPasswordButton.setText(COPY_BUTTON_TEXT);
 		}
-		copyPasswordButton.setPreferredSize(new Dimension(60, 25));
+		copyPasswordButton.setPreferredSize(new Dimension(COPY_BUTTON_WIDTH, COPY_BUTTON_HEIGHT));
 		passwordButtonPanel.add(copyPasswordButton);
 
 		gbc.gridx = 2;
 		gbc.weightx = 0.0;
 		accountPanel.add(passwordButtonPanel, gbc);
 
-		JPanel controlPanel = new JPanel(new FlowLayout(FlowLayout.RIGHT, 5, 0));
+		JPanel controlPanel = new JPanel(new FlowLayout(FlowLayout.RIGHT, BUTTON_SPACING_MEDIUM, 0));
 		controlPanel.setOpaque(false);
 
-		JButton editPasswordButton = new JButton("\u270E");
-		editPasswordButton.setPreferredSize(new Dimension(45, 25));
+		JButton editPasswordButton = new JButton(EDIT_BUTTON_TEXT);
+		editPasswordButton.setPreferredSize(new Dimension(EDIT_BUTTON_WIDTH, EDIT_BUTTON_HEIGHT));
 		controlPanel.add(editPasswordButton);
 
-		JButton removePasswordButton = new JButton("X");
-		removePasswordButton.setPreferredSize(new Dimension(45, 25));
+		JButton removePasswordButton = new JButton(REMOVE_BUTTON_TEXT);
+		removePasswordButton.setPreferredSize(new Dimension(REMOVE_BUTTON_WIDTH, REMOVE_BUTTON_HEIGHT));
 		controlPanel.add(removePasswordButton);
 
 		gbc.gridx = 1;
@@ -460,7 +507,7 @@ public class GroupWindow {
 		panelConstraints.anchor = GridBagConstraints.NORTH;
 		panelConstraints.gridy = recordsCount;
 		panelConstraints.weightx = 1.0;
-		panelConstraints.insets = new Insets(2, 2, 2, 2);
+		panelConstraints.insets = new Insets(PANEL_INSETS, PANEL_INSETS, PANEL_INSETS, PANEL_INSETS);
 
 		String loginCopy = String.valueOf(record.getLogin());
 		String passwordCopy = String.valueOf(record.getPassword());
@@ -517,7 +564,7 @@ public class GroupWindow {
 		removePasswordButton.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				String confirmMessage = "You really want to remove record " + record.getLogin();
+				String confirmMessage = CONFIRM_REMOVE_MESSAGE + record.getLogin();
 				if (getConfirm(confirmMessage)) {
 					PasswordWindow passwordWindow = new PasswordWindow();
 					passwordWindow.removePasswordRecord(loginCopy, passwordCopy, groupPassword, encodedGroup);
@@ -536,7 +583,7 @@ public class GroupWindow {
 		editPasswordButton.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				String confirmMessage = "You really want to edit record " + record.getLogin();
+				String confirmMessage = CONFIRM_EDIT_MESSAGE + record.getLogin();
 				if (getConfirm(confirmMessage)) {
 					PasswordWindow passwordWindow = new PasswordWindow();
 					passwordWindow.update(groupWindow, record.getInfo(), record.getLogin(), record.getPassword(),
@@ -607,9 +654,9 @@ public class GroupWindow {
 		if (decodedGroup != null) {
 			for (int i = 0; i < decodedGroup.size(); i++) {
 				IRecord accountRecord = decodedGroup.getByIndex(i);
-				if (!accountRecord.getLogin().contains("Its white record")
-						&& !accountRecord.getLogin().contains("admin")
-						&& !accountRecord.getPassword().contains("qwerty")) {
+				if (!accountRecord.getLogin().contains(WHITE_RECORD_FILTER)
+						&& !accountRecord.getLogin().contains(ADMIN_FILTER)
+						&& !accountRecord.getPassword().contains(QWERTY_FILTER)) {
 					addPasswordToListGUI(accountRecord);
 				}
 			}
