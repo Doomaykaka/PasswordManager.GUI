@@ -78,9 +78,8 @@ public class MainWindow {
 	private static final int BUTTON_SPACING = 5;
 	private static final int COMPONENT_INSETS = 2;
 	private static final int PANEL_INSETS = 1;
-	private static final String COPY_ICON_PATH = "images/copy.png";
 	private static final String SECRET_CODE_1 = "v01d";
-	private static final String SECRET_MESSAGE_1 = "v01d nashel secret shalunishka";
+	private static final String SECRET_MESSAGE_1 = "ad: Download 4GB Patch by v01d: https://gitlab.com/v01d-gl/4gb-patch";
 	private static final String SECRET_CODE_2 = "Doomayka";
 	private static final String SECRET_MESSAGE_2 = "Doomayka is the crappiest programmer in the world in the crappiest programming language";
 
@@ -330,26 +329,21 @@ public class MainWindow {
 			groupName = groupName.substring(0, maxGroupNameLength - dotString.length()) + dotString;
 		}
 
-		// Создаем панель группы с правильной разметкой
 		JPanel groupPanel = new JPanel();
 		GridBagLayout groupLayout = new GridBagLayout();
 		groupPanel.setLayout(groupLayout);
 
 		GridBagConstraints gbc = new GridBagConstraints();
-		gbc.insets = new Insets(COMPONENT_INSETS, COMPONENT_INSETS, COMPONENT_INSETS, COMPONENT_INSETS); // Отступы
-																											// между
-																											// компонентами
+		gbc.insets = new Insets(COMPONENT_INSETS, COMPONENT_INSETS, COMPONENT_INSETS, COMPONENT_INSETS);
 		gbc.fill = GridBagConstraints.HORIZONTAL;
 
-		// Название группы - занимает основную ширину
 		JLabel groupNameLabel = new JLabel(groupName);
 		gbc.gridx = 0;
 		gbc.gridy = 0;
-		gbc.weightx = 1.0; // Распределяем доступное пространство
+		gbc.weightx = 1.0;
 		gbc.anchor = GridBagConstraints.WEST;
 		groupPanel.add(groupNameLabel, gbc);
 
-		// Панель с кнопками
 		JPanel buttonPanel = new JPanel(new FlowLayout(FlowLayout.RIGHT, BUTTON_SPACING, 0));
 		buttonPanel.setOpaque(false);
 
@@ -364,11 +358,10 @@ public class MainWindow {
 
 		gbc.gridx = 1;
 		gbc.gridy = 0;
-		gbc.weightx = 0.0; // Кнопки не растягиваются
+		gbc.weightx = 0.0;
 		gbc.anchor = GridBagConstraints.EAST;
 		groupPanel.add(buttonPanel, gbc);
 
-		// Настройка контейнера для группы
 		GridBagConstraints panelGbc = new GridBagConstraints();
 		panelGbc.fill = GridBagConstraints.HORIZONTAL;
 		panelGbc.anchor = GridBagConstraints.NORTH;
