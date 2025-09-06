@@ -80,7 +80,7 @@ public class MainWindow {
 	private static final int PANEL_INSETS = 1;
 	private static final String SECRET_CODE_1 = "v01d";
 	private static final String SECRET_MESSAGE_1 = "ad: Download 4GB Patch by v01d: https://gitlab.com/v01d-gl/4gb-patch";
-	private static final String SECRET_CODE_2 = "Doomayka";
+	private static final String SECRET_CODE_2 = "doomayka";
 	private static final String SECRET_MESSAGE_2 = "Doomayka is the crappiest programmer in the world in the crappiest programming language";
 
 	/**
