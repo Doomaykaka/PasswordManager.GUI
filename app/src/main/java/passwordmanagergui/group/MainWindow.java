@@ -412,7 +412,7 @@ public class MainWindow {
 		UIHelper.clearData();
 		UIHelper.readGroupsFromPath();
 
-		recordsCount = 0; // Сбрасываем счетчик
+		recordsCount = 0;
 		for (String groupName : UIHelper.getGroups()) {
 			addPasswordGroupToListGUI(groupName);
 		}
@@ -439,7 +439,7 @@ public class MainWindow {
 		groupsPanel.setVisible(false);
 		groupsPanel.removeAll();
 
-		recordsCount = 0; // Сбрасываем счетчик
+		recordsCount = 0;
 		for (String groupName : groupNames) {
 			addPasswordGroupToListGUI(groupName);
 		}
