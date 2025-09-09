@@ -1,5 +1,11 @@
 package passwordmanagergui.passwords;
 
+import com.google.zxing.BarcodeFormat;
+import com.google.zxing.EncodeHintType;
+import com.google.zxing.WriterException;
+import com.google.zxing.client.j2se.MatrixToImageWriter;
+import com.google.zxing.common.BitMatrix;
+import com.google.zxing.qrcode.QRCodeWriter;
 import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
@@ -20,6 +26,7 @@ import java.awt.event.MouseListener;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Hashtable;
 import java.util.List;
 import java.util.Scanner;
 import javax.swing.ImageIcon;
@@ -75,12 +82,16 @@ public class GroupWindow {
 	private static final int PASSWORD_SCROLL_PANE_Y = 160;
 	private static final int PASSWORD_SCROLL_PANE_WIDTH = 340;
 	private static final int PASSWORD_SCROLL_PANE_HEIGHT = 380;
-	private static final int COPY_BUTTON_WIDTH = 60;
-	private static final int COPY_BUTTON_HEIGHT = 25;
+	private static final int COPY_BUTTON_WIDTH = 50;
+	private static final int COPY_BUTTON_HEIGHT = 35;
+	private static final int QR_BUTTON_WIDTH = 50;
+	private static final int QR_BUTTON_HEIGHT = 35;
+	private static final int QR_WIDTH = 300;
+	private static final int QR_HEIGHT = 300;
 	private static final int EDIT_BUTTON_WIDTH = 45;
-	private static final int EDIT_BUTTON_HEIGHT = 25;
+	private static final int EDIT_BUTTON_HEIGHT = 30;
 	private static final int REMOVE_BUTTON_WIDTH = 45;
-	private static final int REMOVE_BUTTON_HEIGHT = 25;
+	private static final int REMOVE_BUTTON_HEIGHT = 30;
 	private static final int BUTTON_SPACING_SMALL = 2;
 	private static final int BUTTON_SPACING_MEDIUM = 5;
 	private static final int COMPONENT_INSETS = 3;
@@ -90,6 +101,7 @@ public class GroupWindow {
 	private static final String DECODING_ERROR_LOG = "decoding error";
 	private static final String RAW_DATA_LOG = "RawData";
 	private static final String COPY_BUTTON_TEXT = "Copy";
+	private static final String QR_BUTTON_TEXT = "QR";
 	private static final String EDIT_BUTTON_TEXT = "\u270E";
 	private static final String REMOVE_BUTTON_TEXT = "X";
 	private static final String CONFIRM_REMOVE_MESSAGE = "You really want to remove record ";
@@ -143,6 +155,11 @@ public class GroupWindow {
 	 * Path to copy icon
 	 */
 	private final String copyIconPath = "images/copy.png";
+
+	/**
+	 * Path to show QR
+	 */
+	private final String showQRPath = "images/qr.png";
 
 	/**
 	 * Class constructor initializing a group file with passwords
@@ -447,6 +464,15 @@ public class GroupWindow {
 		copyLoginButton.setPreferredSize(new Dimension(COPY_BUTTON_WIDTH, COPY_BUTTON_HEIGHT));
 		loginButtonPanel.add(copyLoginButton);
 
+		JButton qrLoginButton = new JButton();
+		try {
+			qrLoginButton.setIcon(new ImageIcon(GroupWindow.class.getClassLoader().getResource(showQRPath)));
+		} catch (Exception e) {
+			qrLoginButton.setText(QR_BUTTON_TEXT);
+		}
+		qrLoginButton.setPreferredSize(new Dimension(QR_BUTTON_WIDTH, QR_BUTTON_HEIGHT));
+		loginButtonPanel.add(qrLoginButton);
+
 		gbc.gridx = 2;
 		gbc.weightx = 0.0;
 		accountPanel.add(loginButtonPanel, gbc);
@@ -479,6 +505,15 @@ public class GroupWindow {
 		}
 		copyPasswordButton.setPreferredSize(new Dimension(COPY_BUTTON_WIDTH, COPY_BUTTON_HEIGHT));
 		passwordButtonPanel.add(copyPasswordButton);
+
+		JButton qrPasswordButton = new JButton();
+		try {
+			qrPasswordButton.setIcon(new ImageIcon(GroupWindow.class.getClassLoader().getResource(showQRPath)));
+		} catch (Exception e) {
+			qrPasswordButton.setText(QR_BUTTON_TEXT);
+		}
+		qrPasswordButton.setPreferredSize(new Dimension(QR_BUTTON_WIDTH, QR_BUTTON_HEIGHT));
+		passwordButtonPanel.add(qrPasswordButton);
 
 		gbc.gridx = 2;
 		gbc.weightx = 0.0;
@@ -521,12 +556,26 @@ public class GroupWindow {
 			}
 		});
 
+		qrLoginButton.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				showQRCode(loginCopy, "Login QR Code");
+			}
+		});
+
 		copyPasswordButton.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				StringSelection selection = new StringSelection(passwordCopy);
 				Clipboard clipboard = Toolkit.getDefaultToolkit().getSystemClipboard();
 				clipboard.setContents(selection, selection);
+			}
+		});
+
+		qrPasswordButton.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				showQRCode(passwordCopy, "Password QR Code");
 			}
 		});
 
@@ -602,6 +651,29 @@ public class GroupWindow {
 
 		accountsPanel.add(accountPanel, panelConstraints);
 		recordsCount++;
+	}
+
+	private void showQRCode(String text, String title) {
+		try {
+			QRCodeWriter qrCodeWriter = new QRCodeWriter();
+			Hashtable hints = new Hashtable();
+			hints.put(EncodeHintType.CHARACTER_SET, "utf-8");
+			BitMatrix bitMatrix = qrCodeWriter.encode(text, BarcodeFormat.QR_CODE, QR_WIDTH, QR_HEIGHT, hints);
+
+			JFrame qrFrame = new JFrame(title);
+			qrFrame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+
+			JLabel qrLabel = new JLabel(new ImageIcon(MatrixToImageWriter.toBufferedImage(bitMatrix)));
+			JPanel panel = new JPanel();
+			panel.add(qrLabel);
+			qrFrame.add(panel);
+
+			qrFrame.pack();
+			qrFrame.setLocationRelativeTo(null);
+			qrFrame.setVisible(true);
+		} catch (WriterException e) {
+			JOptionPane.showMessageDialog(groupWindow, "Error generating QR code");
+		}
 	}
 
 	/**
