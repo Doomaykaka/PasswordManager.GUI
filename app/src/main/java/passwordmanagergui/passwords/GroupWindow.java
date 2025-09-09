@@ -1,6 +1,7 @@
 package passwordmanagergui.passwords;
 
 import com.google.zxing.BarcodeFormat;
+import com.google.zxing.EncodeHintType;
 import com.google.zxing.WriterException;
 import com.google.zxing.client.j2se.MatrixToImageWriter;
 import com.google.zxing.common.BitMatrix;
@@ -25,6 +26,7 @@ import java.awt.event.MouseListener;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Hashtable;
 import java.util.List;
 import java.util.Scanner;
 import javax.swing.ImageIcon;
@@ -502,7 +504,12 @@ public class GroupWindow {
 		copyPasswordButton.setPreferredSize(new Dimension(COPY_BUTTON_WIDTH, COPY_BUTTON_HEIGHT));
 		passwordButtonPanel.add(copyPasswordButton);
 
-		JButton qrPasswordButton = new JButton(QR_BUTTON_TEXT);
+		JButton qrPasswordButton = new JButton();
+		try {
+			qrPasswordButton.setIcon(new ImageIcon(GroupWindow.class.getClassLoader().getResource(showQRPath)));
+		} catch (Exception e) {
+			qrPasswordButton.setText(QR_BUTTON_TEXT);
+		}
 		qrPasswordButton.setPreferredSize(new Dimension(QR_BUTTON_WIDTH, QR_BUTTON_HEIGHT));
 		passwordButtonPanel.add(qrPasswordButton);
 
@@ -647,7 +654,9 @@ public class GroupWindow {
 	private void showQRCode(String text, String title) {
 		try {
 			QRCodeWriter qrCodeWriter = new QRCodeWriter();
-			BitMatrix bitMatrix = qrCodeWriter.encode(text, BarcodeFormat.QR_CODE, 300, 300);
+			Hashtable hints = new Hashtable();
+			hints.put(EncodeHintType.CHARACTER_SET, "utf-8");
+			BitMatrix bitMatrix = qrCodeWriter.encode(text, BarcodeFormat.QR_CODE, 300, 300, hints);
 
 			JFrame qrFrame = new JFrame(title);
 			qrFrame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
