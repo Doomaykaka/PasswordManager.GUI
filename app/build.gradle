@@ -35,6 +35,8 @@ dependencies {
     implementation 'com.formdev:flatlaf:3.2.5'
     implementation 'com.diffplug.spotless:spotless-plugin-gradle:7.0.0'
     implementation 'com.github.Doomaykaka:PasswordManager:1.0.1'
+    implementation 'com.google.zxing:core:3.5.1'
+    implementation 'com.google.zxing:javase:3.5.1'
 }
 
 // Apply a specific Java toolchain to ease working on different environments.
@@ -71,8 +73,8 @@ versioner {
 
     startFrom {
         major = 1
-        minor = 0
-        patch = 5
+        minor = 1
+        patch = 0
     }
 }
 
