@@ -86,6 +86,8 @@ public class GroupWindow {
 	private static final int COPY_BUTTON_HEIGHT = 35;
 	private static final int QR_BUTTON_WIDTH = 50;
 	private static final int QR_BUTTON_HEIGHT = 35;
+	private static final int QR_WIDTH = 300;
+	private static final int QR_HEIGHT = 300;
 	private static final int EDIT_BUTTON_WIDTH = 45;
 	private static final int EDIT_BUTTON_HEIGHT = 30;
 	private static final int REMOVE_BUTTON_WIDTH = 45;
@@ -656,7 +658,7 @@ public class GroupWindow {
 			QRCodeWriter qrCodeWriter = new QRCodeWriter();
 			Hashtable hints = new Hashtable();
 			hints.put(EncodeHintType.CHARACTER_SET, "utf-8");
-			BitMatrix bitMatrix = qrCodeWriter.encode(text, BarcodeFormat.QR_CODE, 300, 300, hints);
+			BitMatrix bitMatrix = qrCodeWriter.encode(text, BarcodeFormat.QR_CODE, QR_WIDTH, QR_HEIGHT, hints);
 
 			JFrame qrFrame = new JFrame(title);
 			qrFrame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
